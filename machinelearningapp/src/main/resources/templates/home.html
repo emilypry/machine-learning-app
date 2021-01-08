@@ -8,10 +8,17 @@
 <body>
 
     <div id="header">Easy Machine Learning</div>
-
-    <h2>I'm a heading</h2>
-    <p>Testing</p>
-    <a th:href="@{/home}" th:text="Link"></a>
+    <div id="navigation">
+        <a th:href="@{/home}" th:text="'Link 1'"></a>
+        <a th:href="@{/home}" th:text="'Link 2'"></a>
+        <a th:href="@{/home}" th:text="'Link 3'"></a>
+    </div>
+    <div id="content">
+        <h2>I'm a heading</h2>
+        <p>Testing</p>
+        <a th:href="@{/home}" th:text="Link"></a>
+    </div>
+    <div id="footer">I'm the footer</div>
 
 
 
