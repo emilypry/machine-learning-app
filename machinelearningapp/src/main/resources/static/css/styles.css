@@ -1,0 +1,9 @@
+body {
+    background-color:antiquewhite;
+}
+h1, h2, h3, h4, p, a {
+    font-family:"Avenir";
+}
+a {
+    color:rgb(46, 62, 136);
+}
