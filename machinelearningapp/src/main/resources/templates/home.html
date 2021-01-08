@@ -6,15 +6,16 @@
     <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
     <div id="header">Easy Machine Learning</div>
+
     <div id="navigation">
-        <a th:href="@{/home}" th:text="'Link 1'"></a>
+        <a th:href="@{/home}" th:text="'Home'"></a>
         <a th:href="@{/home}" th:text="'Link 2'"></a>
         <a th:href="@{/home}" th:text="'Link 3'"></a>
     </div>
+
     <div id="content">
-        <h3>Create a linear regression model of a dataset through machine learning.</h2>
+        <h3>Create a linear regression model of a dataset through machine learning</h2>
         
         <div id="home-list">
             <ol>
@@ -33,13 +34,13 @@
                 <p>Play with the parameters until you've trained a good model.</p>
                 <li>Test your model</li>
                 <p>See how your model performs on the testing set.</p>
-            </ol>>
+            </ol>
         </div>
+
+        <a class="next-page-button" th:href="@{/upload-data}">Begin</a>
         
-        <p>Testing</p>
-        <a th:href="@{/home}" th:text="Link"></a>
     </div>
-    <div id="footer">I'm the footer</div>
+    <div id="footer"></div>
 
 
 
