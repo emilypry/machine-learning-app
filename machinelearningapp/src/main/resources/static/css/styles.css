@@ -18,7 +18,7 @@ h1, h2, h3, h4, p, a, ul, ol{
     font-family:"Avenir";
 }
 a {
-    color:rgb(46, 62, 136);
+    color:rgb(32, 40, 73);
 }
 h1, h2, h3, h4 {
     text-align: center;
@@ -32,7 +32,7 @@ h1, h2, h3, h4 {
     margin-right: 15px;
     background:rgb(165, 29, 20);
     text-align: center;
-    color: rgb(233, 230, 227);
+    color: rgb(232, 234, 235);
     font-size: 24px;
     font-family: "Avenir";
 }

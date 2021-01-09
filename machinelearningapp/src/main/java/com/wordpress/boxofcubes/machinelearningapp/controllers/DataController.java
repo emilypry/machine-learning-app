@@ -16,4 +16,9 @@ public class DataController {
     public String showHome(){
         return "home";
     }
+
+    @GetMapping("upload-data")
+    public String showUpload(){
+        return "upload";
+    }
 }
