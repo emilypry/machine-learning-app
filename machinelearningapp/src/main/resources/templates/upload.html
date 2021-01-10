@@ -29,6 +29,27 @@
             </p>
         </div>
 
+
+
+        <div id="data-choice">
+            <div>
+                <input type="radio" name="dataChoice" id="uploadChoice" />
+                <label for="uploadChoice">Upload data</label>
+            </div>
+
+            <div>
+                <input type="radio" name="dataChoice" id="enterChoice" />
+                <label for="enterChoice">Enter data</label>
+            </div>
+
+            <div>
+                <input type="radio" name="dataChoice" id="sampleChoice" />
+                <label for="sampleChoice">Use sample data</label>
+            </div>
+        </div>
+
+
+
         <div id="upload">
             <form method="post" th:object="${data}">
                 <div>
@@ -40,6 +61,7 @@
                     <label for="yUpload">Y: </label>
                     <input type="file" th:field="*{y}" id="yUpload" />
                 </div>
+
                 <div>
                     <label for="name">Name of dataset: </label>
                     <input th:field="*{name}" id="name" />
