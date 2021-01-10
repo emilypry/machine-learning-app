@@ -75,17 +75,6 @@ h1, h2, h3, h4 {
 #home-list p {
     color:rgb(32, 40, 73);
 }
-#data-choice {
-    width: 20%;
-    margin-left: 45%;
-    margin-top: 3%;
-}
-#upload {
-    width: 30%;
-    margin-left: 5%;
-    margin-top: 3%;
-}
-
 .explanation {
     width: 70%;
     margin: auto;
@@ -104,4 +93,38 @@ h1, h2, h3, h4 {
     margin-right: 15%;
     margin-left: 85%;
     margin-bottom: 2%;
+}
+#data-choice {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    background: red;
+}
+#data-choice input{
+    width: 5%;
+    margin-left: 40%;
+}
+#data-choice .data-choice-label{
+    width: 15%;
+    margin-left: 1%;
+    font-family:"Avenir";
+    color:rgb(209, 207, 181);
+}
+#upload {
+    width: 30%;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+#chose-upload, #chose-enter, #chose-sample {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;   
+}
+#upload-choice:checked ~ #chose-upload, 
+#enter-choice:checked ~ #chose-enter, 
+#sample-choice:checked ~ #chose-sample {
+    opacity: 1;
+    max-height: 100px;
+    overflow: visible;
 }
