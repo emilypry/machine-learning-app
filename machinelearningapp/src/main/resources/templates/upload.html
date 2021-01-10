@@ -28,6 +28,31 @@
                 of car', or 'age group'.
             </p>
         </div>
+
+        <div id="upload">
+            <form method="post" th:object="${data}">
+                <label for="xUpload">X: </label>
+                <input type="file" th:field="*{x}" id="xUpload"/>
+
+                <label for="yUpload">Y: </label>
+                <input type="file" th:field="*{y}" id="yUpload" />
+
+                <label for="name">Name of dataset: </label>
+                <input th:field="*{name}" id="name" />
+
+                <label for="xLabel">X label: </label>
+                <input th:field="*{xLabel}" id="xLabel" />
+
+                <label for="yLabel">y label: </label>
+                <input th:field="*{yLabel}" id="yLabel" />
+
+                <label for="item">Item label: </label>
+                <input th:field="*{itemLabel}" id="item" />
+
+                <input type="submit" value="Upload Dataset" />
+
+            </form>
+        </div>
         
 
 
