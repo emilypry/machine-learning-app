@@ -31,25 +31,38 @@
 
         <div id="upload">
             <form method="post" th:object="${data}">
-                <label for="xUpload">X: </label>
-                <input type="file" th:field="*{x}" id="xUpload"/>
+                <div>
+                    <label for="xUpload">X: </label>
+                    <input type="file" th:field="*{x}" id="xUpload"/>
+                </div>
 
-                <label for="yUpload">Y: </label>
-                <input type="file" th:field="*{y}" id="yUpload" />
+                <div>
+                    <label for="yUpload">Y: </label>
+                    <input type="file" th:field="*{y}" id="yUpload" />
+                </div>
+                <div>
+                    <label for="name">Name of dataset: </label>
+                    <input th:field="*{name}" id="name" />
+                </div>
 
-                <label for="name">Name of dataset: </label>
-                <input th:field="*{name}" id="name" />
+                <div>
+                    <label for="xLabel">X label: </label>
+                    <input th:field="*{xLabel}" id="xLabel" />
+                </div>
 
-                <label for="xLabel">X label: </label>
-                <input th:field="*{xLabel}" id="xLabel" />
+                <div>
+                    <label for="yLabel">Y label: </label>
+                    <input th:field="*{yLabel}" id="yLabel" />
+                </div>
 
-                <label for="yLabel">y label: </label>
-                <input th:field="*{yLabel}" id="yLabel" />
+                <div>
+                    <label for="item">Item label: </label>
+                    <input th:field="*{itemLabel}" id="item" />
+                </div>
 
-                <label for="item">Item label: </label>
-                <input th:field="*{itemLabel}" id="item" />
-
-                <input type="submit" value="Upload Dataset" />
+                <div>
+                    <input type="submit" value="Upload Dataset" />
+                </div>
 
             </form>
         </div>
