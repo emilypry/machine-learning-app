@@ -43,39 +43,43 @@
 
             <div id="chose-upload">
                 <form method="post" th:object="${data}">
-                    <div>
+                    <div class="errors">
+
+                    </div>
+                
+                    <div class="input-line">
                         <label for="xUpload">X: </label>
                         <input type="file" th:field="*{x}" id="xUpload"/>
                     </div>
 
-                    <div>
+                    <div class="input-line">
                         <label for="yUpload">Y: </label>
                         <input type="file" th:field="*{y}" id="yUpload" />
                     </div>
 
-                    <div>
+                    <div class="input-line">
                         <label for="name">Name of dataset: </label>
                         <input th:field="*{name}" id="name" />
                     </div>
 
-                    <div>
+                    <div class="input-line">
                         <label for="xLabel">X label: </label>
                         <input th:field="*{xLabel}" id="xLabel" />
                     </div>
 
-                    <div>
+                    <div class="input-line">
                         <label for="yLabel">Y label: </label>
                         <input th:field="*{yLabel}" id="yLabel" />
                     </div>
 
-                    <div>
+                    <div class="input-line">
                         <label for="item">Item label: </label>
                         <input th:field="*{itemLabel}" id="item" />
                     </div>
 
-                    <div>
+                    <!--<div class="input-line">
                         <input type="submit" value="Upload Dataset" />
-                    </div>
+                    </div>-->
 
                 </form>
             </div>
@@ -92,80 +96,12 @@
 
 
 
-
-
-
-
-            <div>
-                <input type="radio" name="dataChoice" id="uploadChoice" />
-                <label for="uploadChoice">Upload data</label>
-
-                <div class="hide-until-chosen">
-                    <div id="upload">
-                        <form method="post" th:object="${data}">
-                            <div>
-                                <label for="xUpload">X: </label>
-                                <input type="file" th:field="*{x}" id="xUpload"/>
-                            </div>
-        
-                            <div>
-                                <label for="yUpload">Y: </label>
-                                <input type="file" th:field="*{y}" id="yUpload" />
-                            </div>
-        
-                            <div>
-                                <label for="name">Name of dataset: </label>
-                                <input th:field="*{name}" id="name" />
-                            </div>
-        
-                            <div>
-                                <label for="xLabel">X label: </label>
-                                <input th:field="*{xLabel}" id="xLabel" />
-                            </div>
-        
-                            <div>
-                                <label for="yLabel">Y label: </label>
-                                <input th:field="*{yLabel}" id="yLabel" />
-                            </div>
-        
-                            <div>
-                                <label for="item">Item label: </label>
-                                <input th:field="*{itemLabel}" id="item" />
-                            </div>
-        
-                            <div>
-                                <input type="submit" value="Upload Dataset" />
-                            </div>
-        
-                        </form>
-                    </div>
-                </div>
-                
-            </div>
-
-            <div>
-                <input type="radio" name="dataChoice" id="enterChoice" />
-                <label for="enterChoice">Enter data</label>
-            </div>
-
-            <div>
-                <input type="radio" name="dataChoice" id="sampleChoice" />
-                <label for="sampleChoice">Use sample data</label>
-            </div>
-        </div>
-
-
-
-        
-
-
         <a class="next-page-button" th:href="@{/set-parameters}">Set Parameters</a>
+       
         
+
+
     </div>
-
-
     <div id="footer"></div>
-
-
 </body>
 </html>
