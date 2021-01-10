@@ -76,6 +76,12 @@ h1, h2, h3, h4 {
     color:rgb(32, 40, 73);
 }
 
+.explanation {
+    width: 70%;
+    margin: auto;
+    color:rgb(32, 40, 73);
+    text-align: justify;
+}
 .next-page-button {
     background-color: rgb(241, 107, 83);
     border: none;

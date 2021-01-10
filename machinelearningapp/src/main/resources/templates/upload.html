@@ -15,19 +15,28 @@
     </div>
 
     <div id="content">
-        <h3>Upload or enter your own dataset, or use a sample dataset.
-            Values must be separated by whitespace, not by comma. 
-        </h3>
+        <div class="explanation">
+            <h3>Upload or enter your own dataset, or use a sample dataset.
+                Values must be separated by whitespace, not by comma. 
+            </h3>
+            <p>
+                All values must be numerical, and the order of X values and Y values must
+                be the same; each consecutive pair of values will be treated as a single example. 
+                The X values should contain only one factor, e.g., 'house price' instead of
+                'house price and size'. The Y values should be continuous, e.g., 'temperature',
+                'price', or 'weight' instead of 'number of children', 'model of car', or
+                'age group'.
+            </p>
+        </div>
         
-
 
 
         <a class="next-page-button" th:href="@{/set-parameters}">Set Parameters</a>
         
     </div>
+
+
     <div id="footer"></div>
-
-
 
 
 </body>
