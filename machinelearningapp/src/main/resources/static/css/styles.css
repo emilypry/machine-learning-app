@@ -79,6 +79,7 @@ input {
 #home-list p {
     color:rgb(32, 40, 73);
 }
+
 .explanation {
     width: 70%;
     margin: auto;
@@ -102,6 +103,14 @@ input {
     margin-top: 5%;
     margin-bottom: 2%;
 }
+.errors {
+    width: 100%;
+    text-align: center;
+    color:rgb(165, 29, 20);
+    font-family:"Avenir";
+    font-weight: 500;
+}
+
 #data-choice {
     width: 100%;
     margin-top: 3%;
@@ -154,10 +163,4 @@ input {
     font-size: 14px;
     margin-left: 7%;
 }
-#chose-upload .errors {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    color:rgb(165, 29, 20);
-    font-family:"Avenir";
-}
+
