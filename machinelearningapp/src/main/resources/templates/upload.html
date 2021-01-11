@@ -16,14 +16,14 @@
 
     <div id="content">
         <div class="explanation">
-            <h3>Upload or enter your own dataset, or use a sample dataset.
-                Values must be separated by whitespace, not by comma. 
+            <h3>Upload or enter your own dataset or use a sample dataset.
             </h3>
             <p>
-                All values must be numerical, and the order of X values and Y values must
+                All values must be numerical and separated by whitespace, not by comma.
+                The order of X values and Y values must
                 be the same; each consecutive pair of values will be treated as a single example. 
                 The X values should contain only one factor, e.g., 'house price' instead of
-                'house price' and 'house size'. The Y values should be continuous, e.g., 
+                'house price and house size'. The Y values should be continuous, e.g., 
                 'temperature', 'price', or 'weight' instead of 'number of children', 'model 
                 of car', or 'age group'.
             </p>
@@ -39,7 +39,7 @@
             <label for="enter-choice" class="data-choice-label">Enter data</label>
 
             <input type="radio" name="data-choice" id="sample-choice" />
-            <label for="sample-choice" class="data-choice-label">Enter data</label>
+            <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
             <div id="chose-upload">
                 <form method="post" th:object="${data}" id="upload-form">
