@@ -1,5 +1,7 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
+import javax.validation.Valid;
+
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 
 import org.springframework.stereotype.Controller;
@@ -19,9 +21,17 @@ public class DataController {
         return "home";
     }
 
-    @GetMapping("upload-data")
-    public String showUpload(Model model){
+    @GetMapping("submit-data")
+    public String showSubmit(Model model){
         model.addAttribute("data", new Data());
-        return "upload";
+        return "submit";
+    }
+    @PostMapping("submit-data")
+    public String processSubmit(@ModelAttribute @Valid Data data, Errors errors, Model model){
+        if(errors.hasErrors()){
+            model.addAttribute("uploaded", true);
+            return "submit";
+        }
+        return "redirect:/set-parameters";
     }
 }
