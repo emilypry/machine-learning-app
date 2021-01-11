@@ -42,7 +42,7 @@
             <label for="sample-choice" class="data-choice-label">Enter data</label>
 
             <div id="chose-upload">
-                <form method="post" th:object="${data}">
+                <form method="post" th:object="${data}" id="upload-form">
                     <div class="errors">
 
                     </div>
@@ -77,9 +77,9 @@
                         <input th:field="*{itemLabel}" id="item" />
                     </div>
 
-                    <!--<div class="input-line">
-                        <input type="submit" value="Upload Dataset" />
-                    </div>-->
+                    <button class="next-page-button" form="upload-form" type="submit">
+                        Set Parameters
+                    </button>
 
                 </form>
             </div>
@@ -92,11 +92,12 @@
 
         
 
+        <!--<div id="upload-button">
+            <button class="next-page-button" form="upload-form" type="submit" id="show-upload-button">Set Parameters</button>
+        </div>
 
 
-
-
-        <a class="next-page-button" th:href="@{/set-parameters}">Set Parameters</a>
+        <a class="next-page-button" th:href="@{/set-parameters}">Set Parameters</a>-->
        
         
 
