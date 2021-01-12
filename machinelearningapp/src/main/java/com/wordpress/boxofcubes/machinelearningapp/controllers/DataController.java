@@ -24,15 +24,16 @@ public class DataController {
 
     @GetMapping("submit-data")
     public String showSubmit(Model model){
-        model.addAttribute("dataFormDto", new DataFormDTO());
+        model.addAttribute(new DataFormDTO());
         return "submit";
     }
-    @PostMapping("submit-data")
-    public String processSubmit(@ModelAttribute @Valid Data data, Errors errors, Model model){
+    @PostMapping("submit-data/upload")
+    public String processUploadData(@ModelAttribute @Valid DataFormDTO dataFormDTO, Errors errors, Model model){
         if(errors.hasErrors()){
             model.addAttribute("uploaded", true);
             return "submit";
         }
+        System.out.println(dataFormDTO.getName());
         return "redirect:/set-parameters";
     }
     /* Could have /submit form bind to a DataSubmission class, attributes multipart file x and y,

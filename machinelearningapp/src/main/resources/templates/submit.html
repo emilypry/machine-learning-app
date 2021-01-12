@@ -43,7 +43,7 @@
             <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
             <div id="chose-upload">
-                <form method="post" th:object="${dataFormDto}" id="upload-form">
+                <form method="post" th:object="${dataFormDTO}" th:action="@{/submit-data/upload}" id="upload-form">
                     <div class="errors">
                         <!--only getting errors for x and y!-->
                         <p th:errors="*{xFile}"></p>

@@ -5,20 +5,28 @@ import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 public class DataFormDTO{
-    @NotNull
+    @NotNull(message="X data file is missing")
     private MultipartFile xFile;
-    @NotNull
+    @NotNull(message="Y data file is missing")
     private MultipartFile yFile;
-    @NotNull
+    @NotNull(message="Name of dataset is missing")
     private String name;
-    @NotNull
+    @NotNull(message="Label for X data is missing")
     private String xLabel;
-    @NotNull
+    @NotNull(message="Label for Y data is missing")
     private String yLabel;
-    @NotNull
+    @NotNull(message="Label for item per example is missing")
     private String itemLabel;
 
     public DataFormDTO(){}
+    public DataFormDTO(MultipartFile xFile, MultipartFile yFile, String name, String xLabel, String yLabel, String itemLabel){
+        this.xFile = xFile;
+        this.yFile = yFile;
+        this.name = name;
+        this.xLabel = xLabel;
+        this.yLabel = yLabel;
+        this.itemLabel = itemLabel;
+    }
 
     public MultipartFile getXFile(){
         return xFile;
