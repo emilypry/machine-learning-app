@@ -2,13 +2,19 @@ package com.wordpress.boxofcubes.machinelearningapp.models;
 
 import javax.validation.constraints.NotNull;
 
+import com.wordpress.boxofcubes.machinelearningapp.validation.ListOfNumbers;
+
 public class Data {
     private int id;
 
-    @NotNull(message="X data is required")
+    //@NotNull(message="X data is required")
+    //@ListOfNumbers
     private double[] x;
-    @NotNull(message="Y data is required")
+
+    //@NotNull(message="Y data is required")
+    //@ListOfNumbers
     private double[] y;
+    
     private int numPoints;
     @NotNull(message="Name of dataset is required")
     private String name;

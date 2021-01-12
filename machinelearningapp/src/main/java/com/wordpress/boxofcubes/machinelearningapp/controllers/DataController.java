@@ -34,4 +34,12 @@ public class DataController {
         }
         return "redirect:/set-parameters";
     }
+    /* Could have /submit form bind to a DataSubmission class, attributes multipart file x and y,
+    String x and y, xl, yl, il. Then constructors that take either multipart files or Strings. 
+    Post handling for /submit is for valid DataSubmission object, so errors are for DataSubmission
+    object. Validator reads multipart file, or String, and returns whether all numbers. (Want to
+    be able to change message depending on what type of error.) If no errors, a method is called
+    to convert the file/string to a list of doubles. (Where is that method stored?)
+        Seems to duplicate efforts of reading through file/string. 
+    */
 }
