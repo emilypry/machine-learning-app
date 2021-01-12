@@ -3,6 +3,7 @@ package com.wordpress.boxofcubes.machinelearningapp.controllers;
 import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataFormDTO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class DataController {
 
     @GetMapping("submit-data")
     public String showSubmit(Model model){
-        model.addAttribute("data", new Data());
+        model.addAttribute("dataFormDto", new DataFormDTO());
         return "submit";
     }
     @PostMapping("submit-data")

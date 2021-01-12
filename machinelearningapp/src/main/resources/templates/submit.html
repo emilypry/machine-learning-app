@@ -43,11 +43,11 @@
             <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
             <div id="chose-upload">
-                <form method="post" th:object="${data}" id="upload-form">
+                <form method="post" th:object="${dataFormDto}" id="upload-form">
                     <div class="errors">
                         <!--only getting errors for x and y!-->
-                        <p th:errors="*{x}"></p>
-                        <p th:errors="*{y}"></p>
+                        <p th:errors="*{xFile}"></p>
+                        <p th:errors="*{yFile}"></p>
                         <p th:errors="*{name}"></p>
                         <p th:errors="*{xLabel}"></p>
                         <p th:errors="*{yLabel}"></p>
@@ -56,12 +56,12 @@
                 
                     <div class="input-line">
                         <label for="xUpload">X: </label>
-                        <input type="file" th:field="*{x}" id="xUpload"/>
+                        <input type="file" th:field="*{xFile}" id="xUpload"/>
                     </div>
 
                     <div class="input-line">
                         <label for="yUpload">Y: </label>
-                        <input type="file" th:field="*{y}" id="yUpload" />
+                        <input type="file" th:field="*{yFile}" id="yUpload" />
                     </div>
 
                     <div class="input-line">

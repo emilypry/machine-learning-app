@@ -10,6 +10,8 @@ public class DataFormDTO{
     @NotNull
     private MultipartFile yFile;
     @NotNull
+    private String name;
+    @NotNull
     private String xLabel;
     @NotNull
     private String yLabel;
@@ -29,6 +31,12 @@ public class DataFormDTO{
     }
     public void setYFile(MultipartFile yFile){
         this.yFile = yFile;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
     }
     public String getXLabel(){
         return xLabel;
