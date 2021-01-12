@@ -36,11 +36,11 @@
             <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
             <div id="chose-upload">
-                <form method="post" th:object="${dataUploadDTO}" th:action="@{/submit-data/upload}" enctype=”multipart/form-data” id="upload-form">
+                <form method="post" enctype="multipart/form-data" th:object="${dataUploadDTO}" id="upload-form" >
                     <div class="errors">
-                        <!--only getting errors for x and y!-->
                         <p th:errors="*{xFile}"></p>
                         <p th:errors="*{yFile}"></p>
+                        
                         <p th:errors="*{name}"></p>
                         <p th:errors="*{xLabel}"></p>
                         <p th:errors="*{yLabel}"></p>
@@ -60,6 +60,7 @@
                     <div class="input-line">
                         <label for="name">Name of dataset: </label>
                         <input th:field="*{name}" id="name" />
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error!!!!</p>
                     </div>
 
                     <div class="input-line">

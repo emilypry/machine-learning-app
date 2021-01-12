@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-@Configuration
+/*@Configuration
 public class AppConfiguration {
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver multipartResolver() {
@@ -12,4 +12,4 @@ public class AppConfiguration {
         multipartResolver.setMaxUploadSize(100000);
         return multipartResolver;
     }
-}
+}*/

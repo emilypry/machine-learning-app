@@ -7,20 +7,18 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class DataSubmitSharedDTO{
-
-    @NotNull(message="Name of dataset is missing")
+    @NotBlank(message="Name of dataset is missing")
     private String name;
-    @NotNull(message="Label for X data is missing")
+    @NotBlank(message="Label for X data is missing")
     private String xLabel;
-    @NotNull(message="Label for Y data is missing")
+    @NotBlank(message="Label for Y data is missing")
     private String yLabel;
-    @NotNull(message="Label for item per example is missing")
+    @NotBlank(message="Label for item per example is missing")
     private String itemLabel;
-
-    public DataSubmitSharedDTO(){}
 
     public String getName(){
         return name;
