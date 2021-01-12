@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class DataSubmitSharedDTO{
     @NotBlank(message="Name of dataset is missing")
+    @Max(value=100, message="Name of dataset must be fewer than 100 characters")
     private String name;
     @NotBlank(message="Label for X data is missing")
+    @Max(value=100, message="Label for X data must be fewer than 100 characters")
     private String xLabel;
     @NotBlank(message="Label for Y data is missing")
+    @Max(value=100, message="Label for Y must be fewer than 100 characters")
     private String yLabel;
     @NotBlank(message="Label for item per example is missing")
+    @Max(value=100, message="Label for item per example must be fewer than 100 characters")
     private String itemLabel;
 
     public String getName(){

@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class DataUploadDTO extends DataSubmitSharedDTO{
     @NotNull(message="X data file is missing")
-    @ListOfNumbers(message="X data file is not readable or contains non-numbers")
+    @ListOfNumbers
     private MultipartFile xFile;
     @NotNull(message="Y data file is missing")
     @ListOfNumbers(message="Y data file is not readable or contains non-numbers")

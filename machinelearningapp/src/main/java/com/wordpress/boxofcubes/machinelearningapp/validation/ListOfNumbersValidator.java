@@ -23,7 +23,7 @@ public class ListOfNumbersValidator implements ConstraintValidator<ListOfNumbers
 
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext cxt) {
-        if(file != null){
+        if(!file.isEmpty()){
             try{
                 File newFile = new File(file.getOriginalFilename());
                 file.transferTo(newFile);
