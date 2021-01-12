@@ -7,6 +7,17 @@
 </head>
 <body>
 
+    <div th:fragment="links-logged-out" id="navigation">
+        <a th:href="@{/home}" th:text="'Home'"></a>
+        <a th:href="@{/user/login}" th:text="'Log In'"></a>
+        <a th:href="@{/user/signup}" th:text="'Sign Up'"></a>
+    </div>
+    <div th:fragment="links-logged-in" id="navigation">
+        <a th:href="@{/home}" th:text="'Home'"></a>
+        <a th:href="@{/user/account}" th:text="'My Account'"></a>
+        <a th:href="@{/home}" th:text="'Log Out'"></a>
+    </div>
+
 
 </body>
 </html>

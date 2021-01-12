@@ -1,5 +1,12 @@
 package com.wordpress.boxofcubes.machinelearningapp.models.dto;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import javax.validation.constraints.NotNull;
 
 public class DataSubmitSharedDTO{
@@ -38,5 +45,21 @@ public class DataSubmitSharedDTO{
     }
     public void setItemLabel(String itemLabel){
         this.itemLabel = itemLabel;
+    }
+
+    /** Reads a file and returns the list of doubles in the file. */
+    public static double[] convertToNums(File file) throws FileNotFoundException, InputMismatchException, IOException{
+        ArrayList<Double> numbers = new ArrayList<>();
+        Scanner scan = new Scanner(file);
+        while(scan.hasNext()){
+            numbers.add(scan.nextDouble());
+        }
+        scan.close();
+      
+        double[] list = new double[numbers.size()];
+        for(int i=0; i<numbers.size(); i++){
+            list[i] = numbers.get(i);
+        }
+        return list;
     }
 }

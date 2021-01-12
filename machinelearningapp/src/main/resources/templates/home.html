@@ -4,11 +4,7 @@
 <body>
     <div id="header">Easy Machine Learning</div>
 
-    <div id="navigation">
-        <a th:href="@{/home}" th:text="'Home'"></a>
-        <a th:href="@{/user/login}" th:text="'Log In'"></a>
-        <a th:href="@{/user/signup}" th:text="'Sign Up'"></a>
-    </div>
+    <div th:replace="fragments :: links-logged-out"></div>
 
     <div id="content">
         <h3>Create a linear regression model of a dataset through machine learning.</h3>
