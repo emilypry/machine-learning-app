@@ -2,8 +2,6 @@ package com.wordpress.boxofcubes.machinelearningapp.models.dto;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class DataSubmitSharedDTO{
 
     @NotNull(message="Name of dataset is missing")
@@ -16,12 +14,6 @@ public class DataSubmitSharedDTO{
     private String itemLabel;
 
     public DataSubmitSharedDTO(){}
-    /*public DataSubmitSharedDTO(String name, String xLabel, String yLabel, String itemLabel){
-        this.name = name;
-        this.xLabel = xLabel;
-        this.yLabel = yLabel;
-        this.itemLabel = itemLabel;
-    }*/
 
     public String getName(){
         return name;
