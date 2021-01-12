@@ -136,7 +136,7 @@ input {
 #enter-choice:checked ~ #chose-enter, 
 #sample-choice:checked ~ #chose-sample {
     opacity: 1;
-    max-height: 600px;
+    max-height: 1000px;
     overflow: visible;
 }
 #chose-upload form {

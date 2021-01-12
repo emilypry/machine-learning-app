@@ -31,16 +31,12 @@ public class DataController {
         model.addAttribute("dataUploadDTO", new DataUploadDTO());
         return "submit";
     }
-    @PostMapping("submit-data")
+    @PostMapping("submit-data/upload")
     public String processUploadData(@Valid DataUploadDTO dataUploadDTO, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("uploaded", true);
             return "submit";
         }
-        System.out.println(dataUploadDTO.getXFile().getOriginalFilename());
-        System.out.println(dataUploadDTO.getYFile().getOriginalFilename());
-        System.out.println(dataUploadDTO.getName());
-        System.out.println(dataUploadDTO == null);
         return "redirect:/set-parameters";
     }
 
