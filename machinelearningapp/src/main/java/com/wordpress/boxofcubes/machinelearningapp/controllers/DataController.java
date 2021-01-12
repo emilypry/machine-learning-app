@@ -3,7 +3,9 @@ package com.wordpress.boxofcubes.machinelearningapp.controllers;
 import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
-import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataFormDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataEntryDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmitSharedDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataUploadDTO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,16 +26,16 @@ public class DataController {
 
     @GetMapping("submit-data")
     public String showSubmit(Model model){
-        model.addAttribute(new DataFormDTO());
+        model.addAttribute(new DataUploadDTO());
         return "submit";
     }
     @PostMapping("submit-data/upload")
-    public String processUploadData(@ModelAttribute @Valid DataFormDTO dataFormDTO, Errors errors, Model model){
+    public String processUploadData(@ModelAttribute @Valid DataUploadDTO dataUploadDTO, Errors errors, Model model){
         if(errors.hasErrors()){
             model.addAttribute("uploaded", true);
             return "submit";
         }
-        System.out.println(dataFormDTO.getName());
+        System.out.println(dataUploadDTO.getName());
         return "redirect:/set-parameters";
     }
     /* Could have /submit form bind to a DataSubmission class, attributes multipart file x and y,
