@@ -1,16 +1,20 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
-import javax.validation.Valid; 
+import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataEntryDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmitSharedDTO;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataUploadDTO;
+import com.wordpress.boxofcubes.machinelearningapp.validation.DataSubmissionDTOValidator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class DataController {
+
+    @Autowired
+    DataSubmissionDTOValidator submissionValidator;
+
     @GetMapping("home")
     public String showHome(){
         return "home";
@@ -28,12 +36,27 @@ public class DataController {
 
     @GetMapping("submit-data")
     public String showSubmit(Model model){
-        model.addAttribute("dataUploadDTO", new DataUploadDTO());
+        model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
         return "submit";
     }
     @PostMapping("submit-data/upload")
-    public String processUploadData(@Valid DataUploadDTO dataUploadDTO, BindingResult bindingResult, Model model){
+    public String processUploadData( DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
+
+        submissionValidator.validate(dataSubmissionDTO, bindingResult);
+
         if(bindingResult.hasErrors()){
+            if(dataSubmissionDTO.getX() != null){
+                System.out.println("X: ");
+                for(double d : dataSubmissionDTO.getX()){
+                    System.out.print(d + " ");
+                }
+            }
+            if(dataSubmissionDTO.getY() != null){
+                System.out.println("\nY: ");
+                for(double d : dataSubmissionDTO.getY()){
+                    System.out.print(d + " ");
+                }
+            }
             model.addAttribute("uploaded", true);
             return "submit";
         }
