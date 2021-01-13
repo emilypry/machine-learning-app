@@ -2,8 +2,16 @@ package com.wordpress.boxofcubes.machinelearningapp.models;
 
 import javax.validation.constraints.NotNull;
 
+import com.wordpress.boxofcubes.machinelearningapp.validation.DataLengthMatches;
 import com.wordpress.boxofcubes.machinelearningapp.validation.ListOfNumbers;
 
+@DataLengthMatches.List({ 
+    @DataLengthMatches(
+      field = "x.length", 
+      fieldMatch = "y.length", 
+      message = "Passwords do not match!"
+    )
+})
 public class Data {
     private int id;
 
