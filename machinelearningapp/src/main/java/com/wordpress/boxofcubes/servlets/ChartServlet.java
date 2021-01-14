@@ -1,6 +1,7 @@
 package com.wordpress.boxofcubes.servlets;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
@@ -21,12 +23,14 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class ChartServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<p>Testing servlet</p>");
-
         // request data object id
         // request model object id
+
+        response.setContentType("image/png");
+        OutputStream outputStream = response.getOutputStream();
+
+        JFreeChart chart = getChart(data);
+        ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400);
     }
 
     private JFreeChart getChart(Data data){
@@ -42,7 +46,7 @@ public class ChartServlet extends HttpServlet{
         // Make the chart
         JFreeChart chart = ChartFactory.createScatterPlot(data.getName(), data.getXLabel(),
         data.getYLabel(), (XYDataset)dataset);
-        
+
         return chart;   
     }
 }
