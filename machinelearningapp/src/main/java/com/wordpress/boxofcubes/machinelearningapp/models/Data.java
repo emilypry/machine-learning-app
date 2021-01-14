@@ -1,44 +1,21 @@
 package com.wordpress.boxofcubes.machinelearningapp.models;
 
-import javax.validation.constraints.NotNull;
-
-import com.wordpress.boxofcubes.machinelearningapp.validation.DataLengthMatches;
-import com.wordpress.boxofcubes.machinelearningapp.validation.ListOfNumbers;
-
-@DataLengthMatches.List({ 
-    @DataLengthMatches(
-      field = "x.length", 
-      fieldMatch = "y.length", 
-      message = "Passwords do not match!"
-    )
-})
 public class Data {
     private int id;
-
-    //@NotNull(message="X data is required")
-    //@ListOfNumbers
     private double[] x;
-
-    //@NotNull(message="Y data is required")
-    //@ListOfNumbers
-    private double[] y;
-    
+    private double[] y;   
     private int numPoints;
-    @NotNull(message="Name of dataset is required")
     private String name;
-    @NotNull(message="Label for X data is required")
     private String xLabel;
-    @NotNull(message="Label for Y data is required")
     private String yLabel;
-    @NotNull(message="Label for item per example is required")
     private String itemLabel;
 
     public Data(){}
-    public Data(String name, double[] x, double[] y, String xLabel, String yLabel, String itemLabel){
-        this.name = name;
+    public Data(double[] x, double[] y, String name, String xLabel, String yLabel, String itemLabel){
         this.x = x;
         this.y = y;
         this.numPoints = x.length;
+        this.name = name;
         this.xLabel = xLabel;
         this.yLabel = yLabel;
         this.itemLabel = itemLabel;

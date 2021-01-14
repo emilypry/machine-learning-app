@@ -50,6 +50,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 // Convert X file to File, scan, and get new length of d.x
                 try{
                     newX = new File(d.getXFile().getOriginalFilename());
+                    newX.deleteOnExit();
                     d.getXFile().transferTo(newX);
                     scanFile(newX, d, "X");
                     lengthX = d.getX().length;
@@ -64,6 +65,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 // Convert Y file to File, scan, and get new length of d.y
                 try{
                     newY = new File(d.getYFile().getOriginalFilename());
+                    newY.deleteOnExit();
                     d.getYFile().transferTo(newY);
                     scanFile(newY, d, "Y");
                     lengthY = d.getY().length;
@@ -92,6 +94,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 // Convert X entry to File, scan, and get new length of d.x
                 try{
                     newX = new File("file");
+                    newX.deleteOnExit();
                     FileUtils.writeStringToFile(newX, d.getXEntry());
                     scanFile(newX, d, "X");
                     lengthX = d.getX().length;
@@ -106,6 +109,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 // Convert Y entry to File, scan, and get new length of d.y
                 try{
                     newY = new File("file");
+                    newY.deleteOnExit();
                     FileUtils.writeStringToFile(newY, d.getYEntry());
                     scanFile(newY, d, "Y");
                     lengthY = d.getY().length;

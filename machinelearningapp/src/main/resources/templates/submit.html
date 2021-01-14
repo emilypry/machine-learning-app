@@ -35,8 +35,8 @@
             <input type="radio" name="data-choice" id="sample-choice" />
             <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
-            <div id="chose-upload">
-                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" th:action="@{/submit-data/upload}" id="upload-form" >
+            <div id="show-form">
+                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" id="upload-form" >
                     <div class="errors">
                         <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
                         <!--<p th:errors="*{xFile}"></p>
@@ -47,24 +47,37 @@
                         <p th:errors="*{itemLabel}"></p>-->
                     </div>
                 
-                    <div class="input-line">
-                        <label for="xUpload">X: </label>
-                        <input type="file" th:field="*{xFile}" id="xUpload" />
+                    <div id="chose-upload">
+                        <div class="input-line">
+                            <label for="xUpload">X: </label>
+                            <input type="file" th:field="*{xFile}" id="xUpload" />
+                        </div>
+
+                        <div class="input-line">
+                            <label for="yUpload">Y: </label>
+                            <input type="file" th:field="*{yFile}" id="yUpload" />
+                        </div>
                     </div>
 
-                    <div class="input-line">
-                        <label for="yUpload">Y: </label>
-                        <input type="file" th:field="*{yFile}" id="yUpload" />
+                    <div id="chose-enter">
+                        <div class="input-line">
+                            <label for="xEnter">X: </label>
+                            <textarea form="upload-form" th:field="*{xEntry}" id="xEnter"></textarea>
+                        </div>
+                        <div class="input-line">
+                            <label for="yEnter">Y: </label>
+                            <textarea form="upload-form" th:field="*{yEntry}" id="yEnter"></textarea>
+                        </div>
                     </div>
 
-                    <div class="input-line">
-                        <label for="xEnter">X: </label>
-                        <textarea form="upload-form" th:field="*{xEntry}" id="xEnter"></textarea>
-                    </div>
-
-                    <div class="input-line">
-                        <label for="yEnter">Y: </label>
-                        <textarea form="upload-form" th:field="*{yEntry}" id="yEnter"></textarea>
+                    <div id="chose-sample">
+                        <div class="input-line">
+                            <label for="sampleSets">Sample dataset: </label>
+                            <select id="sampleSets" name="sampleData">
+                                <option value="chocolates">Price and number of chocolates</option>
+                                <option value="life">Life expectancy and year</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="input-line">
@@ -95,8 +108,7 @@
             </div>
 
 
-            <div id="chose-enter">Chose enter</div>
-            <div id="chose-sample">Chose sample</div>
+
         </div>
         
 
