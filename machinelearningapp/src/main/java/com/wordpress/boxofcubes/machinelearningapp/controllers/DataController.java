@@ -1,5 +1,9 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
+import java.net.http.HttpRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
@@ -22,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class DataController {
+
+    private static final String dataSessionKey = "data";
 
     @Autowired
     DataSubmissionDTOValidator submissionValidator;
@@ -54,7 +60,7 @@ public class DataController {
         return "redirect:/view-data";
     }
     @PostMapping("submit-data/enter")
-    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
+    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
         if(bindingResult.hasErrors()){
@@ -67,6 +73,9 @@ public class DataController {
         dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(),
         dataSubmissionDTO.getItemLabel());
         System.out.println(data.getNumPoints()+" "+data.getName());
+
+
+        setDataInSession(request.getSession(), data);
 
         return "redirect:/view-data";
     }
@@ -88,5 +97,11 @@ public class DataController {
     @GetMapping("set-parameters")
     public String showParameters(){
         return "parameters";
+    }
+
+
+
+    private static void setDataInSession(HttpSession session, Data data){
+        session.setAttribute(dataSessionKey, data);
     }
 }
