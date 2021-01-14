@@ -31,7 +31,11 @@
             </ol>
         </div>
 
-        <a class="next-page-button" th:href="@{/submit-data}">Begin</a>
+        <div class="one-button-container">
+            <button type="submit" th:onclick="location.href='/submit-data'">
+                Begin
+            </button>
+        </div>
         
     </div>
     <div id="footer"></div>

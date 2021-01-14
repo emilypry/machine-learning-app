@@ -10,8 +10,7 @@
 
     <div id="content">
         <div class="explanation">
-            <h3>Upload or enter your own dataset or use a sample dataset.
-            </h3>
+            <h3>Upload or enter your own dataset or use a sample dataset.</h3>
             <p>
                 All values must be numerical and separated by whitespace, not by comma.
                 The order of X values and Y values must
@@ -73,9 +72,11 @@
                         <input th:field="*{itemLabel}" id="item" th:value="*{itemLabel}"/>
                     </div>
 
-                    <button class="next-page-button" form="upload-form" type="submit">
-                        Set Parameters
-                    </button>
+                    <div class="one-button-container">
+                        <button form="upload-form" type="submit">
+                            Set Parameters
+                        </button>
+                    </div>
 
                 </form>
             </div>
@@ -118,9 +119,11 @@
                         <input th:field="*{itemLabel}" id="item" th:value="*{itemLabel}"/>
                     </div>
 
-                    <button class="next-page-button" form="enter-form" type="submit">
-                        Set Parameters
-                    </button>
+                    <div class="one-button-container">
+                        <button form="enter-form" type="submit">
+                            Set Parameters
+                        </button>
+                    </div>
 
                 </form>
             </div>
@@ -135,9 +138,11 @@
                         </select>
                     </div>
 
-                    <button class="next-page-button" form="sample-form" type="submit">
-                        Set Parameters
-                    </button>
+                    <div class="one-button-container">
+                        <button form="sample-form" type="submit">
+                            Set Parameters
+                        </button>
+                    </div>
 
                 </form>
             </div>

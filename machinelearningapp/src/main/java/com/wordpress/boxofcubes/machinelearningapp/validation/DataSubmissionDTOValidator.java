@@ -77,7 +77,7 @@ public class DataSubmissionDTOValidator implements Validator{
         else if(d.getXEntry() != null || d.getYEntry() != null){
             // Both entries are empty
             if(d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
-                errors.reject("error.missingBothEntries", "X and Y entires are missing");
+                errors.reject("error.missingBothEntries", "X and Y entries are missing");
             }
             // Y entry is missing
             else if(!d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){

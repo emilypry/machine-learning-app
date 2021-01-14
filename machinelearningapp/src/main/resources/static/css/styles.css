@@ -86,23 +86,35 @@ input {
     color:rgb(32, 40, 73);
     text-align: justify;
 }
-.next-page-button {
+.one-button-container, .two-button-container {
+    width: 95%;
+    height: 60px;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content:flex-end;
+}
+.one-button-container {
+    justify-content: flex-end;
+}
+.two-button-container {
+    justify-content: space-between;
+}
+.one-button-container button, .two-button-container button{
     background-color: rgb(241, 107, 83);
     border: none;
     border-radius: 4px;
+    cursor: pointer;
     padding: 12px 25px;
-    text-decoration: none;
+    width: 150px;
+    height: 60px;
     color:rgb(232, 234, 235);
     font-size: 16px;
-    cursor: pointer;
-    text-align: justify;
-    font-weight: 400;
-    display: inline-block;
-    margin-right: 15%;
-    margin-left: 85%;
-    margin-top: 5%;
-    margin-bottom: 2%;
+    text-align: center;
 }
+
 .errors {
     width: 100%;
     text-align: center;

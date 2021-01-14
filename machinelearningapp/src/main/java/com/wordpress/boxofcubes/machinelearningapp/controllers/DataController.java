@@ -79,4 +79,9 @@ public class DataController {
 
         return "redirect:/set-parameters";
     }
+
+    @GetMapping("set-parameters")
+    public String showParameters(){
+        return "parameters";
+    }
 }
