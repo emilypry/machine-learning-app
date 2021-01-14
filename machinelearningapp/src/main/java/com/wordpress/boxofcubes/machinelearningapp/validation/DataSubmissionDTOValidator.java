@@ -2,6 +2,7 @@ package com.wordpress.boxofcubes.machinelearningapp.validation;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -25,10 +26,17 @@ public class DataSubmissionDTOValidator implements Validator{
         DataSubmissionDTO d = (DataSubmissionDTO)object;
         File newX; 
         File newY;
+        Integer lengthX = null;
+        Integer lengthY = null;
+
+        // Both files are missing
+        if(d.getXFile().isEmpty() && d.getYFile().isEmpty()
+        && d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
+            errors.reject("error.missingBoth", "X and Y data are missing");
+        }
 
         // Working with file uploads
         if(!d.getXFile().isEmpty() || !d.getYFile().isEmpty()){
-            errors.reject("error.missingBoth", "AT LEAST ONE UPLOAD");
             // Y file is missing
             if(!d.getXFile().isEmpty() && d.getYFile().isEmpty()){
                 errors.reject("error.missingYFile", "Y data file is missing");
@@ -39,11 +47,12 @@ public class DataSubmissionDTOValidator implements Validator{
             }
             // Both files are present
             else{
-            // Convert X file to File and scan
+                // Convert X file to File, scan, and get new length of d.x
                 try{
                     newX = new File(d.getXFile().getOriginalFilename());
                     d.getXFile().transferTo(newX);
                     scanFile(newX, d, "X");
+                    lengthX = d.getX().length;
                 }catch(FileNotFoundException e){
                     errors.reject("error.xFileNotFound", "X data file can't be found");
                 }catch(InputMismatchException e){
@@ -52,16 +61,70 @@ public class DataSubmissionDTOValidator implements Validator{
                     errors.reject("error.xFileFailed", "Error uploading X data file");
                 }
 
-            // Convert Y file to File
+                // Convert Y file to File, scan, and get new length of d.y
                 try{
                     newY = new File(d.getYFile().getOriginalFilename());
                     d.getYFile().transferTo(newY);
                     scanFile(newY, d, "Y");
+                    lengthY = d.getY().length;
                 }catch(FileNotFoundException e){
                     errors.reject("error.yFileNotFound", "Y data file can't be found");
+                }catch(InputMismatchException e){
+                    errors.reject("error.yFileHasNonNumber", "Y data file contains non-numbers");
                 }catch(IOException e){
                     errors.reject("error.yFileFailed", "Error uploading Y data file");
                 }
+            }
+        }
+        // Working with data entries
+        else if(!d.getXEntry().isEmpty() || !d.getYEntry().isEmpty()){
+            // Y entry is missing
+            if(!d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
+                errors.reject("error.missingYEntry", "Y data entry is missing");
+            }
+            // X entry is missing
+            else if(d.getXEntry().isEmpty() && !d.getYEntry().isEmpty()){
+                errors.reject("error.missingXEntry", "X data entry is missing");
+            }
+            // Both entries are present
+            else{
+                // Convert X entry to File, scan, and get new length of d.x
+                try{
+                    newX = new File("file");
+                    FileUtils.writeStringToFile(newX, d.getXEntry());
+                    scanFile(newX, d, "X");
+                    lengthX = d.getX().length;
+                }catch(FileNotFoundException e){
+                    errors.reject("error.xEntryNotFound", "X entry can't be found");
+                }catch(InputMismatchException e){
+                    errors.reject("error.xEntryHasNonNumber", "X entry contains non-numbers");
+                }catch(IOException e){
+                    errors.reject("error.xEntryFailed", "Error processing X entry");
+                }
+
+                // Convert Y entry to File, scan, and get new length of d.y
+                try{
+                    newY = new File("file");
+                    FileUtils.writeStringToFile(newY, d.getYEntry());
+                    scanFile(newY, d, "Y");
+                    lengthY = d.getY().length;
+                }catch(FileNotFoundException e){
+                    errors.reject("error.yEntryNotFound", "Y entry can't be found");
+                }catch(InputMismatchException e){
+                    errors.reject("error.yEntryHasNonNumber", "Y entry contains non-numbers");
+                }catch(IOException e){
+                    errors.reject("error.yEntryFailed", "Error processing Y entry");
+                }
+            }
+        }
+
+        // If the x and y parameters of d have been set due to successful
+        // scanning, make sure they're the same length
+        if(lengthX != null && lengthY != null){
+            if(lengthX > lengthY){
+                errors.reject("error.tooFewY", "There are more X than Y values");
+            }else if(lengthY > lengthX){
+                errors.reject("error.tooFewX", "There are more Y than X values");
             }
         }
 
