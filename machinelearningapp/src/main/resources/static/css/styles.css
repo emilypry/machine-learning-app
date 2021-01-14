@@ -133,7 +133,8 @@ input {
     max-height: 0;
     overflow: hidden;   
 }
-#upload-choice:checked ~ #chose-upload
+#upload-choice:checked ~ #chose-upload,
+#enter-choice:checked ~ #chose-enter
 /*#upload-choice:checked ~ #show-form #chose-upload,
 #upload-choice:checked ~ #show-form, 
 #enter-choice:checked ~ #show-form #chose-enter,
@@ -144,11 +145,13 @@ input {
     max-height: 1000px;
     overflow: visible;
 }
-#chose-upload form {
+#chose-upload form,
+#chose-enter form {
     width: 100%;
     margin-top: 3%;
 }
-#chose-upload .input-line {
+#chose-upload .input-line,
+#chose-enter .input-line {
     display: block;
     width: 35%;
     margin-left: auto;
@@ -160,10 +163,12 @@ input {
     color: rgb(61, 60, 60);
     font-weight: 500;
 }
-#chose-upload .input-line label {
+#chose-upload .input-line label,
+#chose-enter .input-line label {
     width: 40%;
 }
-#chose-upload .input-line input{
+#chose-upload .input-line input,
+#chose-enter .input-line input {
     width: 60%;
     font-size: 14px;
     margin-left: 7%;

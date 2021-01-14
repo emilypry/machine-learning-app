@@ -53,5 +53,21 @@ public class DataController {
 
         return "redirect:/set-parameters";
     }
+    @PostMapping("submit-data/enter")
+    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
+        submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
+        if(bindingResult.hasErrors()){
+            model.addAttribute("entered", true);
+            System.out.println("Entry error!");
+            return "submit";
+        }
+
+        Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
+        dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(),
+        dataSubmissionDTO.getItemLabel());
+        System.out.println(data.getNumPoints()+" "+data.getName());
+
+        return "redirect:/set-parameters";
+    }
 }
