@@ -114,7 +114,6 @@ input {
     font-size: 16px;
     text-align: center;
 }
-
 .errors {
     width: 100%;
     text-align: center;
@@ -139,7 +138,6 @@ input {
     font-family:"Avenir";
     color:rgb(165, 29, 20);
 }
-
 #chose-upload, #chose-enter, #chose-sample {
     opacity: 0;
     max-height: 0;
@@ -192,5 +190,23 @@ input {
 }
 #chose-sample select {
     margin-left: 5%;
+}
+
+#parameters-container {
+    background: rgb(61, 60, 60);
+    width: 80%;
+    margin-top: 3%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.parameter-row {
+    width: 100%;
+    background:rgb(253, 204, 40);
+    display: flex;
+    justify-content: space-evenly;
+}
+.parameter {
+    background:rgb(241, 107, 83);
+    width: 48%;
 }
 

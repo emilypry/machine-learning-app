@@ -12,13 +12,42 @@
         <div class="explanation">
             <h3>Set the parameters for the machine learning algorithm. </h3>
             <p>
-                Your dataset will be parsed randomly into three subsets: 60% of the data will 
-                constitute the training set, 20% will constitute the cross-validation set,
-                and 20% will constitute the testing set. A model will be trained on the 
+                The dataset will be parsed randomly into three subsets: a training set, a 
+                cross-validation set, and a testing set. A model will be trained on the 
                 training set using a gradient descent algorithm. Select the parameters for 
                 the algorithm or use the default parameters. 
             </p>
         </div>
+
+        <!--
+            Proportion of data in training set: .1 - .9 [list]
+            Initial theta0: any int
+            Initial theta1: any int
+
+            Alpha: 0-1 [list?]
+            Lambda: 0+
+
+            Max iterations: 10 - 2500
+            Convergence level: .0000001 - 1 [list]
+        -->
+        <form method="post">
+            <div id="parameters-container">
+                <div class="parameter-row">
+                    <div class="parameter">
+                        <label for="proportion">Proportion of dataset in training set: </label>
+                        <input type="text" id="proportion">
+                        <p></p>
+
+                    </div>
+
+                    <div class="parameter">
+                        lambda
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
 
 
 
