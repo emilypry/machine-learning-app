@@ -12,9 +12,13 @@ public class User {
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User(){}
-    public User(String username, String passwordHash){
+    public User(String username, String password){
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.passwordHash = encoder.encode(password);
+    }
+
+    public boolean correctPassword(String password){
+        return encoder.matches(password, passwordHash);
     }
 
     public int getId(){
