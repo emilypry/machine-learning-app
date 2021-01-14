@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class DataController {
 
-    private static final String dataSessionKey = "data";
+    //private static final String dataSessionKey = "data";
 
     @Autowired
     DataSubmissionDTOValidator submissionValidator;
@@ -60,7 +60,7 @@ public class DataController {
         return "redirect:/view-data";
     }
     @PostMapping("submit-data/enter")
-    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
+    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, /*HttpServletRequest request*/){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
         if(bindingResult.hasErrors()){
@@ -75,7 +75,7 @@ public class DataController {
         System.out.println(data.getNumPoints()+" "+data.getName());
 
 
-        setDataInSession(request.getSession(), data);
+        //setDataInSession(request.getSession(), data);)
 
         return "redirect:/view-data";
     }
@@ -101,7 +101,7 @@ public class DataController {
 
 
 
-    private static void setDataInSession(HttpSession session, Data data){
+    /*private static void setDataInSession(HttpSession session, Data data){
         session.setAttribute(dataSessionKey, data);
-    }
+    }*/
 }
