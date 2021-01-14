@@ -36,12 +36,13 @@ public class DataController {
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
         return "submit";
     }
-    @PostMapping("submit-data")
+    @PostMapping("submit-data/upload")
     public String processUploadData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
         if(bindingResult.hasErrors()){
             model.addAttribute("uploaded", true);
+            System.out.println("Upload error!");
             return "submit";
         }
 

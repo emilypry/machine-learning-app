@@ -27,24 +27,64 @@
         <div id="data-choice">
             <input th:if="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" checked="checked"/>
             <input th:unless="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" />
+            <!--<input type="radio" name="data-choice" id="upload-choice" />-->
             <label for="upload-choice" class="data-choice-label">Upload data</label>
 
-            <input type="radio" name="data-choice" id="enter-choice" />
+            <input th:if="${entered == true}" type="radio" name="data-choice" id="enter-choice" checked="checked"/>
+            <input th:unless="${entered == true}" type="radio" name="data-choice" id="enter-choice"/>
+            <!--<input type="radio" name="data-choice" id="enter-choice"/>-->
             <label for="enter-choice" class="data-choice-label">Enter data</label>
 
             <input type="radio" name="data-choice" id="sample-choice" />
             <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
-            <div id="show-form">
+            <div id="chose-upload">
+                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" th:action="@{/submit-data/upload}" id="upload-form" >
+                    <div class="errors">
+                        <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
+                    </div>
+                
+                    <div class="input-line">
+                        <label for="xUpload">X: </label>
+                        <input type="file" th:field="*{xFile}" id="xUpload" />
+                    </div>
+
+                    <div class="input-line">
+                        <label for="yUpload">Y: </label>
+                        <input type="file" th:field="*{yFile}" id="yUpload" />
+                    </div>
+
+                    <div class="input-line">
+                        <label for="name">Name of dataset: </label>
+                        <input th:field="*{name}" id="name" th:value="*{name}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="xLabel">X label: </label>
+                        <input th:field="*{xLabel}" id="xLabel" th:value="*{xLabel}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="yLabel">Y label: </label>
+                        <input th:field="*{yLabel}" id="yLabel" th:value="*{yLabel}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="item">Item label: </label>
+                        <input th:field="*{itemLabel}" id="item" th:value="*{itemLabel}"/>
+                    </div>
+
+                    <button class="next-page-button" form="upload-form" type="submit">
+                        Set Parameters
+                    </button>
+
+                </form>
+            </div>
+
+            <!--<div id="show-form">
                 <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" id="upload-form" >
                     <div class="errors">
                         <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
-                        <!--<p th:errors="*{xFile}"></p>
-                        <p th:errors="*{yFile}"></p>
-                        <p th:errors="*{name}"></p>
-                        <p th:errors="*{xLabel}"></p>
-                        <p th:errors="*{yLabel}"></p>
-                        <p th:errors="*{itemLabel}"></p>-->
                     </div>
                 
                     <div id="chose-upload">
@@ -105,7 +145,7 @@
                     </button>
 
                 </form>
-            </div>
+            </div>-->
 
 
 

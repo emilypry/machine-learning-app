@@ -30,15 +30,28 @@ public class DataSubmissionDTOValidator implements Validator{
         Integer lengthY = null;
 
         // Both files are missing
-        if(d.getXFile().isEmpty() && d.getYFile().isEmpty()
-        && d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
+        /*if((d.getXFile().isEmpty() && d.getYFile().isEmpty())
+        || (d.getXEntry().isEmpty() && d.getYEntry().isEmpty())){
             errors.reject("error.missingBoth", "X and Y data are missing");
-        }
+        }*/
 
-        // Working with file uploads
-        if(!d.getXFile().isEmpty() || !d.getYFile().isEmpty()){
+        System.out.println("X file NULL? "+(d.getXFile() == null));
+        System.out.println("Y file NULL? "+(d.getYFile() == null));
+        System.out.println("X file empty? "+d.getXFile().isEmpty());
+        System.out.println("Y file empty? "+d.getYFile().isEmpty());
+        /*System.out.println("X entry NULL? "+(d.getXEntry() == null));
+        System.out.println("Y entry NULL? "+(d.getYEntry() == null));
+        System.out.println("X entry empty? "+d.getXEntry().isEmpty());
+        System.out.println("Y entry empty? "+d.getYEntry().isEmpty());*/
+
+        // Working with file uploads (not null because appear in form)
+        if(d.getXFile() != null || d.getYFile() != null){
+            // Both entries are empty
+            if(d.getXFile().isEmpty() && d.getYFile().isEmpty()){
+                errors.reject("error.missingBothFiles", "X and Y files are missing");
+            }
             // Y file is missing
-            if(!d.getXFile().isEmpty() && d.getYFile().isEmpty()){
+            else if(!d.getXFile().isEmpty() && d.getYFile().isEmpty()){
                 errors.reject("error.missingYFile", "Y data file is missing");
             }
             // X file is missing
@@ -79,10 +92,14 @@ public class DataSubmissionDTOValidator implements Validator{
             }
         }
 
-        // Working with data entries
-        else if(!d.getXEntry().isEmpty() || !d.getYEntry().isEmpty()){
+        // Working with data entries (not null because appear in form)
+        else if(d.getXEntry() != null || d.getYEntry() != null){
+            // Both entries are empty
+            if(d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
+                errors.reject("error.missingBothEntries", "X and Y entires are missing");
+            }
             // Y entry is missing
-            if(!d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
+            else if(!d.getXEntry().isEmpty() && d.getYEntry().isEmpty()){
                 errors.reject("error.missingYEntry", "Y data entry is missing");
             }
             // X entry is missing
@@ -124,8 +141,14 @@ public class DataSubmissionDTOValidator implements Validator{
         }
 
         // If the x and y parameters of d have been set due to successful
-        // scanning, make sure they're the same length
+        // scanning, make sure there is at least one value in each and they are the same length
         if(lengthX != null && lengthY != null){
+            if(lengthX == 0){
+                errors.reject("error.noX", "There are no X values in the submission");
+            }
+            if(lengthY == 0){
+                errors.reject("error.noY", "There are no Y values in th submission");
+            }
             if(lengthX > lengthY){
                 errors.reject("error.tooFewY", "There are more X than Y values");
             }else if(lengthY > lengthX){
