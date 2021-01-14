@@ -51,7 +51,7 @@ public class DataController {
         dataSubmissionDTO.getItemLabel());
         System.out.println(data.getNumPoints()+" "+data.getName());
 
-        return "redirect:/set-parameters";
+        return "redirect:/view-data";
     }
     @PostMapping("submit-data/enter")
     public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
@@ -68,7 +68,7 @@ public class DataController {
         dataSubmissionDTO.getItemLabel());
         System.out.println(data.getNumPoints()+" "+data.getName());
 
-        return "redirect:/set-parameters";
+        return "redirect:/view-data";
     }
     @PostMapping("submit-data/sample")
     public String processSampleData(@RequestParam String sampleData, Model model){
@@ -77,7 +77,12 @@ public class DataController {
         // Need to get sample Data object from repository for use; or, could
         // just construct them here...
 
-        return "redirect:/set-parameters";
+        return "redirect:/view-data";
+    }
+
+    @GetMapping("view-data")
+    public String showChart(){
+        return "chart";
     }
 
     @GetMapping("set-parameters")

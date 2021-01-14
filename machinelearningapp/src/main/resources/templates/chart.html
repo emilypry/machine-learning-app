@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">View Data</div>
+
+    <!--if no user-->
+    <div th:replace="fragments :: links-logged-out"></div>
+    <!--but, if user, .....-->
+
+    <div id="content">
+        <div class="explanation">
+            <h3>View a graph of your dataset.</h3>
+            <p>
+                This is what your dataset looks like. If the points lie roughly along a 
+                straight line, the machine learning algorithm should be able to create
+                a model that represents your dataset well.
+            </p>
+        </div>
+
+        
+
+
+        <div class="two-button-container">
+            <button type="submit" th:onclick="location.href='/submit-data'">
+                Revise Data
+            </button>
+
+            <button type="submit" th:onclick="location.href='/set-parameters'">
+                Set Parameters
+            </button>
+        </div>
+
+
+    </div>
+
+    <div id="footer"></div>
+</body>
+</html>
