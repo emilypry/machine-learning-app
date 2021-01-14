@@ -27,12 +27,10 @@
         <div id="data-choice">
             <input th:if="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" checked="checked"/>
             <input th:unless="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" />
-            <!--<input type="radio" name="data-choice" id="upload-choice" />-->
             <label for="upload-choice" class="data-choice-label">Upload data</label>
 
             <input th:if="${entered == true}" type="radio" name="data-choice" id="enter-choice" checked="checked"/>
             <input th:unless="${entered == true}" type="radio" name="data-choice" id="enter-choice"/>
-            <!--<input type="radio" name="data-choice" id="enter-choice"/>-->
             <label for="enter-choice" class="data-choice-label">Enter data</label>
 
             <input type="radio" name="data-choice" id="sample-choice" />
@@ -118,6 +116,24 @@
                     </div>
 
                     <button class="next-page-button" form="enter-form" type="submit">
+                        Set Parameters
+                    </button>
+
+                </form>
+            </div>
+
+            <div id="chose-sample">
+                <form method="post" th:action="@{/submit-data/sample}" id="sample-form" >
+                
+                    <div class="input-line">
+                        <label for="sampleSets">Sample dataset: </label>
+                        <select id="sampleSets" name="sampleData">
+                            <option value="chocolates">Price and number of chocolates</option>
+                            <option value="life">Life expectancy and year</option>
+                        </select>
+                    </div>
+
+                    <button class="next-page-button" form="sample-form" type="submit">
                         Set Parameters
                     </button>
 

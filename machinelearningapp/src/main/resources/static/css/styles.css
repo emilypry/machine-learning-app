@@ -134,7 +134,8 @@ input {
     overflow: hidden;   
 }
 #upload-choice:checked ~ #chose-upload,
-#enter-choice:checked ~ #chose-enter
+#enter-choice:checked ~ #chose-enter,
+#sample-choice:checked ~ #chose-sample
 /*#upload-choice:checked ~ #show-form #chose-upload,
 #upload-choice:checked ~ #show-form, 
 #enter-choice:checked ~ #show-form #chose-enter,
@@ -146,12 +147,14 @@ input {
     overflow: visible;
 }
 #chose-upload form,
-#chose-enter form {
+#chose-enter form,
+#chose-sample form {
     width: 100%;
     margin-top: 3%;
 }
 #chose-upload .input-line,
-#chose-enter .input-line {
+#chose-enter .input-line,
+#chose-sample .input-line {
     display: block;
     width: 35%;
     margin-left: auto;

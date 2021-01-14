@@ -70,4 +70,13 @@ public class DataController {
 
         return "redirect:/set-parameters";
     }
+    @PostMapping("submit-data/sample")
+    public String processSampleData(@RequestParam String sampleData, Model model){
+        System.out.println(sampleData);
+
+        // Need to get sample Data object from repository for use; or, could
+        // just construct them here...
+
+        return "redirect:/set-parameters";
+    }
 }
