@@ -6,6 +6,7 @@
 
     <!--if no user-->
     <div th:replace="fragments :: links-logged-out"></div>
+    <!--but, if user, .....-->
 
     <div id="content">
         <div class="explanation">
@@ -86,13 +87,15 @@
                     </div>
                 
                     <div class="input-line">
-                        <label for="xEnter">X: </label>
-                        <textarea form="enter-form" th:field="*{xEntry}" id="xEnter"></textarea>
+                        <label for="xEnter" class="enter-label">X: </label>
+                        <textarea form="enter-form" th:field="*{xEntry}" id="xEnter"
+                        rows=20 cols=50 ></textarea>
                     </div>
 
                     <div class="input-line">
-                        <label for="yEnter">Y: </label>
-                        <textarea form="enter-form" th:field="*{yEntry}" id="yEnter"></textarea>
+                        <label for="yEnter" class="enter-label">Y: </label>
+                        <textarea form="enter-form" th:field="*{yEntry}" id="yEnter" 
+                        rows=20 cols=50></textarea>
                     </div>
 
                     <div class="input-line">
@@ -124,7 +127,6 @@
 
             <div id="chose-sample">
                 <form method="post" th:action="@{/submit-data/sample}" id="sample-form" >
-                
                     <div class="input-line">
                         <label for="sampleSets">Sample dataset: </label>
                         <select id="sampleSets" name="sampleData">
@@ -140,87 +142,8 @@
                 </form>
             </div>
 
-            <!--<div id="show-form">
-                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" id="upload-form" >
-                    <div class="errors">
-                        <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
-                    </div>
-                
-                    <div id="chose-upload">
-                        <div class="input-line">
-                            <label for="xUpload">X: </label>
-                            <input type="file" th:field="*{xFile}" id="xUpload" />
-                        </div>
-
-                        <div class="input-line">
-                            <label for="yUpload">Y: </label>
-                            <input type="file" th:field="*{yFile}" id="yUpload" />
-                        </div>
-                    </div>
-
-                    <div id="chose-enter">
-                        <div class="input-line">
-                            <label for="xEnter">X: </label>
-                            <textarea form="upload-form" th:field="*{xEntry}" id="xEnter"></textarea>
-                        </div>
-                        <div class="input-line">
-                            <label for="yEnter">Y: </label>
-                            <textarea form="upload-form" th:field="*{yEntry}" id="yEnter"></textarea>
-                        </div>
-                    </div>
-
-                    <div id="chose-sample">
-                        <div class="input-line">
-                            <label for="sampleSets">Sample dataset: </label>
-                            <select id="sampleSets" name="sampleData">
-                                <option value="chocolates">Price and number of chocolates</option>
-                                <option value="life">Life expectancy and year</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-line">
-                        <label for="name">Name of dataset: </label>
-                        <input th:field="*{name}" id="name" th:value="*{name}"/>
-                    </div>
-
-                    <div class="input-line">
-                        <label for="xLabel">X label: </label>
-                        <input th:field="*{xLabel}" id="xLabel" th:value="*{xLabel}"/>
-                    </div>
-
-                    <div class="input-line">
-                        <label for="yLabel">Y label: </label>
-                        <input th:field="*{yLabel}" id="yLabel" th:value="*{yLabel}"/>
-                    </div>
-
-                    <div class="input-line">
-                        <label for="item">Item label: </label>
-                        <input th:field="*{itemLabel}" id="item" th:value="*{itemLabel}"/>
-                    </div>
-
-                    <button class="next-page-button" form="upload-form" type="submit">
-                        Set Parameters
-                    </button>
-
-                </form>
-            </div>-->
-
-
 
         </div>
-        
-
-        
-
-        <!--<div id="upload-button">
-            <button class="next-page-button" form="upload-form" type="submit" id="show-upload-button">Set Parameters</button>
-        </div>
-
-
-        <a class="next-page-button" th:href="@{/set-parameters}">Set Parameters</a>-->
-       
-        
 
 
     </div>

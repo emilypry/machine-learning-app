@@ -29,21 +29,6 @@ public class DataSubmissionDTOValidator implements Validator{
         Integer lengthX = null;
         Integer lengthY = null;
 
-        // Both files are missing
-        /*if((d.getXFile().isEmpty() && d.getYFile().isEmpty())
-        || (d.getXEntry().isEmpty() && d.getYEntry().isEmpty())){
-            errors.reject("error.missingBoth", "X and Y data are missing");
-        }*/
-
-        /*System.out.println("X file NULL? "+(d.getXFile() == null));
-        System.out.println("Y file NULL? "+(d.getYFile() == null));
-        System.out.println("X file empty? "+d.getXFile().isEmpty());
-        System.out.println("Y file empty? "+d.getYFile().isEmpty());*/
-        System.out.println("X entry NULL? "+(d.getXEntry() == null));
-        System.out.println("Y entry NULL? "+(d.getYEntry() == null));
-        System.out.println("X entry empty? "+d.getXEntry().isEmpty());
-        System.out.println("Y entry empty? "+d.getYEntry().isEmpty());
-
         // Working with file uploads (not null because appear in form)
         if(d.getXFile() != null || d.getYFile() != null){
             // Both entries are empty
@@ -62,8 +47,6 @@ public class DataSubmissionDTOValidator implements Validator{
             else{
                 // Convert X file to File, scan, and get new length of d.x
                 try{
-                    //newX = new File(d.getXFile().getOriginalFilename());
-                    //newX.deleteOnExit();
                     d.getXFile().transferTo(newX);
                     scanFile(newX, d, "X");
                     lengthX = d.getX().length;
@@ -77,8 +60,6 @@ public class DataSubmissionDTOValidator implements Validator{
 
                 // Convert Y file to File, scan, and get new length of d.y
                 try{
-                    //newY = new File(d.getYFile().getOriginalFilename());
-                    //newY.deleteOnExit();
                     d.getYFile().transferTo(newY);
                     scanFile(newY, d, "Y");
                     lengthY = d.getY().length;
@@ -110,8 +91,6 @@ public class DataSubmissionDTOValidator implements Validator{
             else{
                 // Convert X entry to File, scan, and get new length of d.x
                 try{
-                    //newX = new File("file");
-                    //newX.deleteOnExit();
                     FileUtils.writeStringToFile(newX, d.getXEntry());
                     scanFile(newX, d, "X");
                     lengthX = d.getX().length;
@@ -125,8 +104,6 @@ public class DataSubmissionDTOValidator implements Validator{
 
                 // Convert Y entry to File, scan, and get new length of d.y
                 try{
-                    //newY = new File("file");
-                    //newY.deleteOnExit();
                     FileUtils.writeStringToFile(newY, d.getYEntry());
                     scanFile(newY, d, "Y");
                     lengthY = d.getY().length;

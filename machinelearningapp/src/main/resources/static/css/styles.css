@@ -117,7 +117,7 @@ input {
 }
 #data-choice input{
     width: 2%;
-    margin-left: 45%;
+    margin-left: 44%;
     margin-top: 1%;
 }
 #data-choice .data-choice-label{
@@ -128,22 +128,16 @@ input {
     color:rgb(165, 29, 20);
 }
 
-#show-form, #chose-upload, #chose-enter, #chose-sample {
+#chose-upload, #chose-enter, #chose-sample {
     opacity: 0;
     max-height: 0;
     overflow: hidden;   
 }
 #upload-choice:checked ~ #chose-upload,
 #enter-choice:checked ~ #chose-enter,
-#sample-choice:checked ~ #chose-sample
-/*#upload-choice:checked ~ #show-form #chose-upload,
-#upload-choice:checked ~ #show-form, 
-#enter-choice:checked ~ #show-form #chose-enter,
-#enter-choice:checked ~ #show-form, 
-#sample-choice:checked ~ #show-form #chose-sample,
-#sample-choice:checked ~ #show-form*/ {
+#sample-choice:checked ~ #chose-sample {
     opacity: 1;
-    max-height: 1000px;
+    max-height: 1500px;
     overflow: visible;
 }
 #chose-upload form,
@@ -175,5 +169,16 @@ input {
     width: 60%;
     font-size: 14px;
     margin-left: 7%;
+}
+#chose-enter textarea {
+    border: 1px solid rgb(253, 204, 40);
+    resize: none;
+    margin-left: 5%;
+}
+.enter-label {
+    display: inline-block;
+}
+#chose-sample select {
+    margin-left: 5%;
 }
 
