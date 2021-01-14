@@ -76,6 +76,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 }
             }
         }
+
         // Working with data entries
         else if(!d.getXEntry().isEmpty() || !d.getYEntry().isEmpty()){
             // Y entry is missing
@@ -128,62 +129,11 @@ public class DataSubmissionDTOValidator implements Validator{
             }
         }
 
-        // and then for entries
-
-        // Check if the file contains only doubles
-        /*ArrayList<Double> xVals = new ArrayList<>();
-        ArrayList<Double> yVals = new ArrayList<>();
-        Scanner scan = null;
-        try{
-            scan = new Scanner(newX);
-            while(scan.hasNext()){
-                xVals.add(scan.nextDouble());
-            }
-        }catch(FileNotFoundException e){
-            errors.reject("error.xFileNotFoundWhileScanning", "X data file can't be found to read");
-        }catch(InputMismatchException e){
-            errors.reject("error.xFileHasNonnumbers", "X data file contains non-numbers");
-        }*/
-
-
-
-
-
-            
-        /*if((d.getXFile().isEmpty() && d.getYFile().isEmpty()) || 
-        (d.getXEntry().isEmpty() && d.getYEntry().isEmpty())){
-            errors.reject("error.missingBoth", "X and Y data are missing");
-        }
-        // Y missing
-        else if((!d.getXFile().isEmpty() && d.getYFile().isEmpty()) || 
-        (!d.getXEntry().isEmpty() && d.getYEntry().isEmpty())){
-            errors.reject("error.missingY", "Y data is missing");
-        }
-        // X missing
-        else if((d.getXFile().isEmpty() && !d.getYFile().isEmpty()) || 
-        (d.getXEntry().isEmpty() && !d.getYEntry().isEmpty())){
-            errors.reject("error.missingX", "X data is missing");
-        }*/
-
         // Name, xLabel, yLabel, itemLabel missing
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name", "Name of dataset is missing");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "xLabel", "error.xLabel", "Label for X data is missing");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "yLabel", "error.yLabel", "Label for Y data is missing");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "itemLabel", "error.itemLabel", "Label for item per example is missing");
-
-        /*File newX;
-        File newY;
-        if(!d.getXFile().isEmpty() && !d.getYFile().isEmpty()){
-            try{
-                newX = new File(d.getXFile().getOriginalFilename());
-                d.getXFile().transferTo(newX);
-            }catch(FileNotFoundException e){
-                errors.reject("error.xFileNotFound", "X data file can't be found");
-            }catch(IOException e){
-                errors.reject("error.xFileFailed", "Error uploading X data file");
-            }
-        }*/
-
 
     }
 
@@ -202,12 +152,9 @@ public class DataSubmissionDTOValidator implements Validator{
 
         if(xOrY.equals("X")){
             submission.setX(theVals);
-            System.out.println("NEW X FOR OBJECT: "+submission.getX());
         }else if(xOrY.equals("Y")){
             submission.setY(theVals);
-            System.out.println("NEW Y FOR OBJECT: "+submission.getY());
         }
     }
-
 
 }
