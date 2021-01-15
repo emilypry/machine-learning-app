@@ -2,6 +2,7 @@ package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -57,23 +58,20 @@ public class UserController{
     }
     @PostMapping("signup")
     public String processSignup(UserSignupDTO userSignupDTO, BindingResult bindingResult,
-    Model model){
+    Model model, HttpServletRequest request){
+        // Validate user signup
         signupValidator.validate(userSignupDTO, bindingResult);
-
-        // Make sure username meets constraints
-
-        // Make sure no user with that username in database
-
-        // Make sure password meets constraints 
-
         if(bindingResult.hasErrors()){
             return "user/signup";
         }
 
-        userRepository.save(new User(userSignupDTO.getUsername(), userSignupDTO.getPassword()));
+        // Create new user
+        User user = new User(userSignupDTO.getUsername(), userSignupDTO.getPassword());
+        // Add to database
+        userRepository.save(user);
+        // Start new session
+        setUserInSession(request.getSession(), user);
         
-        // START SESSION!!
-
         return "redirect:/home";
     }
 
