@@ -118,13 +118,16 @@ public class DataSubmissionDTOValidator implements Validator{
         }
 
         // If the x and y parameters of d have been set due to successful
-        // scanning, make sure there is at least one value in each and they are the same length
+        // scanning, check number of x and y values
         if(lengthX != null && lengthY != null){
             if(lengthX == 0){
                 errors.reject("error.noX", "There are no X values in the submission");
             }
             if(lengthY == 0){
                 errors.reject("error.noY", "There are no Y values in th submission");
+            }
+            if(lengthX > 2000 || lengthY > 2000){
+                errors.reject("error.tooManyValues", "Data must have fewer than 2000 examples");
             }
             if(lengthX > lengthY){
                 errors.reject("error.tooFewY", "There are more X than Y values");

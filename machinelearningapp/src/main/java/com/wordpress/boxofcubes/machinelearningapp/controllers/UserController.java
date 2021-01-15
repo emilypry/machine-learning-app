@@ -97,6 +97,12 @@ public class UserController{
         return user.get();
     }
 
+    // MUST TEST!!!!!!!!!!
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "redirect:/home";
+    }
 
 
 }
