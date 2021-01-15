@@ -9,35 +9,19 @@
     <div id="content">
         <h3>Log in to an existing account.</h3>
         
-        <div id="home-list">
-            <ol>
-                <li>Enter your own dataset (or use a sample dataset)</li>
-                <p>Because a linear model will be trained, Y data should be continuous,
-                    rather than discrete. Our site supports only univariate linear 
-                    regression, so X data should be single-factor.
-                </p>
-                <li>View a graph of the dataset</li>
-                <p>This will give you a sense of the shape of your data.</p>
-                <li>Set the parameters for machine learning</li>
-                <p>Or use the default parameters for the gradient descent algorithm.</p>
-                <li>Receive a trained model</li>
-                <p>You will see its metrics and a graph of its predictions.</p>
-                <li>Repeat steps 3 and 4 as desired</li>
-                <p>Play with the parameters until you've trained a good model.</p>
-                <li>Test your model</li>
-                <p>See how your model performs on the testing set.</p>
-                <li>Download your model</li>
-                <p>Use your model to make predictions about incoming data.</p>
-            </ol>
+        <div id="user-container">
+            <form method="post" th:object="${userLoginDTO}" id="login-form">
+                <p class="errors" th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
+
+                <input type="text" th:field="*{username}" placeholder="Username"/>
+                <input type="password" th:field="*{password}" placeholder="Password"/>
+                <button form="login-form" type="submit">
+                    Log In
+                </button>
+            </form>
         </div>
 
 
-        
-        <div class="one-button-container">
-            <button type="submit" th:onclick="location.href='/submit-data'">
-                Begin
-            </button>
-        </div>
         
     </div>
     <div id="footer"></div>

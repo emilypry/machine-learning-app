@@ -34,13 +34,13 @@ public class DataController {
 
     @GetMapping("home")
     public String showHome(){
-        return "home";
+        return "data/home";
     }
 
     @GetMapping("submit-data")
     public String showSubmit(Model model){
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
-        return "submit";
+        return "data/submit";
     }
     @PostMapping("submit-data/upload")
     public String processUploadData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
@@ -49,7 +49,7 @@ public class DataController {
         if(bindingResult.hasErrors()){
             model.addAttribute("uploaded", true);
             System.out.println("Upload error!");
-            return "submit";
+            return "data/submit";
         }
 
         Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
@@ -60,13 +60,13 @@ public class DataController {
         return "redirect:/view-data";
     }
     @PostMapping("submit-data/enter")
-    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, /*HttpServletRequest request*/){
+    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
         if(bindingResult.hasErrors()){
             model.addAttribute("entered", true);
             System.out.println("Entry error!");
-            return "submit";
+            return "data/submit";
         }
 
         Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
@@ -91,12 +91,12 @@ public class DataController {
 
     @GetMapping("view-data")
     public String showChart(){
-        return "chart";
+        return "data/chart";
     }
 
     @GetMapping("set-parameters")
     public String showParameters(){
-        return "parameters";
+        return "data/parameters";
     }
 
 
