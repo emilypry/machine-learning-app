@@ -1,4 +1,4 @@
-package com.wordpress.boxofcubes.machinelearningapp.models;
+package com.wordpress.boxofcubes.machinelearningapp.validation;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

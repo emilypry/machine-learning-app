@@ -217,6 +217,7 @@ input {
     padding: 10px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 5%;
 }
 #user-container input{
     width: 70%;
