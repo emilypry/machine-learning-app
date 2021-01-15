@@ -64,19 +64,11 @@ public class UserSignupDTOValidator implements Validator{
                 errors.reject("error.passwordTooLong", "Password must be fewer than 35 characters");
             }
 
-            // Pattern - MUST COMPLETE!!
-            /*
-            if(!password.matches(".*\\d+")){
-                errors.reject("error.passwordHasSpace", "Password cannot have any spaces");
-            }*/
-
             // Verify
             if(!verify.isEmpty() && !password.equals(verify)){
                 errors.reject("error.passwordNotVerified", "Verified password must be the same as password");
             }
-        }
-
-        
+        } 
     
     }  
 }

@@ -1,5 +1,7 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -37,9 +39,6 @@ public class UserController{
     @PostMapping("login")
     public String processLogin(UserLoginDTO userLoginDTO, BindingResult bindingResult){
         loginValidator.validate(userLoginDTO, bindingResult);
-        // Check if the username is in repository
-
-        // Check if the password is correct
 
         if(bindingResult.hasErrors()){
             return "user/login";
@@ -78,6 +77,22 @@ public class UserController{
         return "redirect:/home";
     }
 
+
+    public static void setUserInSession(HttpSession session, User user){
+        session.setAttribute("userId", user.getId());
+    }
+
+    public User getUserFromSession(HttpSession session){
+        Integer userId = (Integer)session.getAttribute("userId");
+        if(userId == null){
+            return null;
+        }
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isEmpty()){
+            return null;
+        }
+        return user.get();
+    }
 
 
 
