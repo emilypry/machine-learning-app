@@ -15,7 +15,7 @@ public class User {
     private int id;
     private String username;
     private String passwordHash;
-    private List<Data> data;
+    //private List<Data> data;
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User(){}
@@ -43,10 +43,10 @@ public class User {
     public void setPasswordHash(String passwordHash){
         this.passwordHash = passwordHash;
     }
-    public List<Data> getData(){
+    /*public List<Data> getData(){
         return data;
     }
     public void setData(List<Data> data){
         this.data = data;
-    }
+    }*/
 }
