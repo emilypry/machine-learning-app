@@ -2,9 +2,16 @@ package com.wordpress.boxofcubes.machinelearningapp.models;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
     private int id;
     private String username;
     private String passwordHash;
