@@ -38,17 +38,22 @@ public class UserController{
         return "user/login";
     }
     @PostMapping("login")
-    public String processLogin(UserLoginDTO userLoginDTO, BindingResult bindingResult){
+    public String processLogin(UserLoginDTO userLoginDTO, BindingResult bindingResult, 
+    HttpServletRequest request){
+        // Validate user login
         loginValidator.validate(userLoginDTO, bindingResult);
-
         if(bindingResult.hasErrors()){
             return "user/login";
         }
 
-        // START SESSION!!
-
+        // Get user from database
+        Optional<User> user = userRepository.findByUsername(userLoginDTO.getUsername());
+        if(user.isEmpty()){
+            return "user/login";
+        }
+        // Start session
+        setUserInSession(request.getSession(), user.get());
         return "redirect:/home";
-
     }
 
     @GetMapping("signup")
