@@ -13,6 +13,7 @@ import com.wordpress.boxofcubes.machinelearningapp.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 public class AuthenticationFilter implements HandlerInterceptor {
     @Autowired
@@ -22,8 +23,9 @@ public class AuthenticationFilter implements HandlerInterceptor {
 
     // User need not be logged in to see these pages
     // ADD HERE AS I CREATE MORE PAGES!!!!!!
-    private static final List<String> whitelist = Arrays.asList("/home", "/submit-data",
-                        "/view-data", "/set-parameters");
+    // OR, JUST GET RID OF ALL THIS. NOT NECESSARY, SINCE NON-USERS CAN DO EVERYTHING.
+    private static final List<String> whitelist = Arrays.asList("/home", "/user/login", "/user/signup",
+    "/submit-data", "/view-data", "/set-parameters");
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
@@ -46,7 +48,14 @@ public class AuthenticationFilter implements HandlerInterceptor {
         return false;
     }
 
-
+    @Override
+    public void postHandle(
+       HttpServletRequest request, HttpServletResponse response, Object handler, 
+       ModelAndView modelAndView) throws Exception {}
+    
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, 
+       Object handler, Exception exception) throws Exception {}
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {

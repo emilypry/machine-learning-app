@@ -1,6 +1,7 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
 import java.net.http.HttpRequest;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -101,7 +102,14 @@ public class DataController {
 
 
 
-    /*private static void setDataInSession(HttpSession session, Data data){
-        session.setAttribute(dataSessionKey, data);
-    }*/
+    public static void setDataInSession(HttpSession session, Data data){
+        session.setAttribute("data", data);
+    }
+    public Data getDataFromSession(HttpSession session){
+        Data data = (Data)session.getAttribute("data");
+        if(data == null){
+            return null;
+        }
+        return data;
+    }
 }

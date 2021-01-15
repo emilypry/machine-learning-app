@@ -9,9 +9,9 @@ import javax.validation.Valid;
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
-import com.wordpress.boxofcubes.machinelearningapp.validation.UserLoginDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.UserLoginDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserLoginDTOValidator;
-import com.wordpress.boxofcubes.machinelearningapp.validation.UserSignupDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.UserSignupDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserSignupDTOValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller()
+@Controller
 @RequestMapping("user")
 public class UserController{
     @Autowired

@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.UserSignupDTO;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
