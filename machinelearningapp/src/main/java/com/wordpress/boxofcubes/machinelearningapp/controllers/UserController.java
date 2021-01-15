@@ -7,6 +7,7 @@ import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserLoginDTO;
+import com.wordpress.boxofcubes.machinelearningapp.validation.UserLoginDTOValidator;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserSignupDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserSignupDTOValidator;
 
@@ -25,6 +26,8 @@ public class UserController{
     UserRepository userRepository;
     @Autowired
     UserSignupDTOValidator signupValidator;
+    @Autowired
+    UserLoginDTOValidator loginValidator;
 
     @GetMapping("login")
     public String showLogin(Model model){
@@ -32,7 +35,8 @@ public class UserController{
         return "user/login";
     }
     @PostMapping("login")
-    public String processLogin(@Valid UserLoginDTO userloginDTO, BindingResult bindingResult){
+    public String processLogin(UserLoginDTO userLoginDTO, BindingResult bindingResult){
+        loginValidator.validate(userLoginDTO, bindingResult);
         // Check if the username is in repository
 
         // Check if the password is correct

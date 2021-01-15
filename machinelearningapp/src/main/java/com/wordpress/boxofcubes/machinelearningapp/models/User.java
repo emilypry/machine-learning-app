@@ -24,7 +24,7 @@ public class User {
         this.passwordHash = encoder.encode(password);
     }
 
-    public boolean correctPassword(String password){
+    public boolean checkPassword(String password){
         return encoder.matches(password, passwordHash);
     }
 
