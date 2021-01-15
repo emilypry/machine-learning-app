@@ -15,6 +15,9 @@ public class UserSignupDTOValidator implements Validator{
     @Override
     public void validate(Object object, Errors errors){  
         UserSignupDTO u = (UserSignupDTO)object;
+        String username = u.getUsername();
+        String password = u.getPassword();
+        String verify = u.getVerifyPassword();
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", 
         "error.username", "Please enter a username");
@@ -22,5 +25,41 @@ public class UserSignupDTOValidator implements Validator{
         "error.password", "Please enter a password");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "verifyPassword", 
         "error.verifyPassword", "Please verify password");
+
+        // Username errors
+        if(!username.isEmpty()){
+            // Whitespace
+            if(username.contains(" ")){
+                errors.reject("error.usernameHasSpace", "Username cannot have any spaces");
+            }
+            // Size
+            if(username.length() < 6 || username.length() > 20){
+                errors.reject("error.usernameSize", "Username must be between 6 and 20 characters");
+            }
+        }
+
+        // Password errors
+        if(!password.isEmpty()){
+            // Size
+            if(password.length() < 8){
+                errors.reject("error.passwordTooShort", "Password must be at least 8 characters");
+            }else if(password.length() > 35){
+                errors.reject("error.passwordTooLong", "Password must be fewer than 35 characters");
+            }
+
+            // Pattern
+            /*
+            if(!password.matches(".*\\d+")){
+                errors.reject("error.passwordHasSpace", "Password cannot have any spaces");
+            }*/
+
+            // Verify
+            if(!verify.isEmpty() && !password.equals(verify)){
+                errors.reject("error.passwordNotVerified", "Verified password must be the same as password");
+            }
+        }
+
+        
+    
     }  
 }
