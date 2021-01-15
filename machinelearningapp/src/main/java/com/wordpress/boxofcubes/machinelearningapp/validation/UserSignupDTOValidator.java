@@ -1,5 +1,11 @@
 package com.wordpress.boxofcubes.machinelearningapp.validation;
 
+import java.util.Optional;
+
+import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
+import com.wordpress.boxofcubes.machinelearningapp.models.User;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -7,6 +13,9 @@ import org.springframework.validation.Validator;
 
 @Component
 public class UserSignupDTOValidator implements Validator{
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public boolean supports(Class clazz){
         return UserSignupDTO.class.equals(clazz);
@@ -36,6 +45,14 @@ public class UserSignupDTOValidator implements Validator{
             if(username.length() < 6 || username.length() > 20){
                 errors.reject("error.usernameSize", "Username must be between 6 and 20 characters");
             }
+
+            // User with that username already in database
+            // MUST TEST!!!
+            Optional<User> anotherUser = userRepository.findByUsername(username);
+            if(anotherUser.isPresent()){
+                errors.reject("error.usernameSize", "Username is taken");
+            }
+
         }
 
         // Password errors
@@ -47,7 +64,7 @@ public class UserSignupDTOValidator implements Validator{
                 errors.reject("error.passwordTooLong", "Password must be fewer than 35 characters");
             }
 
-            // Pattern
+            // Pattern - MUST COMPLETE!!
             /*
             if(!password.matches(".*\\d+")){
                 errors.reject("error.passwordHasSpace", "Password cannot have any spaces");

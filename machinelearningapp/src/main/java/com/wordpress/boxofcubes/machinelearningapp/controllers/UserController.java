@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
+import com.wordpress.boxofcubes.machinelearningapp.models.User;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserLoginDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserSignupDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserSignupDTOValidator;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("user")
 public class UserController{
     @Autowired
-    UserRepository UserRepository;
+    UserRepository userRepository;
     @Autowired
     UserSignupDTOValidator signupValidator;
 
@@ -66,6 +67,8 @@ public class UserController{
             return "user/signup";
         }
 
+        userRepository.save(new User(userSignupDTO.getUsername(), userSignupDTO.getPassword()));
+        
         // START SESSION!!
 
         return "redirect:/home";
