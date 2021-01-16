@@ -1,18 +1,27 @@
 package com.wordpress.boxofcubes.machinelearningapp.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Data {
     @Id
     @GeneratedValue
     private int id;
-    @Lob
-    private double[] x; // change to list 
-    private double[] y;   
+    
+    /*private double[] x; // change to list 
+    private double[] y;   */
+
+    @OneToMany(mappedBy = "dataset")
+    private List<DataValue> x;
+    @OneToMany(mappedBy = "dataset")
+    private List<DataValue> y;
+
     private int numPoints;
     private String name;
     private String xLabel;
@@ -20,10 +29,10 @@ public class Data {
     private String itemLabel;
 
     public Data(){}
-    public Data(double[] x, double[] y, String name, String xLabel, String yLabel, String itemLabel){
+    public Data(List<DataValue> x, List<DataValue>  y, String name, String xLabel, String yLabel, String itemLabel){
         this.x = x;
         this.y = y;
-        this.numPoints = x.length;
+        this.numPoints = x.size();
         this.name = name;
         this.xLabel = xLabel;
         this.yLabel = yLabel;
@@ -42,16 +51,16 @@ public class Data {
     public void setName(String name){
         this.name = name;
     }
-    public double[] getX(){
+    public List<DataValue> getX(){
         return x;
     }
-    public void setX(double[] x){
+    public void setX(List<DataValue>  x){
         this.x = x;
     }
-    public double[] getY(){
+    public List<DataValue>  getY(){
         return y;
     }
-    public void setY(double[] y){
+    public void setY(List<DataValue>  y){
         this.y = y;
     }
     public int getNumPoints(){

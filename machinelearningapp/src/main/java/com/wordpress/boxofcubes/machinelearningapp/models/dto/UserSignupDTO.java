@@ -1,4 +1,4 @@
-package com.wordpress.boxofcubes.machinelearningapp.validation;
+package com.wordpress.boxofcubes.machinelearningapp.models.dto;
 
 public class UserSignupDTO extends UserLoginDTO{
     private String verifyPassword;

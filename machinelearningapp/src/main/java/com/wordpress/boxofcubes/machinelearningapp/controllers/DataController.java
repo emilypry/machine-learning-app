@@ -1,13 +1,18 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
 import java.net.http.HttpRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
+import com.wordpress.boxofcubes.machinelearningapp.data.DataValueRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
+import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.DataSubmissionDTOValidator;
 
@@ -27,9 +32,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class DataController {
-
-    //private static final String dataSessionKey = "data";
-
+    @Autowired
+    DataValueRepository dataValueRepository;
+    @Autowired
+    DataRepository dataRepository;
     @Autowired
     DataSubmissionDTOValidator submissionValidator;
 
@@ -53,10 +59,10 @@ public class DataController {
             return "data/submit";
         }
 
-        Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
+        /*Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
         dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(),
         dataSubmissionDTO.getItemLabel());
-        System.out.println(data.getNumPoints()+" "+data.getName());
+        System.out.println(data.getNumPoints()+" "+data.getName());*/
 
         return "redirect:/view-data";
     }
@@ -70,11 +76,27 @@ public class DataController {
             return "data/submit";
         }
 
-        Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
+        // The rawX and rawY attributes of dataSubmissionDTO are double[]s; 
+        // need to convert the values to DataValues and set X and Y
+        List<DataValue> xVals = new ArrayList<>();
+        for(double xVal : dataSubmissionDTO.getRawX()){
+            xVals.add(new DataValue(xVal, dataSubmissionDTO));
+        }
+        List<DataValue> yVals = new ArrayList<>();
+        for(double yVal : dataSubmissionDTO.getRawY()){
+            yVals.add(new DataValue(yVal, dataSubmissionDTO));
+        }
+
+        // Make new Data object
+        Data data = new Data(xVals, yVals, dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(), dataSubmissionDTO.getItemLabel());
+
+
+        /*Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
         dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(),
-        dataSubmissionDTO.getItemLabel());
+        dataSubmissionDTO.getItemLabel());*/
         System.out.println(data.getNumPoints()+" "+data.getName());
 
+        dataRepository.save(data);
 
         //setDataInSession(request.getSession(), data);)
 

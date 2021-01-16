@@ -9,6 +9,8 @@ public class DataSubmissionDTO extends Data{
     private MultipartFile yFile;
     private String xEntry;
     private String yEntry;
+    private double[] rawX;
+    private double[] rawY;
 
     public MultipartFile getXFile(){
         return xFile;
@@ -34,4 +36,16 @@ public class DataSubmissionDTO extends Data{
     public void setYEntry(String yEntry){
         this.yEntry = yEntry;
     }  
+    public double[] getRawX(){
+        return rawX;
+    }
+    public void setRawX(double[] rawX){
+        this.rawX = rawX;
+    }
+    public double[] getRawY(){
+        return rawY;
+    }
+    public void setRawY(double[] rawY){
+        this.rawY = rawY;
+    }
 }

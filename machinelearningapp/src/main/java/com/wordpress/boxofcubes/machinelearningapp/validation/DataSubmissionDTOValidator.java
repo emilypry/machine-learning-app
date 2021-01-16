@@ -1,6 +1,7 @@
 package com.wordpress.boxofcubes.machinelearningapp.validation;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -49,7 +51,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 try{
                     d.getXFile().transferTo(newX);
                     scanFile(newX, d, "X");
-                    lengthX = d.getX().length;
+                    lengthX = d.getRawX().length;
                 }catch(FileNotFoundException e){
                     errors.reject("error.xFileNotFound", "X data file can't be found");
                 }catch(InputMismatchException e){
@@ -62,7 +64,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 try{
                     d.getYFile().transferTo(newY);
                     scanFile(newY, d, "Y");
-                    lengthY = d.getY().length;
+                    lengthY = d.getRawY().length;
                 }catch(FileNotFoundException e){
                     errors.reject("error.yFileNotFound", "Y data file can't be found");
                 }catch(InputMismatchException e){
@@ -93,7 +95,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 try{
                     FileUtils.writeStringToFile(newX, d.getXEntry());
                     scanFile(newX, d, "X");
-                    lengthX = d.getX().length;
+                    lengthX = d.getRawX().length;
                 }catch(FileNotFoundException e){
                     errors.reject("error.xEntryNotFound", "X entry can't be found");
                 }catch(InputMismatchException e){
@@ -106,7 +108,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 try{
                     FileUtils.writeStringToFile(newY, d.getYEntry());
                     scanFile(newY, d, "Y");
-                    lengthY = d.getY().length;
+                    lengthY = d.getRawY().length;
                 }catch(FileNotFoundException e){
                     errors.reject("error.yEntryNotFound", "Y entry can't be found");
                 }catch(InputMismatchException e){
@@ -126,13 +128,16 @@ public class DataSubmissionDTOValidator implements Validator{
             if(lengthY == 0){
                 errors.reject("error.noY", "There are no Y values in th submission");
             }
-            if(lengthX > 2000 || lengthY > 2000){
-                errors.reject("error.tooManyValues", "Data must have fewer than 2000 examples");
+            if(lengthX > 1000 || lengthY > 1000){
+                errors.reject("error.tooManyValues", "Data must have fewer than 1000 examples");
             }
             if(lengthX > lengthY){
                 errors.reject("error.tooFewY", "There are more X than Y values");
             }else if(lengthY > lengthX){
                 errors.reject("error.tooFewX", "There are more Y than X values");
+            }else if(lengthX == lengthY){
+                // Set the numPoints of the DataSubmissionDTO
+                d.setNumPoints(lengthX);
             }
         }
 
@@ -148,6 +153,21 @@ public class DataSubmissionDTOValidator implements Validator{
     }
 
     private void scanFile(File file, DataSubmissionDTO submission, String xOrY) throws FileNotFoundException, InputMismatchException{
+       /* List<DataValue> vals = new ArrayList<>();
+        Scanner scan = new Scanner(file);
+        while(scan.hasNext()){
+            vals.add(new DataValue(scan.nextDouble(), submission));
+        }
+        scan.close();
+
+        // Set the X or Y DataValues for the submission object
+        if(xOrY.equals("X")){
+            submission.setX(vals);
+        }else if(xOrY.equals("Y")){
+            submission.setY(vals);
+        }*/
+
+        
         ArrayList<Double> vals = new ArrayList<>();
         Scanner scan = new Scanner(file);
         while(scan.hasNext()){
@@ -161,9 +181,9 @@ public class DataSubmissionDTOValidator implements Validator{
         }
 
         if(xOrY.equals("X")){
-            submission.setX(theVals);
+            submission.setRawX(theVals);
         }else if(xOrY.equals("Y")){
-            submission.setY(theVals);
+            submission.setRawY(theVals);
         }
     }
 
