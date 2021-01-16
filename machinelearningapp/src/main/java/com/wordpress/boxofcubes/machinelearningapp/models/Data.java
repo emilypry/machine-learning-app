@@ -1,8 +1,17 @@
 package com.wordpress.boxofcubes.machinelearningapp.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+
+@Entity
 public class Data {
+    @Id
+    @GeneratedValue
     private int id;
-    private double[] x;
+    @Lob
+    private double[] x; // change to list 
     private double[] y;   
     private int numPoints;
     private String name;
