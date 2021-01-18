@@ -266,4 +266,79 @@ public class Data {
         return data;
     }
 
+    /** Makes the Weight and Price of Chocolate Boxes sample dataset */
+    public static Data makeChocolateDataset(){
+        Data data = new Data();
+        List<DataValue> dataValues = new ArrayList<>();
+        dataValues.add(new DataValue(3, data, true));
+        dataValues.add(new DataValue(1, data, false));
+        dataValues.add(new DataValue(3.2, data, true));
+        dataValues.add(new DataValue(1.4, data, false));
+        dataValues.add(new DataValue(3.5, data, true));
+        dataValues.add(new DataValue(.8, data, false));
+        dataValues.add(new DataValue(3.7, data, true));
+        dataValues.add(new DataValue(2.5, data, false));
+        dataValues.add(new DataValue(4, data, true));
+        dataValues.add(new DataValue(1.3, data, false));
+        dataValues.add(new DataValue(4.15, data, true));
+        dataValues.add(new DataValue(2, data, false));
+        dataValues.add(new DataValue(4.30, data, true));
+        dataValues.add(new DataValue(1.8, data, false));
+        dataValues.add(new DataValue(4.60, data, true));
+        dataValues.add(new DataValue(2, data, false));
+        dataValues.add(new DataValue(4.6, data, true));
+        dataValues.add(new DataValue(1.1, data, false));
+        dataValues.add(new DataValue(5, data, true));
+        dataValues.add(new DataValue(3, data, false));
+        dataValues.add(new DataValue(5, data, true));
+        dataValues.add(new DataValue(2.2, data, false));
+        dataValues.add(new DataValue(5.10, data, true));
+        dataValues.add(new DataValue(2.5, data, false));
+        dataValues.add(new DataValue(5.45, data, true));
+        dataValues.add(new DataValue(1.9, data, false));
+        dataValues.add(new DataValue(5.70, data, true));
+        dataValues.add(new DataValue(2.3, data, false));
+        dataValues.add(new DataValue(5.85, data, true));
+        dataValues.add(new DataValue(3, data, false));
+        dataValues.add(new DataValue(6, data, true));
+        dataValues.add(new DataValue(2.3, data, false));
+        dataValues.add(new DataValue(6, data, true));
+        dataValues.add(new DataValue(3.4, data, false));
+        dataValues.add(new DataValue(6, data, true));
+        dataValues.add(new DataValue(3.5, data, false));
+        dataValues.add(new DataValue(6.40, data, true));
+        dataValues.add(new DataValue(3.8, data, false));
+        dataValues.add(new DataValue(6.5, data, true));
+        dataValues.add(new DataValue(3.5, data, false));
+        dataValues.add(new DataValue(6.60, data, true));
+        dataValues.add(new DataValue(3.9, data, false));
+        dataValues.add(new DataValue(6.60, data, true));
+        dataValues.add(new DataValue(4.9, data, false));
+        dataValues.add(new DataValue(6.80, data, true));
+        dataValues.add(new DataValue(4, data, false));
+        dataValues.add(new DataValue(7, data, true));
+        dataValues.add(new DataValue(5, data, false));
+        dataValues.add(new DataValue(7.10, data, true));
+        dataValues.add(new DataValue(4.3, data, false));
+        dataValues.add(new DataValue(7.2, data, true));
+        dataValues.add(new DataValue(3.3, data, false));
+        dataValues.add(new DataValue(7.25, data, true));
+        dataValues.add(new DataValue(4.5, data, false));
+        dataValues.add(new DataValue(7.50, data, true));
+        dataValues.add(new DataValue(4.2, data, false));
+        dataValues.add(new DataValue(7.60, data, true));
+        dataValues.add(new DataValue(5, data, false));
+        dataValues.add(new DataValue(8, data, true));
+        dataValues.add(new DataValue(4.8, data, false));
+
+        data.setDataValues(dataValues);
+        data.setNumPoints(dataValues.size() / 2);
+        data.setName("Weight and Price of Chocolate Boxes");
+        data.setXLabel("Price of Chocolate Box");
+        data.setYLabel("Weight of Chocolate Box in Ounces");
+        data.setItemLabel("Chocolate Box");
+
+        return data;
+    } 
+
 }

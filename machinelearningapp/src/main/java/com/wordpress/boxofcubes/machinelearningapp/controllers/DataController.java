@@ -88,12 +88,11 @@ public class DataController {
     }
     @PostMapping("submit-data/sample")
     public String processSampleData(@RequestParam String sampleData, Model model, HttpServletRequest request){
-        System.out.println(sampleData);
-
-        // Need to get sample Data object from repository for use; or, could
-        // just construct them here...
+        // Create the sample data set
         if(sampleData.equals("life")){
             setDataInSession(request.getSession(), Data.makeLifeDataset());
+        }else if(sampleData.equals("chocolate")){
+            setDataInSession(request.getSession(), Data.makeChocolateDataset());
         }
 
         return "redirect:/view-data";
