@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionAttributeStore;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -45,7 +47,13 @@ public class DataController {
     }
 
     @GetMapping("submit-data")
-    public String showSubmit(Model model){
+    public String showSubmit(Model model, @RequestParam(required=false) boolean revise, HttpSession session){
+        // Check if there's a dataset in the session - remove it if so
+        if(revise == true){
+            session.removeAttribute("data");
+            System.out.println("removed data object");
+            System.out.println(session.getAttribute("data"));
+        }
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
         return "data/submit";
     }
