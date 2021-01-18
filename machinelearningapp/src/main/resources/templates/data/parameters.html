@@ -30,8 +30,10 @@
             Max iterations: 10 - 2500
             Convergence level: .0000001 - 1 [list]
         -->
-        <form method="post" th:object="${parametersDTO}">
+        <form method="post" th:object="${parametersDTO}">            
             <div id="parameters-container">
+                <p class="errors" th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
+
                 <div class="parameter-row">
                     <div class="parameter">
                         <label for="proportion">Proportion of dataset in training set: </label>

@@ -3,6 +3,7 @@ package com.wordpress.boxofcubes.machinelearningapp.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Parameters {
