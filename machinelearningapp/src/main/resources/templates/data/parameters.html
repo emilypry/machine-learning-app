@@ -46,13 +46,12 @@
                         <p>
                             Acceptable values: .1 - .9 
                         </p>
-
                     </div>
 
                     <div class="parameter">
                         <label for="theta0">Initial theta 0: </label>
                         <input th:field="*{theta0}" id="theta0">
-                        <label for="theta1">Initial theta 1: </label>
+                        <label for="theta1" id="theta1-label">Initial theta 1: </label>
                         <input th:field="*{theta1}" id="theta1">
                         <p>
                             The initial values for theta. In the linear function
@@ -62,8 +61,13 @@
                             of theta and try to find the values that result in the lowest
                             prediction error, making for a line that fits the dataset well.
                         </p>
+                        <p>
+                            Acceptable values: any
+                        </p>
                     </div>
+                </div>
 
+                <div class="parameter-row">
                     <div class="parameter">
                         <label for="alpha">Alpha: </label>
                         <input th:field="*{alpha}" id="alpha">
@@ -75,7 +79,6 @@
                             the algorithm increasing prediction error on some iterations 
                             and failing to converge. 
                         </p>
-
                         <p>
                             Acceptable values: 0 - 1
                         </p>
@@ -90,12 +93,13 @@
                             make the model underfit the data. 0 means no regularization, 
                             and a positive number means some regularization. 
                         </p>
-
                         <p>
-                            Acceptable values: 0+
+                            Acceptable values: 0 - 1000
                         </p>
                     </div>
+                </div>
 
+                <div class="parameter-row">
                     <div class="parameter">
                         <label for="maxIter">Maximum iterations of gradient descent: </label>
                         <input th:field="*{maxIterations}" id="maxIter">
@@ -105,9 +109,8 @@
                             the convergence level. A higher number could result in a 
                             better model but will take more time. 
                         </p>
-
                         <p>
-                            Acceptable values: 10+ 
+                            Acceptable values: 10 - 3000
                         </p>
                     </div>
 
@@ -122,9 +125,8 @@
                             convergence level, which could make for shorter training but 
                             could result in a less accurate model. 
                         </p>
-
                         <p>
-                            Acceptable values: .00000000001 - 1
+                            Acceptable values: .00000001 - 1
                         </p>
                     </div>
 

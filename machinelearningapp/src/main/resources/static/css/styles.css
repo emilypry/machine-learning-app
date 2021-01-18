@@ -192,23 +192,7 @@ input {
     margin-left: 5%;
 }
 
-#parameters-container {
-    background: rgb(61, 60, 60);
-    width: 80%;
-    margin-top: 3%;
-    margin-right: auto;
-    margin-left: auto;
-}
-.parameter-row {
-    width: 100%;
-    background:rgb(253, 204, 40);
-    display: flex;
-    justify-content: space-evenly;
-}
-.parameter {
-    background:rgb(241, 107, 83);
-    width: 48%;
-}
+
 #user-container {
     display: block;
     width: 25%;
@@ -247,4 +231,37 @@ input {
     margin-left: auto;
     margin-right: auto;
     margin-top: 4%;
+}
+
+#parameters-container {
+    width: 85%;
+    margin-top: 3%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 15px;
+    font-family: "Avenir"; 
+    color: rgb(61, 60, 60);
+}
+.parameter-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 5%;
+}
+.parameter {
+    width: 45%;
+    padding: 1%;
+    border: 2px solid rgb(165, 29, 20);
+    border-radius: 6px;
+    background: rgb(209, 207, 181);
+}
+.parameter label {
+    font-weight: 500;
+}
+.parameter input {
+    width: 60px;
+    margin-left: 5%;
+}
+.parameter #theta1-label {
+    margin-left: 10%;
 }
