@@ -87,11 +87,14 @@ public class DataController {
         return "redirect:/view-data";
     }
     @PostMapping("submit-data/sample")
-    public String processSampleData(@RequestParam String sampleData, Model model){
+    public String processSampleData(@RequestParam String sampleData, Model model, HttpServletRequest request){
         System.out.println(sampleData);
 
         // Need to get sample Data object from repository for use; or, could
         // just construct them here...
+        if(sampleData.equals("life")){
+            setDataInSession(request.getSession(), Data.makeLifeDataset());
+        }
 
         return "redirect:/view-data";
     }
@@ -139,6 +142,8 @@ public class DataController {
         }
         return data;
     }
+
+
 
 
 }
