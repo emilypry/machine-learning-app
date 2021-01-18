@@ -1,5 +1,6 @@
 package com.wordpress.boxofcubes.machinelearningapp.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -38,15 +39,34 @@ public class Data {
         this.yLabel = yLabel;
         this.itemLabel = itemLabel;
     }
-    /*public Data(List<DataValue> x, List<DataValue>  y, String name, String xLabel, String yLabel, String itemLabel){
-        this.x = x;
-        this.y = y;
-        this.numPoints = x.size();
-        this.name = name;
-        this.xLabel = xLabel;
-        this.yLabel = yLabel;
-        this.itemLabel = itemLabel;
-    }*/
+
+
+    public double[] getX(){
+        List<DataValue> xList = new ArrayList<>();
+        for(DataValue d : dataValues){
+            if(d.getIsX() == true){
+                xList.add(d);
+            }
+        }
+        double[] x = new double[numPoints];
+        for(int i=0; i<numPoints; i++){
+            x[i] = xList.get(i).getValue();
+        }
+        return x;
+    }
+    public double[] getY(){
+        List<DataValue> yList = new ArrayList<>();
+        for(DataValue d : dataValues){
+            if(d.getIsX() == false){
+                yList.add(d);
+            }
+        }
+        double[] y = new double[numPoints];
+        for(int i=0; i<numPoints; i++){
+            y[i] = yList.get(i).getValue();
+        }
+        return y;
+    }
 
     public int getId(){
         return id;
@@ -66,12 +86,6 @@ public class Data {
     public void setDataValues(List<DataValue> dataValues){
         this.dataValues = dataValues;
     }
-    /*public List<DataValue>  getY(){
-        return y;
-    }
-    public void setY(List<DataValue>  y){
-        this.y = y;
-    }*/
     public int getNumPoints(){
         return numPoints;
     }
@@ -96,4 +110,5 @@ public class Data {
     public void setItemLabel(String itemLabel){
         this.itemLabel = itemLabel;
     }
+
 }

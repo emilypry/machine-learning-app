@@ -50,7 +50,7 @@ public class DataController {
         return "data/submit";
     }
     @PostMapping("submit-data/upload")
-    public String processUploadData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
+    public String processUploadData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
         if(bindingResult.hasErrors()){
@@ -59,15 +59,14 @@ public class DataController {
             return "data/submit";
         }
 
-        /*Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
-        dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(),
-        dataSubmissionDTO.getItemLabel());
-        System.out.println(data.getNumPoints()+" "+data.getName());*/
+        // Convert the DTO to a new Data object
+        Data data = getDataObject(dataSubmissionDTO);
+        dataRepository.save(data);
 
         return "redirect:/view-data";
     }
     @PostMapping("submit-data/enter")
-    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model){
+    public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
 
         if(bindingResult.hasErrors()){
@@ -75,30 +74,11 @@ public class DataController {
             return "data/submit";
         }
 
-        // The rawX and rawY attributes of dataSubmissionDTO are double[]s; 
-        // Convert the values to DataValues and save to dataValueRepository
-        // Then set to dataValues attribute of Data object
-        Data data = new Data();
-        List<DataValue> dataValues = new ArrayList<>();
-        for(double x : dataSubmissionDTO.getRawX()){
-            dataValues.add(new DataValue(x, data, true));
-        }
-        for(double y : dataSubmissionDTO.getRawY()){
-            dataValues.add(new DataValue(y, data, false));
-        }
-        /*Data data = new Data(dataValues, dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(), dataSubmissionDTO.getItemLabel());*/
-        data.setDataValues(dataValues);
-        data.setNumPoints(dataSubmissionDTO.getNumPoints());
-        data.setName(dataSubmissionDTO.getName());
-        data.setXLabel(dataSubmissionDTO.getXLabel());
-        data.setYLabel(dataSubmissionDTO.getYLabel());
-        data.setItemLabel(dataSubmissionDTO.getItemLabel());
-
-        System.out.println(data.getNumPoints()+" "+data.getName());
-
+        // Convert the DTO to a new Data object
+        Data data = getDataObject(dataSubmissionDTO);
         dataRepository.save(data);
 
-        //setDataInSession(request.getSession(), data);)
+        setDataInSession(request.getSession(), data);
 
         return "redirect:/view-data";
     }
@@ -123,7 +103,28 @@ public class DataController {
     }
 
 
+    /** Converts a DataSubmissionDTO to a new Data object */
+    public Data getDataObject(DataSubmissionDTO dataSubmissionDTO){
+        Data data = new Data();
 
+        // RawX and RawY are double[]s - convert them to List of DataValues
+        List<DataValue> dataValues = new ArrayList<>();
+        for(double x : dataSubmissionDTO.getRawX()){
+            dataValues.add(new DataValue(x, data, true));
+        }
+        for(double y : dataSubmissionDTO.getRawY()){
+            dataValues.add(new DataValue(y, data, false));
+        }
+
+        data.setDataValues(dataValues);
+        data.setNumPoints(dataSubmissionDTO.getNumPoints());
+        data.setName(dataSubmissionDTO.getName());
+        data.setXLabel(dataSubmissionDTO.getXLabel());
+        data.setYLabel(dataSubmissionDTO.getYLabel());
+        data.setItemLabel(dataSubmissionDTO.getItemLabel());
+
+        return data;
+    }
     public static void setDataInSession(HttpSession session, Data data){
         session.setAttribute("data", data);
     }
@@ -134,4 +135,6 @@ public class DataController {
         }
         return data;
     }
+
+
 }

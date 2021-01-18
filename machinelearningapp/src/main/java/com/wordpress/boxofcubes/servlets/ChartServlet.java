@@ -39,9 +39,10 @@ public class ChartServlet extends HttpServlet{
 
         // Get the data from the Data object
         XYSeries pairs = new XYSeries(data.getItemLabel());
-        for(int i=0; i<data.getX().length; i++){
+        /*for(int i=0; i<data.getX().length; i++){
           pairs.add(data.getX()[i], data.getY()[i]);
-        }
+        }*/
+        
         dataset.addSeries(pairs);
 
         // Make the chart
