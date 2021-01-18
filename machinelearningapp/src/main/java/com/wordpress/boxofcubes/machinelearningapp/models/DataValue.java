@@ -1,5 +1,6 @@
 package com.wordpress.boxofcubes.machinelearningapp.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,12 +12,14 @@ public class DataValue{
     @GeneratedValue
     private int id;
     private double value;
-    @ManyToOne
-    private Data dataset;
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    private Data data;
+    private boolean isX;
 
-    public DataValue(double value, Data dataset){
+    public DataValue(double value, Data data, boolean isX){
         this.value = value;
-        this.dataset = dataset;
+        this.data = data;
+        this.isX = isX;
     }
 
     public int getId(){
@@ -28,10 +31,17 @@ public class DataValue{
     public void setValue(double value){
         this.value = value;
     }
-    public Data getDataset(){
-        return dataset;
+    public Data getData(){
+        return data;
     }
-    public void setDataset(Data dataset){
-        this.dataset = dataset;
+    public void setData(Data Data){
+        this.data = Data;
     }
+    public boolean getIsX(){
+        return isX;
+    }
+    public void setIsX(boolean isX){
+        this.isX = isX;
+    }
+
 }

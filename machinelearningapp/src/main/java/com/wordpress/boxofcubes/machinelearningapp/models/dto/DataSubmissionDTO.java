@@ -4,13 +4,18 @@ import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class DataSubmissionDTO extends Data{
+public class DataSubmissionDTO {
     private MultipartFile xFile;
     private MultipartFile yFile;
     private String xEntry;
     private String yEntry;
     private double[] rawX;
     private double[] rawY;
+    private int numPoints;
+    private String name;
+    private String xLabel;
+    private String yLabel;
+    private String itemLabel;
 
     public MultipartFile getXFile(){
         return xFile;
@@ -47,5 +52,35 @@ public class DataSubmissionDTO extends Data{
     }
     public void setRawY(double[] rawY){
         this.rawY = rawY;
+    }
+    public int getNumPoints(){
+        return numPoints;
+    }
+    public void setNumPoints(int numPoints){
+        this.numPoints = numPoints;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getXLabel(){
+        return xLabel;
+    }
+    public void setXLabel(String xLabel){
+        this.xLabel = xLabel;
+    }
+    public String getYLabel(){
+        return yLabel;
+    }
+    public void setYLabel(String yLabel){
+        this.yLabel = yLabel;
+    }
+    public String getItemLabel(){
+        return itemLabel;
+    }
+    public void setItemLabel(String itemLabel){
+        this.itemLabel = itemLabel;
     }
 }

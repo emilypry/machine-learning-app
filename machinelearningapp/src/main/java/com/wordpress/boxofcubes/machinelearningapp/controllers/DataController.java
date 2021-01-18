@@ -72,28 +72,28 @@ public class DataController {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("entered", true);
-            System.out.println("Entry error!");
             return "data/submit";
         }
 
         // The rawX and rawY attributes of dataSubmissionDTO are double[]s; 
-        // need to convert the values to DataValues and set X and Y
-        List<DataValue> xVals = new ArrayList<>();
-        for(double xVal : dataSubmissionDTO.getRawX()){
-            xVals.add(new DataValue(xVal, dataSubmissionDTO));
+        // Convert the values to DataValues and save to dataValueRepository
+        // Then set to dataValues attribute of Data object
+        Data data = new Data();
+        List<DataValue> dataValues = new ArrayList<>();
+        for(double x : dataSubmissionDTO.getRawX()){
+            dataValues.add(new DataValue(x, data, true));
         }
-        List<DataValue> yVals = new ArrayList<>();
-        for(double yVal : dataSubmissionDTO.getRawY()){
-            yVals.add(new DataValue(yVal, dataSubmissionDTO));
+        for(double y : dataSubmissionDTO.getRawY()){
+            dataValues.add(new DataValue(y, data, false));
         }
+        /*Data data = new Data(dataValues, dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(), dataSubmissionDTO.getItemLabel());*/
+        data.setDataValues(dataValues);
+        data.setNumPoints(dataSubmissionDTO.getNumPoints());
+        data.setName(dataSubmissionDTO.getName());
+        data.setXLabel(dataSubmissionDTO.getXLabel());
+        data.setYLabel(dataSubmissionDTO.getYLabel());
+        data.setItemLabel(dataSubmissionDTO.getItemLabel());
 
-        // Make new Data object
-        Data data = new Data(xVals, yVals, dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(), dataSubmissionDTO.getItemLabel());
-
-
-        /*Data data = new Data(dataSubmissionDTO.getX(), dataSubmissionDTO.getY(),
-        dataSubmissionDTO.getName(), dataSubmissionDTO.getXLabel(), dataSubmissionDTO.getYLabel(),
-        dataSubmissionDTO.getItemLabel());*/
         System.out.println(data.getNumPoints()+" "+data.getName());
 
         dataRepository.save(data);

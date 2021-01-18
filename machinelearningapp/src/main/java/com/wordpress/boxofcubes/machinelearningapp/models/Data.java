@@ -2,6 +2,7 @@ package com.wordpress.boxofcubes.machinelearningapp.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +18,10 @@ public class Data {
     /*private double[] x; // change to list 
     private double[] y;   */
 
-    @OneToMany(mappedBy = "dataset")
-    private List<DataValue> x;
-    @OneToMany(mappedBy = "dataset")
-    private List<DataValue> y;
+    @OneToMany(mappedBy="data", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<DataValue> dataValues;
+    /*private List<DataValue> x;
+    private List<DataValue> y;*/
 
     private int numPoints;
     private String name;
@@ -29,7 +30,15 @@ public class Data {
     private String itemLabel;
 
     public Data(){}
-    public Data(List<DataValue> x, List<DataValue>  y, String name, String xLabel, String yLabel, String itemLabel){
+    public Data(List<DataValue> dataValues, String name, String xLabel, String yLabel, String itemLabel){
+        this.dataValues = dataValues;
+        this.numPoints = dataValues.size();
+        this.name = name;
+        this.xLabel = xLabel;
+        this.yLabel = yLabel;
+        this.itemLabel = itemLabel;
+    }
+    /*public Data(List<DataValue> x, List<DataValue>  y, String name, String xLabel, String yLabel, String itemLabel){
         this.x = x;
         this.y = y;
         this.numPoints = x.size();
@@ -37,7 +46,7 @@ public class Data {
         this.xLabel = xLabel;
         this.yLabel = yLabel;
         this.itemLabel = itemLabel;
-    }
+    }*/
 
     public int getId(){
         return id;
@@ -51,18 +60,18 @@ public class Data {
     public void setName(String name){
         this.name = name;
     }
-    public List<DataValue> getX(){
-        return x;
+    public List<DataValue> getDataValues(){
+        return dataValues;
     }
-    public void setX(List<DataValue>  x){
-        this.x = x;
+    public void setDataValues(List<DataValue> dataValues){
+        this.dataValues = dataValues;
     }
-    public List<DataValue>  getY(){
+    /*public List<DataValue>  getY(){
         return y;
     }
     public void setY(List<DataValue>  y){
         this.y = y;
-    }
+    }*/
     public int getNumPoints(){
         return numPoints;
     }
