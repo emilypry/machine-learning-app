@@ -61,7 +61,10 @@ public class DataController {
 
         // Convert the DTO to a new Data object
         Data data = getDataObject(dataSubmissionDTO);
-        dataRepository.save(data);
+        //dataRepository.save(data);
+
+        // Set the Data object in session
+        setDataInSession(request.getSession(), data);
 
         return "redirect:/view-data";
     }
@@ -76,8 +79,9 @@ public class DataController {
 
         // Convert the DTO to a new Data object
         Data data = getDataObject(dataSubmissionDTO);
-        dataRepository.save(data);
+        //dataRepository.save(data);
 
+        // Set the Data object in session
         setDataInSession(request.getSession(), data);
 
         return "redirect:/view-data";
