@@ -14,6 +14,7 @@ import com.wordpress.boxofcubes.machinelearningapp.data.DataValueRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.DataSubmissionDTOValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,9 +114,13 @@ public class DataController {
     }
 
     @GetMapping("set-parameters")
-    public String showParameters(){
+    public String showParameters(Model model){
+        model.addAttribute("parametersDTO", new ParametersDTO());
         return "data/parameters";
     }
+
+
+
 
 
     /** Converts a DataSubmissionDTO to a new Data object */

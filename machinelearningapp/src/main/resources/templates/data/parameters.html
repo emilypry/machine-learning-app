@@ -30,19 +30,104 @@
             Max iterations: 10 - 2500
             Convergence level: .0000001 - 1 [list]
         -->
-        <form method="post">
+        <form method="post" th:object="${parametersDTO}">
             <div id="parameters-container">
                 <div class="parameter-row">
                     <div class="parameter">
                         <label for="proportion">Proportion of dataset in training set: </label>
-                        <input type="text" id="proportion">
-                        <p></p>
+                        <input th:field="*{trainingProportion}" id="proportion">
+                        <p>
+                            The proportion of the original dataset that will constitute the 
+                            training set. A higher number means a model will be trained
+                            on a larger portion of the dataset, which could help prevent
+                            the model underfitting the dataset but could lead to the 
+                            model overfitting the dataset.
+                        </p>
+                        <p>
+                            Acceptable values: .1 - .9 
+                        </p>
 
                     </div>
 
                     <div class="parameter">
-                        lambda
+                        <label for="theta0">Initial theta 0: </label>
+                        <input th:field="*{theta0}" id="theta0">
+                        <label for="theta1">Initial theta 1: </label>
+                        <input th:field="*{theta1}" id="theta1">
+                        <p>
+                            The initial values for theta. In the linear function
+                            y = a + bx, theta0 takes the place of a (the y-intercept of the
+                            line) and theta1 takes the place of b (the slope of the line). 
+                            The gradient descent algorithm will start with these values 
+                            of theta and try to find the values that result in the lowest
+                            prediction error, making for a line that fits the dataset well.
+                        </p>
                     </div>
+
+                    <div class="parameter">
+                        <label for="alpha">Alpha: </label>
+                        <input th:field="*{alpha}" id="alpha">
+                        <p>
+                            The learning rate of the gradient descent algorithm. A higher
+                            number means a steeper learning rate, so the values of theta
+                            will change more dramatically on each iteration of the algorithm.
+                            This could result in faster learning but could also lead to 
+                            the algorithm increasing prediction error on some iterations 
+                            and failing to converge. 
+                        </p>
+
+                        <p>
+                            Acceptable values: 0 - 1
+                        </p>
+                    </div>
+
+                    <div class="parameter">
+                        <label for="lambda">Lambda: </label>
+                        <input th:field="*{lambda}" id="lambda">
+                        <p>
+                            The regularization parameter of the algorithm. Regularization 
+                            prevents the model from overfitting the data, but could also 
+                            make the model underfit the data. 0 means no regularization, 
+                            and a positive number means some regularization. 
+                        </p>
+
+                        <p>
+                            Acceptable values: 0+
+                        </p>
+                    </div>
+
+                    <div class="parameter">
+                        <label for="maxIter">Maximum iterations of gradient descent: </label>
+                        <input th:field="*{maxIterations}" id="maxIter">
+                        <p>
+                            The greatest number of iterations that the gradient descent
+                            algorithm will execute. It will stop sooner only if it has reached
+                            the convergence level. A higher number could result in a 
+                            better model but will take more time. 
+                        </p>
+
+                        <p>
+                            Acceptable values: 10+ 
+                        </p>
+                    </div>
+
+                    <div class="parameter">
+                        <label for="convergence">Convergence level of gradient descent: </label>
+                        <input th:field="*{convergenceLevel}" id="convergence">
+                        <p>
+                            The level at which the gradient descent algorithm is considered
+                            to have converged, and will thus stop. The convergence level is 
+                            the smallest tolerable decrease in prediction error on consecutive 
+                            iterations of gradient descent. A higher number is a more lenient 
+                            convergence level, which could make for shorter training but 
+                            could result in a less accurate model. 
+                        </p>
+
+                        <p>
+                            Acceptable values: .00000000001 - 1
+                        </p>
+                    </div>
+
                 </div>
 
 
