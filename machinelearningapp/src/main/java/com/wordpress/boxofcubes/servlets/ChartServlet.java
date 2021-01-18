@@ -23,6 +23,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class ChartServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        System.out.println("Entered chart...");
         if(request.getSession().getAttribute("data") != null){
             System.out.println("There's a data object for the chart");
         
@@ -32,6 +33,8 @@ public class ChartServlet extends HttpServlet{
 
             JFreeChart chart = getChart(data);
             ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400);
+        }else{
+            System.out.println("There's NO data object for the chart!!!!!!!!!");
         }
     }
 

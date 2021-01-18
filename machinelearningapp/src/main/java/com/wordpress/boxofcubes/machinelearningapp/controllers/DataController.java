@@ -52,7 +52,6 @@ public class DataController {
         if(revise == true){
             session.removeAttribute("data");
             System.out.println("removed data object");
-            System.out.println(session.getAttribute("data"));
         }
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
         return "data/submit";
