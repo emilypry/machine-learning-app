@@ -260,7 +260,7 @@ public class Data {
         data.setNumPoints(dataValues.size() / 2);
         data.setName("Average Life Expectancy by Year");
         data.setXLabel("Year");
-        data.setYLabel("Life Expectancy");
+        data.setYLabel("Life Expectancy (Years)");
         data.setItemLabel("Average Life Expectancy per Year");
 
         return data;
@@ -334,11 +334,69 @@ public class Data {
         data.setDataValues(dataValues);
         data.setNumPoints(dataValues.size() / 2);
         data.setName("Weight and Price of Chocolate Boxes");
-        data.setXLabel("Price of Chocolate Box");
-        data.setYLabel("Weight of Chocolate Box in Ounces");
+        data.setXLabel("Price of Chocolate Box (Dollars)");
+        data.setYLabel("Weight of Chocolate Box (Ounces)");
         data.setItemLabel("Chocolate Box");
 
         return data;
     } 
 
+        /** Makes the Price and Number of Pages of Books sample dataset */
+        public static Data makeBookDataset(){
+            Data data = new Data();
+            List<DataValue> dataValues = new ArrayList<>();
+            dataValues.add(new DataValue(5, data, true));
+            dataValues.add(new DataValue(60, data, false));
+            dataValues.add(new DataValue(5, data, true));
+            dataValues.add(new DataValue(20, data, false));
+            dataValues.add(new DataValue(5.30, data, true));
+            dataValues.add(new DataValue(100, data, false));
+            dataValues.add(new DataValue(7, data, true));
+            dataValues.add(new DataValue(80, data, false));
+            dataValues.add(new DataValue(7.30, data, true));
+            dataValues.add(new DataValue(180, data, false));
+            dataValues.add(new DataValue(9, data, true));
+            dataValues.add(new DataValue(432, data, false));
+            dataValues.add(new DataValue(10, data, true));
+            dataValues.add(new DataValue(35, data, false));
+            dataValues.add(new DataValue(10.25, data, true));
+            dataValues.add(new DataValue(100, data, false));
+            dataValues.add(new DataValue(12, data, true));
+            dataValues.add(new DataValue(200, data, false));
+            dataValues.add(new DataValue(12.50, data, true));
+            dataValues.add(new DataValue(15, data, false));
+            dataValues.add(new DataValue(15.75, data, true));
+            dataValues.add(new DataValue(300, data, false));
+            dataValues.add(new DataValue(18, data, true));
+            dataValues.add(new DataValue(320, data, false));
+            dataValues.add(new DataValue(18, data, true));
+            dataValues.add(new DataValue(148, data, false));
+            dataValues.add(new DataValue(20, data, true));
+            dataValues.add(new DataValue(498, data, false));
+            dataValues.add(new DataValue(20.25, data, true));
+            dataValues.add(new DataValue(152, data, false));
+            dataValues.add(new DataValue(20.50, data, true));
+            dataValues.add(new DataValue(68, data, false));
+            dataValues.add(new DataValue(23, data, true));
+            dataValues.add(new DataValue(325, data, false));
+            dataValues.add(new DataValue(25, data, true));
+            dataValues.add(new DataValue(112, data, false));
+            dataValues.add(new DataValue(26, data, true));
+            dataValues.add(new DataValue(264, data, false));
+            dataValues.add(new DataValue(27, data, true));
+            dataValues.add(new DataValue(411, data, false));
+            dataValues.add(new DataValue(27.75, data, true));
+            dataValues.add(new DataValue(74, data, false));
+            dataValues.add(new DataValue(30, data, true));
+            dataValues.add(new DataValue(107, data, false));
+
+            data.setDataValues(dataValues);
+            data.setNumPoints(dataValues.size() / 2);
+            data.setName("Price and Number of Pages of Books");
+            data.setXLabel("Price of Book (Dollars)");
+            data.setYLabel("Number of Pages in Book");
+            data.setItemLabel("Book");
+    
+            return data;
+        } 
 }

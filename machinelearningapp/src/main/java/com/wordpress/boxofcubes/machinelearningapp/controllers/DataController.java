@@ -93,6 +93,8 @@ public class DataController {
             setDataInSession(request.getSession(), Data.makeLifeDataset());
         }else if(sampleData.equals("chocolate")){
             setDataInSession(request.getSession(), Data.makeChocolateDataset());
+        }else{
+            setDataInSession(request.getSession(), Data.makeBookDataset());
         }
 
         return "redirect:/view-data";
