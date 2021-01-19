@@ -31,6 +31,9 @@ public class Data {
     private String itemLabel;
 
     public Data(){}
+    public Data(List<DataValue> dataValues){
+        this.dataValues = dataValues;
+    }
     public Data(List<DataValue> dataValues, String name, String xLabel, String yLabel, String itemLabel){
         this.dataValues = dataValues;
         this.numPoints = dataValues.size();

@@ -174,7 +174,19 @@ public class DataController {
         // Add the Parameters object to the session
         request.getSession().setAttribute("parameters", parameters);
 
-        return "redirect:/train-model";
+        return "redirect:/training-model";
+    }
+
+    @PostMapping("training-model")
+    public String trainModel(){
+        
+
+        return "redirect:/trained-model";
+    }
+
+    @GetMapping("trained-model")
+    public String showTrainedModel(){
+        return "data/trained";
     }
 
 
