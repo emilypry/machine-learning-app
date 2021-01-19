@@ -4,6 +4,7 @@ import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,13 +52,9 @@ public class DataController {
     }
 
     @GetMapping("submit-data")
-    public String showSubmit(Model model, @RequestParam(required=false) boolean revise, HttpSession session){
-        // Check if there's a dataset in the session - remove it if so
-        if(revise == true){
-            session.removeAttribute("data");
-            System.out.println("removed data object");
-        }
+    public String showSubmit(Model model, HttpSession session){
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
+        System.out.println("---At submit-data");
         return "data/submit";
     }
     @PostMapping("submit-data/upload")
@@ -72,10 +69,15 @@ public class DataController {
         Data data = getDataObject(dataSubmissionDTO);
         //dataRepository.save(data);
 
-        // Set the Data object in session
+        // Make a unique identifier and set attribute
+        String dataUUID = UUID.randomUUID().toString();
+        request.getSession().setAttribute(dataUUID, data);
+
+        // Also set the Data object in session
         setDataInSession(request.getSession(), data);
 
-        return "redirect:/view-data";
+        //return "redirect:/view-data";
+        return "redirect:/view-data?dataUUID="+dataUUID;
     }
     @PostMapping("submit-data/enter")
     public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
@@ -89,33 +91,78 @@ public class DataController {
         Data data = getDataObject(dataSubmissionDTO);
         //dataRepository.save(data);
 
-        // Set the Data object in session
-        setDataInSession(request.getSession(), data);
+        // Make a unique identifier and set attribute
+        String dataUUID = UUID.randomUUID().toString();
+        request.getSession().setAttribute(dataUUID, data);
 
-        return "redirect:/view-data";
+        // Also set the Data object in session
+        setDataInSession(request.getSession(), data);
+        //return "redirect:/view-data";
+        return "redirect:/view-data?dataUUID="+dataUUID;
     }
     @PostMapping("submit-data/sample")
     public String processSampleData(@RequestParam String sampleData, Model model, HttpServletRequest request){
-        // Create the sample data set
-        if(sampleData.equals("life")){
-            setDataInSession(request.getSession(), Data.makeLifeDataset());
-        }else if(sampleData.equals("chocolate")){
-            setDataInSession(request.getSession(), Data.makeChocolateDataset());
-        }else{
-            setDataInSession(request.getSession(), Data.makeBookDataset());
-        }
+        // Make a unique identifier for the Data object 
+        String dataUUID = UUID.randomUUID().toString();
 
-        return "redirect:/view-data";
+        // Create the sample data set and set it to the UUID
+        Data data = new Data();
+        if(sampleData.equals("life")){
+            data = Data.makeLifeDataset();
+            request.getSession().setAttribute(dataUUID, data);
+            
+        }else if(sampleData.equals("chocolate")){
+            data = Data.makeChocolateDataset();
+            request.getSession().setAttribute(dataUUID, data);
+        }else{
+            data = Data.makeBookDataset();
+            request.getSession().setAttribute(dataUUID, data);
+        }
+        // ALSO SET IT IN SESSION SO CAN ACCESS IT AFTER VIEWING !!!!!!!!!!!!!!! 
+        setDataInSession(request.getSession(), data);
+
+        //return "redirect:/view-data";
+        return "redirect:/view-data?dataUUID="+dataUUID;
     }
 
+    /* Not sure what's happening, but the chart servlet doesn't always read that there's an object
+    so doesn't display the graph. Actually, the chart servlet is sometimes called *before* a 
+    new dataset has been submitted (after the old one has been destroyed) - during the get 
+    request for /submit-data, before its post request. Then even after the dataset is submitted, 
+    the chart doesn't recognize it.
+        Problem seems to be that the servlet is active when it shouldn't be. Should only be 
+    called on /view-data. Maybe I have to close it each time, or at least prevent it from
+    looking for a dataset when there isn't one? 
+    */
+
+
     @GetMapping("view-data")
-    public String showChart(){
+    public String showChart(Model model, @RequestParam String dataUUID, HttpServletRequest r){
+        // Get the data UUID from the URL and add to the model
+        model.addAttribute("dataUUID", dataUUID);
+
+        Data byUUID = (Data)r.getSession().getAttribute(dataUUID);
+        Data byData = (Data)r.getSession().getAttribute("data");
+
+        System.out.println("byUUID and byData same? "+(byUUID.equals(byData)));
+
         return "data/chart";
     }
 
+
+
+
     @GetMapping("set-parameters")
-    public String showParameters(Model model){
-        model.addAttribute("parametersDTO", new ParametersDTO());
+    public String showParameters(Model model, @RequestParam(required=false) boolean defaultParams){
+        System.out.println("default params? "+defaultParams);
+        //if(defaultParams == true){
+            model.addAttribute("parametersDTO", ParametersDTO.getDefaultParameters());
+            // make sure to add defaultParams to post redirects!!!!!!!!!!!
+        /*}
+        else{
+            model.addAttribute("parametersDTO", new ParametersDTO());
+        }*/
+
         return "data/parameters";
     }
     @PostMapping("set-parameters")

@@ -19,17 +19,18 @@
         </div>
 
         <div id="chart">
-            <img th:src="@{/view-data/display-chart}" width=700 height=400>
+            <img th:src="@{/view-data/display-chart(dataUUID=${dataUUID})}" width=700 height=400>
+            <!--<img th:src="@{/view-data/display-chart}" width=700 height=400>-->
         </div>
         
 
 
         <div class="two-button-container">
-            <button type="submit" th:onclick="location.href='/submit-data?revise=true'">
+            <button type="submit" th:onclick="location.href='/submit-data'">
                 Revise Data
             </button>
 
-            <button type="submit" th:onclick="location.href='/set-parameters'">
+            <button type="submit" th:onclick="location.href='/set-parameters?defaultParams=true'">
                 Set Parameters
             </button>
         </div>

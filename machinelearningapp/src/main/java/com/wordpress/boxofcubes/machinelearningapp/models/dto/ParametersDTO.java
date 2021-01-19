@@ -6,6 +6,8 @@ public class ParametersDTO extends Parameters{
     private double theta0;
     private double theta1;
 
+    public ParametersDTO(){};
+
     public double getTheta0(){
         return theta0;
     }
@@ -17,5 +19,18 @@ public class ParametersDTO extends Parameters{
     }
     public void setTheta1(double theta1){
         this.theta1 = theta1;
+    }
+
+    public static ParametersDTO getDefaultParameters(){
+        ParametersDTO p = new ParametersDTO();
+        p.setTrainingProportion(.6);
+        p.setTheta0(0);
+        p.setTheta1(0);
+        p.setAlpha(.01);
+        p.setLambda(0);
+        p.setMaxIterations(500);
+        p.setConvergenceLevel(.001);
+
+        return p;
     }
 }
