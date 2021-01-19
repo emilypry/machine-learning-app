@@ -34,6 +34,6 @@ public class ParametersDTOValidator implements Validator{
         if(p.getConvergenceLevel() < .00000001 || p.getConvergenceLevel() > 1){
             errors.reject("error.convergence", "Convergence level must be between .00000001 and 1");
         }
-
+        System.out.println("checked parameters DTO");
     }
 }

@@ -30,14 +30,14 @@
             Max iterations: 10 - 2500
             Convergence level: .0000001 - 1 [list]
         -->
-        <form method="post" th:object="${parametersDTO}">            
-            <div id="parameters-container">
-                <p class="errors" th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
+        <form method="post" th:object="${parametersDTO}" id="parameters-form">      
+            <p class="errors" th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
 
+            <div id="parameters-container">
                 <div class="parameter-row">
                     <div class="parameter">
                         <label for="proportion">Proportion of dataset in training set: </label>
-                        <input th:field="*{trainingProportion}" id="proportion">
+                        <input th:field="*{trainingProportion}" id="proportion" th:value=".6" />
                         <p>
                             The proportion of the original dataset that will constitute the 
                             training set. A higher number means a model will be trained
@@ -52,9 +52,9 @@
 
                     <div class="parameter">
                         <label for="theta0">Initial theta 0: </label>
-                        <input th:field="*{theta0}" id="theta0">
+                        <input th:field="*{theta0}" id="theta0" />
                         <label for="theta1" id="theta1-label">Initial theta 1: </label>
-                        <input th:field="*{theta1}" id="theta1">
+                        <input th:field="*{theta1}" id="theta1" />
                         <p>
                             The initial values for theta. In the linear function
                             y = a + bx, theta0 takes the place of a (the y-intercept of the
@@ -72,7 +72,7 @@
                 <div class="parameter-row">
                     <div class="parameter">
                         <label for="alpha">Alpha: </label>
-                        <input th:field="*{alpha}" id="alpha">
+                        <input th:field="*{alpha}" id="alpha" />
                         <p>
                             The learning rate of the gradient descent algorithm. A higher
                             number means a steeper learning rate, so the values of theta
@@ -88,7 +88,7 @@
 
                     <div class="parameter">
                         <label for="lambda">Lambda: </label>
-                        <input th:field="*{lambda}" id="lambda">
+                        <input th:field="*{lambda}" id="lambda" />
                         <p>
                             The regularization parameter of the algorithm. Regularization 
                             prevents the model from overfitting the data, but could also 
@@ -104,7 +104,7 @@
                 <div class="parameter-row">
                     <div class="parameter">
                         <label for="maxIter">Maximum iterations of gradient descent: </label>
-                        <input th:field="*{maxIterations}" id="maxIter">
+                        <input th:field="*{maxIterations}" id="maxIter" />
                         <p>
                             The greatest number of iterations that the gradient descent
                             algorithm will execute. It will stop sooner only if it has reached
@@ -118,7 +118,7 @@
 
                     <div class="parameter">
                         <label for="convergence">Convergence level of gradient descent: </label>
-                        <input th:field="*{convergenceLevel}" id="convergence">
+                        <input th:field="*{convergenceLevel}" id="convergence" />
                         <p>
                             The level at which the gradient descent algorithm is considered
                             to have converged, and will thus stop. The convergence level is 
@@ -134,21 +134,22 @@
 
                 </div>
 
+                <div class="two-button-container">
+                    <button type="submit" th:onclick="location.href='/view-data'">
+                        View Data
+                    </button>
+        
+                    <button type="submit" form="parameters-form">
+                        Train Model
+                    </button>
+                </div>
 
             </div>
         </form>
 
 
 
-        <div class="two-button-container">
-            <button type="submit" th:onclick="location.href='/view-data'">
-                View Data
-            </button>
 
-            <button type="submit" th:onclick="location.href='/train-model'">
-                Train Model
-            </button>
-        </div>
 
 
     </div>

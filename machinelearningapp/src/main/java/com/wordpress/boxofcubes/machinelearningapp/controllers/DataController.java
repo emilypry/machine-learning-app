@@ -16,6 +16,7 @@ import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.DataSubmissionDTOValidator;
+import com.wordpress.boxofcubes.machinelearningapp.validation.ParametersDTOValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,8 @@ public class DataController {
     DataRepository dataRepository;
     @Autowired
     DataSubmissionDTOValidator submissionValidator;
+    @Autowired
+    ParametersDTOValidator parametersValidator;
 
     @GetMapping("home")
     public String showHome(){
@@ -60,10 +63,8 @@ public class DataController {
     @PostMapping("submit-data/upload")
     public String processUploadData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
-
         if(bindingResult.hasErrors()){
             model.addAttribute("uploaded", true);
-            System.out.println("Upload error!");
             return "data/submit";
         }
 
@@ -79,7 +80,6 @@ public class DataController {
     @PostMapping("submit-data/enter")
     public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
-
         if(bindingResult.hasErrors()){
             model.addAttribute("entered", true);
             return "data/submit";
@@ -117,6 +117,20 @@ public class DataController {
     public String showParameters(Model model){
         model.addAttribute("parametersDTO", new ParametersDTO());
         return "data/parameters";
+    }
+    @PostMapping("set-parameters")
+    public String processParameters(ParametersDTO parametersDTO, BindingResult bindingResult){
+        parametersValidator.validate(parametersDTO, bindingResult);
+        System.out.println("errors? "+bindingResult.getErrorCount());
+        if(bindingResult.hasErrors()){
+            return "data/parameters";
+        }
+
+        // Convert the DTO to a new Parameters object
+
+        // Add the Parameters object to the session
+
+        return "redirect:/train-model";
     }
 
 
