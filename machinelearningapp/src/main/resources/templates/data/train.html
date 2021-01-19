@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">Trained Model</div>
+
+    <!--if no user-->
+    <div th:replace="fragments :: links-logged-out"></div>
+    <!--but, if user, .....-->
+
+    <div id="content">
+        <div class="explanation">
+            <h3>This is your trained model. </h3>
+            <p>
+                This is the model!
+            </p>
+        </div>
+
+
+
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

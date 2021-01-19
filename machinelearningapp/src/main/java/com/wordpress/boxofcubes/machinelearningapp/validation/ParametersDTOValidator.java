@@ -1,5 +1,7 @@
 package com.wordpress.boxofcubes.machinelearningapp.validation;
 
+import java.text.NumberFormat;
+
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class ParametersDTOValidator implements Validator{
     @Override
     public void validate(Object object, Errors errors){  
         ParametersDTO p = (ParametersDTO)object;
-
+        
         // Parameters out of bounds
         if(p.getTrainingProportion() < .1 || p.getTrainingProportion() > .9){
             errors.reject("error.trainingProportion", "Training proportion must be between .1 and .9");
@@ -35,7 +37,7 @@ public class ParametersDTOValidator implements Validator{
         if(p.getConvergenceLevel() < .00000001 || p.getConvergenceLevel() > 1){
             errors.reject("error.convergence", "Convergence level must be between .00000001 and 1");
         }
-        
+
     }
 
 }

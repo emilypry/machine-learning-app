@@ -39,8 +39,10 @@ public class ChartServlet extends HttpServlet{
             ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
         }*/
 
-        // THIS SEEMS TO BE WORKING!!!!!! no, got confused a few times, ugh
+        // THIS SEEMS TO BE WORKING!!!!!! NO - shows wrong set sometimes
+        // IF I HIT TAB TOO MANY TIMES WHEN ENTERING DATA, WILL SWITCH TO SAMPLE LIFE SET!!!!!!!
         /*Data data = (Data)request.getSession().getAttribute("data");
+        System.out.println("data name: "+data.getName());
         if(data != null){
             System.out.println("data object for servlet");
 
@@ -53,6 +55,10 @@ public class ChartServlet extends HttpServlet{
         }else{
             System.out.println("NO data object for servlet");
         }*/
+        // can't do this because I'll have to use it later!!! still doesn't work reliably anyway
+        // actully, might - just not if I accidentally do more tabs on enter
+        //request.getSession().removeAttribute("data");
+        //System.out.println("Removed attribute from session "+data);
 
         // THIS SEEMS TO WORK, BUT IS CLUNKY - WOULD PREFER TO NOT DEAL WITH UUID
         // BUT SEEMS ONLY ONE THAT WORKS CONSISTENTLY!!!!!!!!!!!!!!
@@ -76,6 +82,9 @@ public class ChartServlet extends HttpServlet{
         }else{
             System.out.println("There's NO data object for the chart!!!!!!!!!");
         }
+
+        request.getSession().removeAttribute(dataUUID);
+        System.out.println("Removed UUID from session "+dataUUID);
     }
 
     private JFreeChart getChart(Data data){

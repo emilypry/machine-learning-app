@@ -14,6 +14,7 @@ import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.DataValueRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
+import com.wordpress.boxofcubes.machinelearningapp.models.Parameters;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.DataSubmissionDTOValidator;
@@ -153,32 +154,40 @@ public class DataController {
 
 
     @GetMapping("set-parameters")
-    public String showParameters(Model model, @RequestParam(required=false) boolean defaultParams){
-        System.out.println("default params? "+defaultParams);
-        //if(defaultParams == true){
-            model.addAttribute("parametersDTO", ParametersDTO.getDefaultParameters());
-            // make sure to add defaultParams to post redirects!!!!!!!!!!!
-        /*}
-        else{
-            model.addAttribute("parametersDTO", new ParametersDTO());
-        }*/
-
+    public String showParameters(Model model){
+        model.addAttribute("parametersDTO", ParametersDTO.getDefaultParameters());
         return "data/parameters";
     }
     @PostMapping("set-parameters")
-    public String processParameters(ParametersDTO parametersDTO, BindingResult bindingResult){
+    public String processParameters(ParametersDTO parametersDTO, BindingResult bindingResult, HttpServletRequest request){
         parametersValidator.validate(parametersDTO, bindingResult);
-        System.out.println("errors? "+bindingResult.getErrorCount());
         if(bindingResult.hasErrors()){
             return "data/parameters";
         }
 
         // Convert the DTO to a new Parameters object
+        double[] theta = new double[2];
+        theta[0] = parametersDTO.getTheta0();
+        theta[1] = parametersDTO.getTheta1();
+        Parameters parameters = new Parameters(parametersDTO.getTrainingProportion(), theta, parametersDTO.getAlpha(), parametersDTO.getLambda(), parametersDTO.getMaxIterations(), parametersDTO.getConvergenceLevel());
 
         // Add the Parameters object to the session
+        request.getSession().setAttribute("parameters", parameters);
 
         return "redirect:/train-model";
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
