@@ -21,9 +21,6 @@ public class Data {
     /*private List<DataValue> x;
     private List<DataValue> y;*/
 
-    @OneToMany(mappedBy="allData")
-    private List<LinearRegression> regressions;
-
     private int numPoints;
     private String name;
     private String xLabel;
@@ -113,9 +110,6 @@ public class Data {
     }
     public void setItemLabel(String itemLabel){
         this.itemLabel = itemLabel;
-    }
-    public List<LinearRegression> getRegressions(){
-        return regressions;
     }
 
     /** Makes the Life Expectancy by Year sample dataset */

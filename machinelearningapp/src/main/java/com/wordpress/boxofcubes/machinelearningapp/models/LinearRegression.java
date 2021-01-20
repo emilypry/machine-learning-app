@@ -11,14 +11,11 @@ import javax.persistence.ManyToOne;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
-@Entity
 public class LinearRegression {
-    @Id
     @GeneratedValue
     private int id;
 
     // The data and subsets
-    @ManyToOne
     private Data allData;
     private Data trainingSet;
     private Data crossValSet;
@@ -108,7 +105,7 @@ public class LinearRegression {
     }
 
     /** Returns the model's (theta's) predicted y-values given the x-values in the dataset */
-    public static double[] getPredictions(Data dataset, double[] theta){
+    public double[] getPredictions(Data dataset, double[] theta){
         double[] predictions = new double[dataset.getNumPoints()];
         for(int row=0; row < dataset.getNumPoints(); row++){
             predictions[row] = theta[0] + (dataset.getX()[row] * theta[1]);
@@ -273,6 +270,9 @@ public class LinearRegression {
     public Data getAllData(){
         return allData;
     }
+    public void setAllData(Data allData){
+        this.allData = allData;
+    }
     public Parameters getParameters(){
         return parameters;
     }
@@ -303,7 +303,7 @@ public class LinearRegression {
     public double getTestingError(){
         return testingError;
     }
-    
+
 
 
 
