@@ -14,6 +14,7 @@ import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.DataValueRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
+import com.wordpress.boxofcubes.machinelearningapp.models.LinearRegression;
 import com.wordpress.boxofcubes.machinelearningapp.models.Parameters;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
@@ -126,15 +127,6 @@ public class DataController {
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
 
-    /* Not sure what's happening, but the chart servlet doesn't always read that there's an object
-    so doesn't display the graph. Actually, the chart servlet is sometimes called *before* a 
-    new dataset has been submitted (after the old one has been destroyed) - during the get 
-    request for /submit-data, before its post request. Then even after the dataset is submitted, 
-    the chart doesn't recognize it.
-        Problem seems to be that the servlet is active when it shouldn't be. Should only be 
-    called on /view-data. Maybe I have to close it each time, or at least prevent it from
-    looking for a dataset when there isn't one? 
-    */
 
 
     @GetMapping("view-data")
@@ -159,7 +151,8 @@ public class DataController {
         return "data/parameters";
     }
     @PostMapping("set-parameters")
-    public String processParameters(ParametersDTO parametersDTO, BindingResult bindingResult, HttpServletRequest request){
+    public String processParametersAndTrainModel(ParametersDTO parametersDTO, BindingResult bindingResult, HttpServletRequest request){
+        // Validate the parameters
         parametersValidator.validate(parametersDTO, bindingResult);
         if(bindingResult.hasErrors()){
             return "data/parameters";
@@ -172,20 +165,48 @@ public class DataController {
         Parameters parameters = new Parameters(parametersDTO.getTrainingProportion(), theta, parametersDTO.getAlpha(), parametersDTO.getLambda(), parametersDTO.getMaxIterations(), parametersDTO.getConvergenceLevel());
 
         // Add the Parameters object to the session
-        request.getSession().setAttribute("parameters", parameters);
+        /*request.getSession().setAttribute("parameters", parameters);
+        return "redirect:/training-model";*/
 
-        return "redirect:/training-model";
+        // Get the data object
+        Data data = (Data)request.getSession().getAttribute("data");
+        if(data != null){
+            // Make a new Linear Regression object and train a model
+            LinearRegression lr = new LinearRegression(data, parameters);
+            lr.trainModel();
+
+            // Add the Linear Regression object to the session
+            request.getSession().setAttribute("linearRegression", lr);
+
+            return "redirect:/trained-model";
+        }else{
+            System.out.println("ERROR - couldn't find data for training!");
+            return "data/parameters";
+        }
     }
 
-    @PostMapping("training-model")
-    public String trainModel(){
-        
+    /* WHEN VALIDATING PARAMETERS, MAKE SURE THERE'S AT LEAST 1 EXAMPLE IN THE CV AND TESTING 
+    SETS, GIVEN THEIR DATASET AND THE PROPORTION THEY'VE SELECTED. MACHINE LEARNING WILL RUN
+    INTO PROBLEMS OTHERWISE!!!!!!!!!!!!!
 
-        return "redirect:/trained-model";
-    }
+
+    AFTER TRAINING, HITTING 'VIEW DATA' FROM SET-PARAMETERS GO BACK TO TRAINED-MODEL!!!
+
+    */
 
     @GetMapping("trained-model")
-    public String showTrainedModel(){
+    public String showTrainedModel(HttpServletRequest request, Model model){
+        // Get the Linear Regression object
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+
+        model.addAttribute("lr", lr);
+        model.addAttribute("p", lr.getParameters());
+
+        String costs = "";
+        for(double c : lr.getCostsWhileTraining()){
+            costs += c + "\n";
+        }
+        model.addAttribute("costs", costs);
         return "data/trained";
     }
 

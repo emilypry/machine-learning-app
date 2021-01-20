@@ -263,6 +263,16 @@ public class LinearRegression {
         testingError = getCost(testingSet, trainedTheta, false);
     }
 
+    public int getTrainingSize(){
+        return trainingSet.getNumPoints();
+    }
+    public int getCrossValSize(){
+        return crossValSet.getNumPoints();
+    }
+    public int getTestingSize(){
+        return testingSet.getNumPoints();
+    }
+
 
     public int getId(){
         return id;

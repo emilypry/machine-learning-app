@@ -36,19 +36,19 @@
                     <div class="label">
                         Trained theta: 
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getTrainedTheta()[0]+', '+lr.getTrainedTheta()[1]}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Training error: 
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getTrainingError()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Cross-validation error: 
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getCrossValError()}"></div>
                 </div>
 
                 <div class="header">Gradient Descent</div>
@@ -56,25 +56,25 @@
                     <div class="label">
                         Initial cost: 
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" >(value)</div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Actual iterations:  
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getActualIterations()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Converged:
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getConverged()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Cost increased:
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getCostIncreased()}"></div>
                 </div>
                
                 <div class="header">Parameters</div>
@@ -82,57 +82,57 @@
                     <div class="label">
                         Proportion of dataset in training set: 
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${p.getTrainingProportion()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Size of training set:
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getTrainingSize()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Size of cross-validation set: 
                     </div>
-                    <div class="value">(value)</div>
+                    <div class="value" th:text="${lr.getCrossValSize()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Initial theta:
                     </div>
-                    <div class="value">(a huuuuuge list!!!!)</div>
+                    <div class="value" th:text="${p.getInitialTheta()[0]+', '+p.getInitialTheta()[1]}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Alpha:
                     </div>
-                    <div class="value">(a huuuuuge list!!!!)</div>
+                    <div class="value" th:text="${p.getAlpha()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Lambda:
                     </div>
-                    <div class="value">(a huuuuuge list!!!!)</div>
+                    <div class="value" th:text="${p.getLambda()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Maximum iterations: 
                     </div>
-                    <div class="value">(a huuuuuge list!!!!)</div>
+                    <div class="value" th:text="${p.getMaxIterations()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Convergence level:
                     </div>
-                    <div class="value">(a huuuuuge list!!!!)</div>
+                    <div class="value" th:text="${p.getConvergenceLevel()}"></div>
                 </div>
 
                 <div class="header">All Costs while Training</div>
                 <div class="row">
-                    <div class="value">987 987 986 8776 5765 987987 87 657 65746 4654 7
-                         987987 987 987 987 987 987 98 7987 98 798 79 879 87 987 98 798 7
-                         7 987 987 987 98798 79 879 87 987 987 98 798 798 7 987 98 798 79
+                    <div class="value">
+                        <textarea readonly th:text="${costs}" rows=20></textarea>
                     </div>
+
                 </div>
 
 
@@ -140,37 +140,32 @@
 
             <div id="right-column">
                 <img width=700 height=400>
+
+                <div class="explanation">
+                    <p>
+                        If you're trying to do this, then change this. 
+                    If you're trying to do this, then change this. 
+                    If you're trying to do this, then change this. 
+                    If you're trying to do this, then change this. 
+                    If you're trying to do this, then change this. 
+                    </p>
+                </div>
+
             </div>
 
         </div>
 
-        <!--<div>
-            Model 
-            Trained theta:
-            Training error:
-            Cross-validation error:
-        </div>
 
-        <img width=700 height=400>
-        <div>
-            Gradient Descent
-            Actual iterations:
-            Converged:
-            Cost increased:
-            [costs while training....]
+
+        <div class="two-button-container">
+            <button type="submit" th:onclick="location.href='/set-parameters'">
+                Modify Parameters
+            </button>
+
+            <button type="submit" th:onclick="location.href='/set-parameters'">
+                blah
+            </button>
         </div>
-        <div>
-            Parameters
-            Proportion of dataset in training set:
-            Size of training set:
-            Size of cross-validation set: 
-            Size of testing set: 
-            Initial theta:
-            Alpha: 
-            Lambda:
-            Maximum iterations of gradient descent: 
-            Convergence level:
-        </div>-->
 
 
 
