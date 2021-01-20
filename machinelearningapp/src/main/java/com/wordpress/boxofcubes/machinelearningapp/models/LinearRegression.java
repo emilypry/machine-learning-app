@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
@@ -17,6 +18,7 @@ public class LinearRegression {
     private int id;
 
     // The data and subsets
+    @ManyToOne
     private Data allData;
     private Data trainingSet;
     private Data crossValSet;
@@ -263,6 +265,47 @@ public class LinearRegression {
         crossValError = getCost(crossValSet, trainedTheta, false);
         testingError = getCost(testingSet, trainedTheta, false);
     }
+
+
+    public int getId(){
+        return id;
+    }
+    public Data getAllData(){
+        return allData;
+    }
+    public Parameters getParameters(){
+        return parameters;
+    }
+    public void setParameters(Parameters parameters){
+        this.parameters = parameters;
+    }
+    public int getActualIterations(){
+        return actualIterations;
+    }
+    public double[] getCostsWhileTraining(){
+        return costsWhileTraining;
+    }
+    public boolean getCostIncreased(){
+        return costIncreased;
+    }
+    public boolean getConverged(){
+        return converged;
+    }
+    public double[] getTrainedTheta(){
+        return trainedTheta;
+    }
+    public double getTrainingError(){
+        return trainingError;
+    }
+    public double getCrossValError(){
+        return crossValError;
+    }
+    public double getTestingError(){
+        return testingError;
+    }
+    
+
+
 
 
 

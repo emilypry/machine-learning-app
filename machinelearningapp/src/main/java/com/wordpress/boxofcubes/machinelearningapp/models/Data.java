@@ -15,14 +15,14 @@ public class Data {
     @Id
     @GeneratedValue
     private int id;
-    
-    /*private double[] x; // change to list 
-    private double[] y;   */
 
     @OneToMany(mappedBy="data", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<DataValue> dataValues;
     /*private List<DataValue> x;
     private List<DataValue> y;*/
+
+    @OneToMany(mappedBy="allData")
+    private List<LinearRegression> regressions;
 
     private int numPoints;
     private String name;
@@ -113,6 +113,9 @@ public class Data {
     }
     public void setItemLabel(String itemLabel){
         this.itemLabel = itemLabel;
+    }
+    public List<LinearRegression> getRegressions(){
+        return regressions;
     }
 
     /** Makes the Life Expectancy by Year sample dataset */
