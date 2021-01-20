@@ -47,10 +47,11 @@ public class LinearRegression {
         int crossSize = (int)((allData.getNumPoints() - trainingSize) / 2);
         int testingSize = allData.getNumPoints() - trainingSize - crossSize;
 
-        // Each set will have x and y values
-        /*double[][] trainingVals = new double[2][trainingSize];
-        double[][] crossVals = new double[2][crossSize];
-        double[][] testingVals = new double[2][testingSize];*/
+        System.out.println("original size: "+allData.getNumPoints());
+        System.out.println("training size: "+trainingSize);
+        System.out.println("cross size: "+crossSize);
+        System.out.println("testing size: "+testingSize);
+
         List<DataValue> trainingVals = new ArrayList<>();
         List<DataValue> crossVals = new ArrayList<>();
         List<DataValue> testingVals = new ArrayList<>();
@@ -60,7 +61,6 @@ public class LinearRegression {
         // Loop through each index, pick a random pair of data points, and assign that 
         // pair as the next member of the relevant subset
         for(int i=0; i < allData.getNumPoints(); i++){
-            System.out.println("This iteration: "+i);
             // Get a random number
             int dataInd;
             while(true){
@@ -71,23 +71,15 @@ public class LinearRegression {
                     break;
                 }
             }
+
             // Add the data points at dataInd to the relevant subset
             if(i < trainingSize){
-                //trainingVals[0][i] = allData.getX()[dataInd];
-                //trainingVals[1][i] = allData.getY()[dataInd];
                 trainingVals.add(new DataValue(allData.getX()[dataInd], allData, true));
                 trainingVals.add(new DataValue(allData.getY()[dataInd], allData, false));
-
             }else if(i < trainingSize + crossSize){
-                int ind = i - trainingSize;
-                //crossVals[0][ind] = allData.getX()[dataInd];
-                //crossVals[1][ind] = allData.getY()[dataInd];
                 crossVals.add(new DataValue(allData.getX()[dataInd], allData, true));
                 crossVals.add(new DataValue(allData.getY()[dataInd], allData, false));
             }else{
-                int ind = i - trainingSize - crossSize;
-                //testingVals[0][ind] = allData.getX()[dataInd];
-                //testingVals[1][ind] = allData.getY()[dataInd];
                 testingVals.add(new DataValue(allData.getX()[dataInd], allData, true));
                 testingVals.add(new DataValue(allData.getY()[dataInd], allData, false));
             }
@@ -102,12 +94,29 @@ public class LinearRegression {
 
 
     public static void main(String[] args){
-        Data data = Data.makeChocolateDataset();
+        Data data = Data.makeBookDataset();
         ParametersDTO p = ParametersDTO.getDefaultParameters();
         double[] theta = {p.getTheta0(), p.getTheta1()};
         Parameters parameters = new Parameters(p.getTrainingProportion(), theta, p.getAlpha(), p.getLambda(), p.getMaxIterations(), p.getConvergenceLevel());
 
-        
+        LinearRegression lr = new LinearRegression(data, parameters);
+
+        System.out.println("ORIGINAL");
+        for(int i=0; i< lr.allData.getNumPoints(); i++){
+            System.out.println(lr.allData.getX()[i]+", "+lr.allData.getY()[i]);
+        }
+        System.out.println("TRAINING");
+        for(int i=0; i< lr.trainingSet.getNumPoints(); i++){
+            System.out.println(lr.trainingSet.getX()[i]+", "+lr.trainingSet.getY()[i]);
+        }
+        System.out.println("CV");
+        for(int i=0; i< lr.crossValSet.getNumPoints(); i++){
+            System.out.println(lr.crossValSet.getX()[i]+", "+lr.crossValSet.getY()[i]);
+        }
+        System.out.println("TESTING");
+        for(int i=0; i< lr.testingSet.getNumPoints(); i++){
+            System.out.println(lr.testingSet.getX()[i]+", "+lr.testingSet.getY()[i]);
+        }
 
     }
 

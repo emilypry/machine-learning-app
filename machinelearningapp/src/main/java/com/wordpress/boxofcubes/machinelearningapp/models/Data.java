@@ -33,6 +33,7 @@ public class Data {
     public Data(){}
     public Data(List<DataValue> dataValues){
         this.dataValues = dataValues;
+        this.numPoints = this.dataValues.size() / 2;
     }
     public Data(List<DataValue> dataValues, String name, String xLabel, String yLabel, String itemLabel){
         this.dataValues = dataValues;
