@@ -110,6 +110,35 @@ public class LinearRegression {
         return predictions;
     }
 
+    /** Returns the cost of the model, with or without regularization (with, if lambda
+     * is greater than 0 and regularized == true) */
+    public double getCost(Data dataset, double[] theta, boolean regularized){
+        // cost = 1/(2*m) * sum(sqr(predictions - y))
+        double sumOfSquares = 0;
+        double[] predictions = getPredictions(dataset, theta);
+
+        // sum(sqr(predictions - y))
+        for(int i=0; i<dataset.getNumPoints(); i++){
+            sumOfSquares += (predictions[i] - dataset.getY()[i]) 
+                            * (predictions[i] - dataset.getY()[i]);
+        }
+
+        // 1/(2*m) * sum(sqr(predictions - y))
+        double cost = 2 * dataset.getNumPoints();
+        cost = 1/cost;
+        cost *= sumOfSquares;
+
+        // If doing a regularized cost function, add the regularization parameter
+        if(regularized == true && parameters.getLambda() > 0){
+            // Add lambda/(2*m) * sum(theta[1]*theta[1])
+            double reg = 2 * dataset.getNumPoints();
+            reg = parameters.getLambda() / reg;
+            reg *= (theta[1]*theta[1]);
+            cost += reg;
+        }
+        return cost;
+    }
+
     public static void main(String[] args){
         Data data = Data.makeBookDataset();
         ParametersDTO p = ParametersDTO.getDefaultParameters();
@@ -118,10 +147,10 @@ public class LinearRegression {
 
         LinearRegression lr = new LinearRegression(data, parameters);
 
-        System.out.println("ORIGINAL");
+        /*System.out.println("ORIGINAL");
         for(int i=0; i< lr.allData.getNumPoints(); i++){
             System.out.println(lr.allData.getX()[i]+", "+lr.allData.getY()[i]);
-        }
+        }*/
         System.out.println("TRAINING");
         for(int i=0; i< lr.trainingSet.getNumPoints(); i++){
             System.out.println(lr.trainingSet.getX()[i]+", "+lr.trainingSet.getY()[i]);
@@ -140,12 +169,17 @@ public class LinearRegression {
         for(int r=0; r<design.length; r++){
             System.out.println(design[r][0]+" "+design[r][1]);
         }*/
-        System.out.println("predictions");
+        /*System.out.println("predictions");
         double[] pred = getPredictions(lr.trainingSet, new double[]{1,1});
         for(double pp : pred){
             System.out.println(pp);
-        }
-        
+        }*/
+
+        System.out.println("theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
+        lr.parameters.setLambda(20);
+        System.out.println("lambda: "+lr.parameters.getLambda());
+        double cost = lr.getCost(lr.trainingSet, lr.parameters.getInitialTheta(), true);
+        System.out.println("COST: "+cost);
 
 
 
