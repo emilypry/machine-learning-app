@@ -28,10 +28,14 @@ public class LinearRegression {
     // Acquired during/after gradient descent
     private int actualIterations;
     private double[] costsWhileTraining;
+    boolean costIncreased;
+    boolean converged;
 
-    // The model
+    // The model and errors
     private double[] trainedTheta;
-    // will want to get t and cv cost too
+    private double trainingError;
+    private double crossValError;
+    private double testingError;
 
     public LinearRegression(){}
     public LinearRegression(Data allData, Parameters parameters){
@@ -207,7 +211,6 @@ public class LinearRegression {
         return newTheta;
     }
 
-
     /** Runs gradient descent and returns a matrix where the first row is the cost per
      * iteration and the second row is the final two theta values
      */
@@ -228,12 +231,14 @@ public class LinearRegression {
                 // If cost has increased on this iteration, stop (not learning)
                 if(difference < 0){
                     System.out.println("COST INCREASED");
+                    costIncreased = true;
                     break;
                 }
                 // If the cost has decreased less than the convergenceLevel on this 
                 // iteration, stop (learned)
                 if(difference < parameters.getConvergenceLevel()){
                     System.out.println("CONVERGED");
+                    converged = true;
                     break;
                 }
             }
@@ -248,11 +253,21 @@ public class LinearRegression {
         return costsAndTheta;
     }
 
+    /** Runs gradient descent on the trainingSet and updates attributes */
+    public void trainModel(){
+        double[][] costsAndTheta = gradientDescent(trainingSet);
+        actualIterations = costsAndTheta[0].length;
+        costsWhileTraining = costsAndTheta[0];
+        trainedTheta = costsAndTheta[1];
+        trainingError = getCost(trainingSet, trainedTheta, false);
+        crossValError = getCost(crossValSet, trainedTheta, false);
+        testingError = getCost(testingSet, trainedTheta, false);
+    }
 
 
 
     public static void main(String[] args){
-        Data data = Data.makeChocolateDataset();
+        Data data = Data.makeLifeDataset();
         ParametersDTO p = ParametersDTO.getDefaultParameters();
         double[] theta = {p.getTheta0(), p.getTheta1()};
         Parameters parameters = new Parameters(p.getTrainingProportion(), theta, p.getAlpha(), p.getLambda(), p.getMaxIterations(), p.getConvergenceLevel());
@@ -299,14 +314,23 @@ public class LinearRegression {
 
         //double[] t = {10, 10};
         //lr.parameters.setInitialTheta(t);
-        lr.parameters.setLambda(10);
+        /*lr.parameters.setLambda(10);
         System.out.println("initial theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
         System.out.println("alpha: "+lr.parameters.getAlpha());
         System.out.println("lambda: "+lr.parameters.getLambda());
         System.out.println("max it: "+lr.parameters.getMaxIterations());
         System.out.println("con level: "+lr.parameters.getConvergenceLevel());
         double[][] costsAndTheta = lr.gradientDescent(lr.trainingSet);
-        System.out.println("new theta: "+costsAndTheta[1][0]+" "+costsAndTheta[1][1]);
+        System.out.println("new theta: "+costsAndTheta[1][0]+" "+costsAndTheta[1][1]);*/
+
+        lr.parameters.setAlpha(.00000001);
+        lr.trainModel();
+        System.out.println("trained model!");
+        System.out.println("initial error: "+lr.getCost(lr.trainingSet, lr.parameters.getInitialTheta(), false));
+        System.out.println("trained theta: "+lr.trainedTheta[0]+" "+lr.trainedTheta[1]);
+        System.out.println("training error: "+lr.trainingError);
+        System.out.println("cv error: "+lr.crossValError);
+        System.out.println("testing error: "+lr.trainingError);
 
 
 
