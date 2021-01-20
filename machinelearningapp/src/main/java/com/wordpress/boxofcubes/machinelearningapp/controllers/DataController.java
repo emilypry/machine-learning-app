@@ -204,7 +204,7 @@ public class DataController {
 
         String costs = "";
         for(double c : lr.getCostsWhileTraining()){
-            costs += c + "\n";
+            costs += String.format("%.2f", c)+ "\n";
         }
         model.addAttribute("costs", costs);
         return "data/trained";

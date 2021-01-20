@@ -36,19 +36,19 @@
                     <div class="label">
                         Trained theta: 
                     </div>
-                    <div class="value" th:text="${lr.getTrainedTheta()[0]+', '+lr.getTrainedTheta()[1]}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 0, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 0, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Training error: 
                     </div>
-                    <div class="value" th:text="${lr.getTrainingError()}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 0, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Cross-validation error: 
                     </div>
-                    <div class="value" th:text="${lr.getCrossValError()}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 0, 2)}"></div>
                 </div>
 
                 <div class="header">Gradient Descent</div>
@@ -56,7 +56,7 @@
                     <div class="label">
                         Initial cost: 
                     </div>
-                    <div class="value" >(value)</div>
+                    <div class="value" th:text="${lr.getInitialCost()}"></div>
                 </div>
                 <div class="row">
                     <div class="label">

@@ -272,6 +272,9 @@ public class LinearRegression {
     public int getTestingSize(){
         return testingSet.getNumPoints();
     }
+    public double getInitialCost(){
+        return getCost(trainingSet, parameters.getInitialTheta(), false);
+    }
 
 
     public int getId(){
