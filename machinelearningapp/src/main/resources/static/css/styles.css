@@ -276,3 +276,43 @@ input {
     text-decoration: none;
     font-size: 16px;
 }
+
+#trained-model-container {
+    width: 88%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    display: flex;
+    justify-content: space-between;
+}
+#left-column {
+    width: 32%;
+}
+#right-column {
+    width: 67%;
+}
+#right-column img{
+    margin-top: 6%;
+}
+#left-column .row {
+    font-family: "Avenir";
+    font-size: 15px;
+    margin-top: 1%;
+}
+#left-column .header{
+    margin-top: 6%;
+    margin-bottom: 3%;
+    font-family:"Avenir";
+    font-weight: 500;
+    font-size: 17px;
+    color:rgb(61, 60, 60);
+}
+#left-column .row .label {
+    display: inline;
+    color:rgb(32, 40, 73);
+}
+#left-column .row .value {
+    color:rgb(165, 29, 20);
+    margin-left: 3%;
+    display: inline;
+}
