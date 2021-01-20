@@ -139,6 +139,79 @@ public class LinearRegression {
         return cost;
     }
 
+    /** Returns the updated theta vector for a single iteration of gradient descent  */
+    private double[] updateTheta(Data dataset, double[] theta){
+        // If not regularized (lambda = 0):
+        //   newTheta = theta - (alpha/m) * ((predictions - y) * X)
+        // If regularized (lambda > 0):
+        //   newTheta[0] = theta[0] - (alpha/m) * ((predictions - y) * X[i][0])
+        //   newTheta[1] = theta[1] - (alpha/m) * ((predictions - y) * X[i][1]) + 
+        //                  (lambda / m) * theta[1]
+
+        double[] newTheta = new double[2];
+        double[] predictions = getPredictions(dataset, theta);
+        double[][] design = getDesignMatrix(dataset);
+
+        // Get (predictions - y) for all versions
+        double[] predMinusY = new double[predictions.length];
+        for(int i=0; i<predictions.length; i++){
+            predMinusY[i] = predictions[i] - dataset.getY()[i];
+        }
+
+        // Get (alpha/m) for all versions
+        double alphaOverM = parameters.getAlpha() / dataset.getNumPoints();
+
+        double[] thetaUpdates = new double[2];
+
+        // If regularized
+        if(parameters.getLambda() > 0){
+            // For newTheta[0], predMinusY * X[0] is the sum of all predMinusY values
+            for(double d : predMinusY){
+                thetaUpdates[0] += d;
+            }
+
+            // For newTheta[1], predMinusY * X[1] is the sum of all (predMinusY[i] * X[i][1])
+            double thisSum = 0;
+            for(int i=0; i<dataset.getNumPoints(); i++){
+                thisSum += predMinusY[i] * design[i][1];
+            }
+            thetaUpdates[1] = thisSum;
+
+            // Get alphaOverM * (predMinusY * X[i]) [+ (lambda/m)*theta[1] for newTheta[1]]
+            thetaUpdates[0] *= alphaOverM;
+            thetaUpdates[1] *= alphaOverM;
+
+            // For newTheta[1], add (lambda / m) * theta[1]
+            thetaUpdates[1] += (parameters.getLambda() /dataset.getNumPoints() * theta[1]);
+
+        // If no regularization
+        }else{
+            // Get predMinusY * X
+            for(int col=0; col<2; col++){
+                double thisSum = 0;
+                for(int row=0; row<dataset.getNumPoints(); row++){
+                    thisSum += design[row][col] * predMinusY[row];
+                }
+                thetaUpdates[col] = thisSum;
+            }
+
+            // Get alphaOverM * (predMinusY * X)
+            thetaUpdates[0] *= alphaOverM;
+            thetaUpdates[1] *= alphaOverM;           
+        }
+
+        // Get theta - thetaUpdates
+        newTheta[0] = theta[0] - thetaUpdates[0];
+        newTheta[1] = theta[1] - thetaUpdates[1];
+
+        return newTheta;
+    }
+
+
+
+
+
+
     public static void main(String[] args){
         Data data = Data.makeBookDataset();
         ParametersDTO p = ParametersDTO.getDefaultParameters();
@@ -175,11 +248,15 @@ public class LinearRegression {
             System.out.println(pp);
         }*/
 
-        System.out.println("theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
+        /*System.out.println("theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
         lr.parameters.setLambda(20);
         System.out.println("lambda: "+lr.parameters.getLambda());
         double cost = lr.getCost(lr.trainingSet, lr.parameters.getInitialTheta(), true);
-        System.out.println("COST: "+cost);
+        System.out.println("COST: "+cost);*/
+
+        lr.parameters.setLambda(20);
+        double[] newTheta = lr.updateTheta(lr.trainingSet, theta);
+        System.out.println(newTheta[0]+" "+newTheta[1]);
 
 
 
