@@ -208,12 +208,51 @@ public class LinearRegression {
     }
 
 
+    /** Runs gradient descent and returns a matrix where the first row is the cost per
+     * iteration and the second row is the final two theta values
+     */
+    private double[][] gradientDescent(Data dataset){
+        ArrayList<Double> costsList = new ArrayList<Double>();
+        double[] theta = parameters.getInitialTheta();
+
+        for(int i=0; i<parameters.getMaxIterations(); i++){
+            theta = updateTheta(dataset, theta);
+            double cost = getCost(dataset, theta, true);
+            costsList.add(cost);
+
+            System.out.print(cost + " ");
+
+            if(i > 0){
+                double difference = costsList.get(i-1) - cost;
+
+                // If cost has increased on this iteration, stop (not learning)
+                if(difference < 0){
+                    System.out.println("COST INCREASED");
+                    break;
+                }
+                // If the cost has decreased less than the convergenceLevel on this 
+                // iteration, stop (learned)
+                if(difference < parameters.getConvergenceLevel()){
+                    System.out.println("CONVERGED");
+                    break;
+                }
+            }
+        }
+
+        double[][] costsAndTheta = new double[2][costsList.size()];
+        for(int i=0; i<costsList.size(); i++){
+            costsAndTheta[0][i] = costsList.get(i);
+        }
+        costsAndTheta[1] = theta;
+
+        return costsAndTheta;
+    }
 
 
 
 
     public static void main(String[] args){
-        Data data = Data.makeBookDataset();
+        Data data = Data.makeChocolateDataset();
         ParametersDTO p = ParametersDTO.getDefaultParameters();
         double[] theta = {p.getTheta0(), p.getTheta1()};
         Parameters parameters = new Parameters(p.getTrainingProportion(), theta, p.getAlpha(), p.getLambda(), p.getMaxIterations(), p.getConvergenceLevel());
@@ -254,9 +293,21 @@ public class LinearRegression {
         double cost = lr.getCost(lr.trainingSet, lr.parameters.getInitialTheta(), true);
         System.out.println("COST: "+cost);*/
 
-        lr.parameters.setLambda(20);
+        /*lr.parameters.setLambda(20);
         double[] newTheta = lr.updateTheta(lr.trainingSet, theta);
-        System.out.println(newTheta[0]+" "+newTheta[1]);
+        System.out.println(newTheta[0]+" "+newTheta[1]);*/
+
+        //double[] t = {10, 10};
+        //lr.parameters.setInitialTheta(t);
+        lr.parameters.setLambda(10);
+        System.out.println("initial theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
+        System.out.println("alpha: "+lr.parameters.getAlpha());
+        System.out.println("lambda: "+lr.parameters.getLambda());
+        System.out.println("max it: "+lr.parameters.getMaxIterations());
+        System.out.println("con level: "+lr.parameters.getConvergenceLevel());
+        double[][] costsAndTheta = lr.gradientDescent(lr.trainingSet);
+        System.out.println("new theta: "+costsAndTheta[1][0]+" "+costsAndTheta[1][1]);
+
 
 
 
