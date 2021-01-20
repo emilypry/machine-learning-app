@@ -91,6 +91,16 @@ public class LinearRegression {
         testingSet = new Data(testingVals);
     }
 
+    /** Returns a matrix where the first column consists in 1s and the second is x values */
+    private static double[][] getDesignMatrix(Data dataset){
+        double[][] designMatrix = new double[dataset.getNumPoints()][2];
+        for(int row=0; row < dataset.getNumPoints(); row++){
+            designMatrix[row][0] = 1;
+            designMatrix[row][1] = dataset.getX()[row];
+        }
+        return designMatrix;
+    }
+
 
 
     public static void main(String[] args){
@@ -117,6 +127,15 @@ public class LinearRegression {
         for(int i=0; i< lr.testingSet.getNumPoints(); i++){
             System.out.println(lr.testingSet.getX()[i]+", "+lr.testingSet.getY()[i]);
         }
+
+        System.out.println("design");
+        double[][] design = getDesignMatrix(lr.trainingSet);
+        for(int r=0; r<design.length; r++){
+            System.out.println(design[r][0]+" "+design[r][1]);
+        }
+        
+
+
 
     }
 
