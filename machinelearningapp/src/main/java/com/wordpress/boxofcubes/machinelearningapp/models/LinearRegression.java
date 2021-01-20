@@ -92,7 +92,7 @@ public class LinearRegression {
     }
 
     /** Returns a matrix where the first column consists in 1s and the second is x values */
-    private static double[][] getDesignMatrix(Data dataset){
+    private double[][] getDesignMatrix(Data dataset){
         double[][] designMatrix = new double[dataset.getNumPoints()][2];
         for(int row=0; row < dataset.getNumPoints(); row++){
             designMatrix[row][0] = 1;
@@ -101,7 +101,14 @@ public class LinearRegression {
         return designMatrix;
     }
 
-
+    /** Returns the model's (theta's) predicted y-values given the x-values in the dataset */
+    public static double[] getPredictions(Data dataset, double[] theta){
+        double[] predictions = new double[dataset.getNumPoints()];
+        for(int row=0; row < dataset.getNumPoints(); row++){
+            predictions[row] = theta[0] + (dataset.getX()[row] * theta[1]);
+        }
+        return predictions;
+    }
 
     public static void main(String[] args){
         Data data = Data.makeBookDataset();
@@ -119,19 +126,24 @@ public class LinearRegression {
         for(int i=0; i< lr.trainingSet.getNumPoints(); i++){
             System.out.println(lr.trainingSet.getX()[i]+", "+lr.trainingSet.getY()[i]);
         }
-        System.out.println("CV");
+        /*System.out.println("CV");
         for(int i=0; i< lr.crossValSet.getNumPoints(); i++){
             System.out.println(lr.crossValSet.getX()[i]+", "+lr.crossValSet.getY()[i]);
         }
         System.out.println("TESTING");
         for(int i=0; i< lr.testingSet.getNumPoints(); i++){
             System.out.println(lr.testingSet.getX()[i]+", "+lr.testingSet.getY()[i]);
-        }
+        }*/
 
-        System.out.println("design");
+        /*System.out.println("design");
         double[][] design = getDesignMatrix(lr.trainingSet);
         for(int r=0; r<design.length; r++){
             System.out.println(design[r][0]+" "+design[r][1]);
+        }*/
+        System.out.println("predictions");
+        double[] pred = getPredictions(lr.trainingSet, new double[]{1,1});
+        for(double pp : pred){
+            System.out.println(pp);
         }
         
 
