@@ -23,8 +23,8 @@
                 &nbsp The model's <b>training and cross-validation error</b> represent its average prediction
                 error on the training and cross-validation sets. The closer those numbers are 
                 to 0, the better the model is of your dataset. To improve the model, modify the 
-                parameters of the algorithm and train the model again. You should shoot for the 
-                lowest possible cross-validation error. 
+                parameters of the algorithm and train the model again. <u>You should shoot for the 
+                lowest possible cross-validation error.</u>
             </p>
             <p>
                 &nbsp The <b>initial cost</b> is the average prediction error of the initial theta 
@@ -32,9 +32,9 @@
                 the initial cost to the training and cross-validation error. The training and 
                 cross-validation error should be lower than the initial cost. The number of 
                 <b>actual iterations</b> of the gradient descent algorithm will be lower than 
-                the <b>maximum iterations</b> only if the algorithm converged or the cost increased. 
+                the maximum iterations only if the algorithm converged or the cost increased. 
                 If it <b>converged</b>, it found the optimal theta values, relative to the 
-                <b>convergence level</b>. If the <b>cost increased</b>, the prediction error 
+                convergence level. If the <b>cost increased</b>, the prediction error 
                 increased at some point in the algorithm, meaning it wasn't working properly. 
                 The <b>costs while training</b> shows the model's prediction error on each 
                 iteration of the algorithm. 
@@ -156,11 +156,24 @@
                 <img width=700 height=400>
 
                 <div id="improvements">
-                    <div class="label">
-                        How to Improve the Model
-                    </div>
+                    <h3>How to improve the model</h3>
                     <p>
-                        &nbsp If 
+                        If the <b>cost increased</b>, try decreasing alpha, decreasing lambda,
+                        or changing the initial theta values.
+
+                        <br/><br/>If the algorithm did not <b>converge</b>, try increasing the maximum
+                        iterations or changing the initial theta values. 
+
+                        <br/><br/>If the <b>training error</b> is low but the <b>cross-validation error</b>
+                        is high, try increasing lambda.
+
+                        <br/><br/>If the <b>cross-validation error</b> is low but the <b>training error</b>
+                        is high, try decreasing lambda.
+
+                        <br/><br/>After that, if the <b>training error</b> and <b>cross-validation error</b> are 
+                        still high, try increasing the proportion of the dataset in the training set, 
+                        increasing the maximum iterations, or decreasing the convergence level. 
+
                     </p>
                 </div>
 

@@ -16,7 +16,7 @@ public class LinearRegression {
     private int id;
 
     // The data and subsets
-    private Data allData;
+    //private Data allData;
     private Data trainingSet;
     private Data crossValSet;
     private Data testingSet;
@@ -38,13 +38,13 @@ public class LinearRegression {
 
     public LinearRegression(){}
     public LinearRegression(Data allData, Parameters parameters){
-        this.allData = allData;
+        //this.allData = allData;
         this.parameters = parameters;
-        setSubsets();
+        setSubsets(allData);
     }
 
     /** Sets the trainingSet, crossValSet, and testingSet from allData */
-    private void setSubsets(){
+    private void setSubsets(Data allData){
         // Get the size for the subsets
         int trainingSize = (int)(allData.getNumPoints() * parameters.getTrainingProportion());
         int crossSize = (int)((allData.getNumPoints() - trainingSize) / 2);
@@ -280,12 +280,12 @@ public class LinearRegression {
     public int getId(){
         return id;
     }
-    public Data getAllData(){
+    /*public Data getAllData(){
         return allData;
     }
     public void setAllData(Data allData){
         this.allData = allData;
-    }
+    }*/
     public Parameters getParameters(){
         return parameters;
     }
