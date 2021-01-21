@@ -5,6 +5,7 @@ import com.wordpress.boxofcubes.machinelearningapp.models.Parameters;
 public class ParametersDTO extends Parameters{
     private double theta0;
     private double theta1;
+    private int numPointsInData;
 
     public ParametersDTO(){};
 
@@ -19,6 +20,12 @@ public class ParametersDTO extends Parameters{
     }
     public void setTheta1(double theta1){
         this.theta1 = theta1;
+    }
+    public int getNumPointsInData(){
+        return numPointsInData;
+    }
+    public void setNumPointsInData(int numPointsInData){
+        this.numPointsInData = numPointsInData;
     }
 
     public static ParametersDTO getDefaultParameters(){

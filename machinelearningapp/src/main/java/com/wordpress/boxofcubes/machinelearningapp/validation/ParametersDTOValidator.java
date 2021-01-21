@@ -38,6 +38,9 @@ public class ParametersDTOValidator implements Validator{
             errors.reject("error.convergence", "Convergence level must be between .00000001 and 1");
         }
 
+        // Training proportion too high/low given number of points in data
+        System.out.println("Params - number of data points: "+p.getNumPointsInData());
+
     }
 
 }

@@ -165,8 +165,20 @@ public class DataController {
 
 
     @GetMapping("set-parameters")
-    public String showParameters(Model model){
-        model.addAttribute("parametersDTO", ParametersDTO.getDefaultParameters());
+    public String showParameters(Model model, HttpServletRequest request){
+        // Make a new ParametersDTO with the default parameters
+        ParametersDTO p = ParametersDTO.getDefaultParameters();
+
+        // Get the Data object from the session
+        Data data = (Data)request.getSession().getAttribute("data");
+        if(data != null){
+            // Set the numPointsInData of the Parameters object
+            p.setNumPointsInData(data.getNumPoints());
+        }else{
+            System.out.println("No data object for setting num points in Parameters!");
+        }
+        model.addAttribute("parametersDTO", p);
+
         return "data/parameters";
     }
     @PostMapping("set-parameters")
@@ -183,11 +195,7 @@ public class DataController {
         theta[1] = parametersDTO.getTheta1();
         Parameters parameters = new Parameters(parametersDTO.getTrainingProportion(), theta, parametersDTO.getAlpha(), parametersDTO.getLambda(), parametersDTO.getMaxIterations(), parametersDTO.getConvergenceLevel());
 
-        // Add the Parameters object to the session
-        /*request.getSession().setAttribute("parameters", parameters);
-        return "redirect:/training-model";*/
-
-        // Get the data object
+        // Get the Data object from the session 
         Data data = (Data)request.getSession().getAttribute("data");
         if(data != null){
             // Make a new Linear Regression object and train a model
@@ -208,13 +216,7 @@ public class DataController {
     SETS, GIVEN THEIR DATASET AND THE PROPORTION THEY'VE SELECTED. MACHINE LEARNING WILL RUN
     INTO PROBLEMS OTHERWISE!!!!!!!!!!!!!
 
-    AFTER TRAINING, HITTING 'VIEW DATA' FROM SET-PARAMETERS GO BACK TO TRAINED-MODEL!!!
 
-    NOTE: I SHOULD BREAK THE DATASET INTO ITS SUBSETS AFTER IT'S SUBMITTED (BEFORE SETTING
-    PARAMETERS), SO THE TRAINING SET REMAINS THE SAME IF YOU GO BACK AND MODIFY THE 
-    PARAMETERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*****************************
-        So, when going back to modify data, include 'modify=true' or something in query
-        and if true, get lr from session
     */
 
     @GetMapping("trained-model")
