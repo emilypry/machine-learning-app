@@ -12,22 +12,34 @@
         <div class="explanation">
             <h3>This is your trained model. </h3>
             <p>
-                This is the model! I hope you're happy! You're shooting for the lowest
-                amount of training error and cross-validation error. Here's what that 
-                means...
+                A model has been trained on your training set given the parameters you
+                specified for the gradient descent algorithm. The model consists in 
+                the <b>trained theta </b>values, corresponding to estimated y-intercept and 
+                slope of the linear regression. The graph shows your whole dataset and 
+                the model's linear regression. A good model will fit the line onto your dataset 
+                well. 
+            </p>
+            <p>
+                &nbsp The model's <b>training and cross-validation error</b> represent its average prediction
+                error on the training and cross-validation sets. The closer those numbers are 
+                to 0, the better the model is of your dataset. To improve the model, modify the 
+                parameters of the algorithm and train the model again. You should shoot for the 
+                lowest possible cross-validation error. 
+            </p>
+            <p>
+                &nbsp The <b>initial cost</b> is the average prediction error of the initial theta 
+                values on your training set. You can gauge whether the model learned by comparing
+                the initial cost to the training and cross-validation error. The training and 
+                cross-validation error should be lower than the initial cost. The number of 
+                <b>actual iterations</b> of the gradient descent algorithm will be lower than 
+                the <b>maximum iterations</b> only if the algorithm converged or the cost increased. 
+                If it <b>converged</b>, it found the optimal theta values, relative to the 
+                <b>convergence level</b>. If the <b>cost increased</b>, the prediction error 
+                increased at some point in the algorithm, meaning it wasn't working properly. 
+                The <b>costs while training</b> shows the model's prediction error on each 
+                iteration of the algorithm. 
             </p>
         </div>
-
-        <!--
-            cross-validation cost
-            training cost
-            actual iterations
-            trained theta0, 1
-            graph with predictions
-            options to save model to account, download model...
-
-            Put recommendations about what to do......
-        -->
 
         <div id="trained-model-container">
             <div id="left-column">
@@ -36,19 +48,19 @@
                     <div class="label">
                         Trained theta: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 0, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 0, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 1, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 1, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Training error: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 0, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 1, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Cross-validation error: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 0, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 1, 2)}"></div>
                 </div>
 
                 <div class="header">Gradient Descent</div>
@@ -56,7 +68,7 @@
                     <div class="label">
                         Initial cost: 
                     </div>
-                    <div class="value" th:text="${lr.getInitialCost()}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getInitialCost(), 1, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
@@ -75,6 +87,16 @@
                         Cost increased:
                     </div>
                     <div class="value" th:text="${lr.getCostIncreased()}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        All costs while training:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <textarea readonly th:text="${costs}" rows=10></textarea>
+                    </div>
                 </div>
                
                 <div class="header">Parameters</div>
@@ -127,27 +149,18 @@
                     <div class="value" th:text="${p.getConvergenceLevel()}"></div>
                 </div>
 
-                <div class="header">All Costs while Training</div>
-                <div class="row">
-                    <div class="value">
-                        <textarea readonly th:text="${costs}" rows=20></textarea>
-                    </div>
-
-                </div>
-
 
             </div>
 
             <div id="right-column">
                 <img width=700 height=400>
 
-                <div class="explanation">
+                <div id="improvements">
+                    <div class="label">
+                        How to Improve the Model
+                    </div>
                     <p>
-                        If you're trying to do this, then change this. 
-                    If you're trying to do this, then change this. 
-                    If you're trying to do this, then change this. 
-                    If you're trying to do this, then change this. 
-                    If you're trying to do this, then change this. 
+                        &nbsp If 
                     </p>
                 </div>
 

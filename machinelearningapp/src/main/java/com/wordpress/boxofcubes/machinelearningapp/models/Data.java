@@ -18,8 +18,6 @@ public class Data {
 
     @OneToMany(mappedBy="data", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<DataValue> dataValues;
-    /*private List<DataValue> x;
-    private List<DataValue> y;*/
 
     private int numPoints;
     private String name;
