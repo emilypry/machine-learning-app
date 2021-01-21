@@ -138,18 +138,20 @@
                     <a th:href="@{/set-parameters?defaultParams=true}">Restore Default Parameters</a>
                 </div>
 
-                <div class="two-button-container">
-                    <button type="submit" th:onclick="location.href='/view-data'">
-                        View Data
-                    </button>
-        
-                    <button type="submit" form="parameters-form">
-                        Train Model
-                    </button>
-                </div>
-
             </div>
         </form>
+
+        <div class="two-button-container">
+            <form method="post" th:action="@{/view-data/return}">
+                <button type="submit">
+                    View Data
+                </button>
+            </form>
+
+            <button type="submit" form="parameters-form">
+                Train Model
+            </button>
+        </div>
 
     </div>
 

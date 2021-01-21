@@ -130,17 +130,36 @@ public class DataController {
 
 
     @GetMapping("view-data")
-    public String showChart(Model model, @RequestParam String dataUUID, HttpServletRequest r){
+    public String showChart(Model model, @RequestParam String dataUUID, HttpServletRequest request){
         // Get the data UUID from the URL and add to the model
         model.addAttribute("dataUUID", dataUUID);
 
-        Data byUUID = (Data)r.getSession().getAttribute(dataUUID);
-        Data byData = (Data)r.getSession().getAttribute("data");
+        Data byUUID = (Data)request.getSession().getAttribute(dataUUID);
+        Data byData = (Data)request.getSession().getAttribute("data");
 
         System.out.println("byUUID and byData same? "+(byUUID.equals(byData)));
 
         return "data/chart";
     }
+
+    @PostMapping("view-data/return")
+    public String returnToViewData(HttpServletRequest request){
+        // Get the Data object from the session
+        Data data = (Data)request.getSession().getAttribute("data");
+
+        // Make a new UUID for it
+        String dataUUID = UUID.randomUUID().toString();
+
+        if(data != null){
+            request.getSession().setAttribute(dataUUID, data);
+            System.out.println("Returning to view data with obj "+dataUUID);
+            return "redirect:/view-data?dataUUID="+dataUUID;
+        }else{
+            System.out.println("Couldn't find data object to go back to view!");
+            return "redirect:/set-parameters";
+        }
+    }
+
 
 
 
@@ -194,7 +213,8 @@ public class DataController {
     NOTE: I SHOULD BREAK THE DATASET INTO ITS SUBSETS AFTER IT'S SUBMITTED (BEFORE SETTING
     PARAMETERS), SO THE TRAINING SET REMAINS THE SAME IF YOU GO BACK AND MODIFY THE 
     PARAMETERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*****************************
-
+        So, when going back to modify data, include 'modify=true' or something in query
+        and if true, get lr from session
     */
 
     @GetMapping("trained-model")
