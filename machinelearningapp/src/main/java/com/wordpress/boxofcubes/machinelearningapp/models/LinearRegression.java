@@ -38,7 +38,6 @@ public class LinearRegression {
 
     public LinearRegression(){}
     public LinearRegression(Data allData, Parameters parameters){
-        //this.allData = allData;
         this.parameters = parameters;
         setSubsets(allData);
     }
