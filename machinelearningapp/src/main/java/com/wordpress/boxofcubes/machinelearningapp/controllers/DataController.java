@@ -182,13 +182,12 @@ public class DataController {
         return "data/parameters";
     }
     @PostMapping("set-parameters")
-    public String processParametersAndTrainModel(ParametersDTO parametersDTO, BindingResult bindingResult, HttpServletRequest request){
+    public String processParametersTrainModelShowChart(ParametersDTO parametersDTO, BindingResult bindingResult, HttpServletRequest request, Model model){
         // Validate the parameters
         parametersValidator.validate(parametersDTO, bindingResult);
         if(bindingResult.hasErrors()){
             return "data/parameters";
         }
-
         // Convert the DTO to a new Parameters object
         double[] theta = new double[2];
         theta[0] = parametersDTO.getTheta0();
@@ -205,15 +204,25 @@ public class DataController {
             // Add the Linear Regression object to the session
             request.getSession().setAttribute("linearRegression", lr);
 
-            return "redirect:/trained-model";
+            // Make a new UUID for the Data object
+            String dataUUID = UUID.randomUUID().toString();
+            request.getSession().setAttribute(dataUUID, data);
+
+            // Get the predicted points from the model, add to session
+            double[] predictions = lr.getPredictedPoints(data);
+            request.getSession().setAttribute("predictions", predictions);
+
+            return "redirect:/trained-model?dataUUID="+dataUUID;
         }else{
             System.out.println("ERROR - couldn't find data for training!");
             return "data/parameters";
         }
+
+
     }
 
     @GetMapping("trained-model")
-    public String showTrainedModel(HttpServletRequest request, Model model){
+    public String showTrainedModel(@RequestParam String dataUUID,HttpServletRequest request, Model model){
         // Get the Linear Regression object
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
 
@@ -225,19 +234,25 @@ public class DataController {
         }
         model.addAttribute("costs", costs);
 
-        // Get the Data object in the session
+        model.addAttribute("dataUUID", dataUUID);
+
+        /*// Get the Data object in the session
         Data data = (Data)request.getSession().getAttribute("data");
         if(data != null){
-            double[] predictions = lr.getPredictedPoints(data);
+            // Make a new UUID for the Data object
+            String dataUUID = UUID.randomUUID().toString();
+            request.getSession().setAttribute(dataUUID, data);
 
+            // Get the predicted points from the model
+            double[] predictions = lr.getPredictedPoints(data);
             // Set the predictions in the session
             request.getSession().setAttribute("predictions", predictions);
-            // WILL WANT TO REMOVE SESSION ATTRIBUTE LATER!
+
 
 
         }else{
             System.out.println("Can't find data in trained-model!");
-        }
+        }*/
         
 
 

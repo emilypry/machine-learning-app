@@ -43,7 +43,7 @@ public class LinearRegression {
     }
 
     /** Sets the trainingSet, crossValSet, and testingSet from allData */
-    private void setSubsets(Data allData){
+    public void setSubsets(Data allData){
         // Get the size for the subsets
         int trainingSize = (int)(allData.getNumPoints() * parameters.getTrainingProportion());
         int crossSize = (int)((allData.getNumPoints() - trainingSize) / 2);

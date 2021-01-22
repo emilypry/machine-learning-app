@@ -89,20 +89,90 @@ public class ChartServlet extends HttpServlet{
         }else{
             System.out.println("There's NO data object for the chart!!!!!!!!!");
         }*/
-        Data data = (Data)request.getSession().getAttribute("data");
-        double[] predictions = (double[])request.getSession().getAttribute("predictions");
+        
+        // Get Data UUID
+        String dataUUID = request.getParameter("dataUUID");
+        if(dataUUID != null){
+            Data data = (Data)request.getSession().getAttribute(dataUUID);
+            if(data != null){
+                double[] predictions = (double[])request.getSession().getAttribute("predictions");
 
-        if(data != null && predictions != null){
-            response.setContentType("image/png");
-            OutputStream outputStream = response.getOutputStream();
+                // If there are predictions, show the chart with predictions
+                if(predictions != null){
+                    response.setContentType("image/png");
+                    OutputStream outputStream = response.getOutputStream();
+        
+                    // Make the chart
+                    JFreeChart chart = getChartWithPredictions(data, predictions);
+                    ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
+    
+                    // Remove predictions from session
+                    request.getSession().removeAttribute("predictions");
+                    System.out.println("Removed predictions from session");
+                }
+                // If there aren't predictions, show the chart with just the data points
+                else{
+                    response.setContentType("image/png");
+                    OutputStream outputStream = response.getOutputStream();
+    
+                    // Make the chart
+                    JFreeChart chart = getChart(data);
+                    ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
+                }
+            }else{
+                System.out.println("uuid but no data object!");
+            }
 
-            // Make the chart
-            JFreeChart chart = getChartWithPredictions(data, predictions);
-            ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
+            // Remove dataUUID from session
+            request.getSession().removeAttribute(dataUUID);
+            System.out.println("Removed UUID from session "+dataUUID);
 
         }else{
-            System.out.println("Couldn't find data or predictions!!");
+            System.out.println("no uuid!");
         }
+
+
+            /*// Reconstruct the data object associated with that UUID
+            
+            if(data != null){
+                response.setContentType("image/png");
+                OutputStream outputStream = response.getOutputStream();
+
+                // Make the chart
+                JFreeChart chart = getChart(data);
+                ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
+
+                // Remove dataUUID from session
+                request.getSession().removeAttribute(dataUUID);
+                System.out.println("Removed UUID from session "+dataUUID);
+            }else{
+                System.out.println("uuid was there but Data object not found");
+            }   
+        }else{
+            // Get data and predictions from session
+            Data data = (Data)request.getSession().getAttribute("data");
+            
+    
+            // If they're there, showing model predictions graph
+            if(data != null && predictions != null){
+                response.setContentType("image/png");
+                OutputStream outputStream = response.getOutputStream();
+    
+                // Make the chart
+                JFreeChart chart = getChartWithPredictions(data, predictions);
+                ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
+
+                // Remove predictions from session
+                request.getSession().removeAttribute("predictions");
+                System.out.println("Removed predictions from session");
+            }else{
+                System.out.println("Couldn't find data or predictions!!");
+            }
+        }*/
+
+
+
+
 
         //request.getSession().removeAttribute(dataUUID);
         //System.out.println("Removed UUID from session "+dataUUID);
