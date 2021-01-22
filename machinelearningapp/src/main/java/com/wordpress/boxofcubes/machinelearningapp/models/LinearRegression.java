@@ -296,7 +296,15 @@ public class LinearRegression {
     public int getId(){
         return id;
     }
-
+    public Data getTrainingSet(){
+        return trainingSet;
+    }
+    public Data getCrossValSet(){
+        return crossValSet;
+    }
+    public Data getTestingSet(){
+        return testingSet;
+    }
     public Parameters getParameters(){
         return parameters;
     }

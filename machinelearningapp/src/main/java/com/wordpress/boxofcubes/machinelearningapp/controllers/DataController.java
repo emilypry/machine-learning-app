@@ -236,28 +236,12 @@ public class DataController {
 
         model.addAttribute("dataUUID", dataUUID);
 
-        /*// Get the Data object in the session
-        Data data = (Data)request.getSession().getAttribute("data");
-        if(data != null){
-            // Make a new UUID for the Data object
-            String dataUUID = UUID.randomUUID().toString();
-            request.getSession().setAttribute(dataUUID, data);
-
-            // Get the predicted points from the model
-            double[] predictions = lr.getPredictedPoints(data);
-            // Set the predictions in the session
-            request.getSession().setAttribute("predictions", predictions);
-
-
-
-        }else{
-            System.out.println("Can't find data in trained-model!");
-        }*/
-        
-
-
-
         return "data/trained";
+    }
+
+    @GetMapping("test-model")
+    public String showTestedModel(){
+        return "data/tested";
     }
 
 

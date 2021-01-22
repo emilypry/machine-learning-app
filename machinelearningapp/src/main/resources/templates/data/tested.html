@@ -10,34 +10,18 @@
 
     <div id="content">
         <div class="explanation">
-            <h3>This is your trained model. </h3>
+            <h3>This is your model's performance on the testing set. </h3>
             <p>
-                A model has been trained on your training set given the parameters you
-                specified for the gradient descent algorithm. The model consists in 
-                the <b>trained theta </b>values, corresponding to estimated y-intercept and 
-                slope of the linear regression. The graph shows your whole dataset and 
-                the model's linear regression. A good model will fit the line onto your dataset 
-                well. 
+                Now that you've trained your model on the training set, evaluated its performance
+                on the cross-validation set, retrained your model, re-evaluated its performance,
+                and so on, you can now see its performance on a brand new dataset: the testing set.
+                If the <b>testing error</b> is close to 0, that's an indication that you've trained
+                a good model. If the testing, cross-validation, and/or training error are high, 
+                you can improve your model by retraining it and re-evaluating its performance on 
+                the cross-validation set, until the training and cross-validation error are low.
             </p>
             <p>
-                &nbsp The model's <b>training and cross-validation error</b> represent its average prediction error on the training and cross-validation sets. The closer those numbers are 
-                to 0, the better the model is of your dataset. To improve the model, modify the 
-                parameters of the algorithm and train the model again. While improving the model,
-                <u>you should shoot for the lowest possible cross-validation error.</u> Once you've
-                found a good model, move on to testing it on the testing set. 
-            </p>
-            <p>
-                &nbsp The <b>initial cost</b> is the average prediction error of the initial theta 
-                values on your training set. You can gauge whether the model learned by comparing
-                the initial cost to the training and cross-validation error; the training and 
-                cross-validation error should be lower than the initial cost. The number of 
-                <b>actual iterations</b> of the gradient descent algorithm will be lower than 
-                the maximum iterations only if the algorithm converged or the cost increased. 
-                If it <b>converged</b>, it found the optimal theta values, relative to the 
-                convergence level. If the <b>cost increased</b>, the prediction error 
-                increased at some point in the algorithm, meaning it wasn't working properly. 
-                The <b>costs while training</b> shows the model's prediction error on each 
-                iteration of the algorithm. 
+                &nbsp Blop
             </p>
         </div>
 
@@ -62,8 +46,14 @@
                     </div>
                     <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 1, 2)}"></div>
                 </div>
+                <div class="row">
+                    <div class="label">
+                        Testing error: 
+                    </div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 1, 2)}"></div>
+                </div>
 
-                <div class="header">Gradient Descent</div>
+                <div class="header">Training: Gradient Descent</div>
                 <div class="row">
                     <div class="label">
                         Initial cost: 
@@ -99,7 +89,7 @@
                     </div>
                 </div>
                
-                <div class="header">Parameters</div>
+                <div class="header">Training: Parameters</div>
                 <div class="row">
                     <div class="label">
                         Proportion of dataset in training set: 

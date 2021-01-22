@@ -131,51 +131,6 @@ public class ChartServlet extends HttpServlet{
             System.out.println("no uuid!");
         }
 
-
-            /*// Reconstruct the data object associated with that UUID
-            
-            if(data != null){
-                response.setContentType("image/png");
-                OutputStream outputStream = response.getOutputStream();
-
-                // Make the chart
-                JFreeChart chart = getChart(data);
-                ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
-
-                // Remove dataUUID from session
-                request.getSession().removeAttribute(dataUUID);
-                System.out.println("Removed UUID from session "+dataUUID);
-            }else{
-                System.out.println("uuid was there but Data object not found");
-            }   
-        }else{
-            // Get data and predictions from session
-            Data data = (Data)request.getSession().getAttribute("data");
-            
-    
-            // If they're there, showing model predictions graph
-            if(data != null && predictions != null){
-                response.setContentType("image/png");
-                OutputStream outputStream = response.getOutputStream();
-    
-                // Make the chart
-                JFreeChart chart = getChartWithPredictions(data, predictions);
-                ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
-
-                // Remove predictions from session
-                request.getSession().removeAttribute("predictions");
-                System.out.println("Removed predictions from session");
-            }else{
-                System.out.println("Couldn't find data or predictions!!");
-            }
-        }*/
-
-
-
-
-
-        //request.getSession().removeAttribute(dataUUID);
-        //System.out.println("Removed UUID from session "+dataUUID);
     }
 
     private XYDataset getDataset(Data data){
@@ -192,26 +147,26 @@ public class ChartServlet extends HttpServlet{
     }
 
     private JFreeChart getChart(Data data){
-        /*XYSeriesCollection dataset = new XYSeriesCollection();
-
-        // Get the data from the Data object
-        XYSeries pairs = new XYSeries(data.getItemLabel());
-        for(int i=0; i<data.getX().length; i++){
-          pairs.add(data.getX()[i], data.getY()[i]);
-        }
-        dataset.addSeries(pairs);*/
-
+        // Get the data
         XYDataset dataset = getDataset(data);
+
         // Make the chart
         JFreeChart chart = ChartFactory.createScatterPlot(data.getName(), data.getXLabel(),
         data.getYLabel(), dataset);
+
+        // Set the background color
+        XYPlot plot = (XYPlot)chart.getPlot();
+        plot.setBackgroundPaint(new Color(240,240,240));
+        plot.setChart(chart);
 
         return chart;   
     }
 
     private JFreeChart getChartWithPredictions(Data data, double[] predictions){
+        // Get the data
         XYDataset dataset = getDataset(data);
         
+        // Make the predictions data
         XYSeriesCollection preds = new XYSeriesCollection();
         XYSeries pairs = new XYSeries("Model Predictions");
         pairs.add(predictions[0], predictions[1]);
@@ -220,6 +175,7 @@ public class ChartServlet extends HttpServlet{
 
         XYDataset modelPreds = (XYDataset)preds;
 
+        // Set the renderers
         XYItemRenderer renderer1 = new XYLineAndShapeRenderer(false, true); // points
         XYItemRenderer renderer2 = new XYLineAndShapeRenderer(true, false); // line
         // Create chart
@@ -233,8 +189,7 @@ public class ChartServlet extends HttpServlet{
         plot.setRenderer(1, renderer2);
         plot.setBackgroundPaint(new Color(240,240,240));
         plot.setChart(chart);
-        
-        return chart;
 
+        return chart;
     }
 }
