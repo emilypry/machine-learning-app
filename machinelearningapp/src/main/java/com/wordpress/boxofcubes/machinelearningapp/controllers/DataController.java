@@ -240,7 +240,13 @@ public class DataController {
     }
 
     @GetMapping("test-model")
-    public String showTestedModel(){
+    public String showTestedModel(HttpServletRequest request, Model model){
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+        Data data = (Data)request.getSession().getAttribute("data");
+        String dataUUID = UUID.randomUUID().toString();
+        request.getSession().setAttribute(dataUUID, data);
+        model.addAttribute("lr", lr);
+        model.addAttribute("dataUUID", dataUUID);
         return "data/tested";
     }
 

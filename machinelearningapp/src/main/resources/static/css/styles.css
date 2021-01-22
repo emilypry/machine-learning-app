@@ -332,3 +332,31 @@ input {
     color:rgb(32, 40, 73);
     font-size: 15px;
 }
+#tested-model-container {
+    width: 50%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+#tested-model-container .row{
+    display: block;
+    width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#tested-model-container .label {
+    margin-top: 6%;
+    margin-bottom: 3%;
+    font-family:"Avenir";
+    font-weight: 500;
+    font-size: 17px;
+    color:rgb(32, 40, 73);
+    display: inline;
+}
+#tested-model-container .value {
+    color:rgb(165, 29, 20);
+    margin-left: 2%;
+    display: inline;
+    font-family:"Avenir";
+    font-size: 17px;
+}
