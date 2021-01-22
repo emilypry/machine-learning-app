@@ -212,13 +212,6 @@ public class DataController {
         }
     }
 
-    /* WHEN VALIDATING PARAMETERS, MAKE SURE THERE'S AT LEAST 1 EXAMPLE IN THE CV AND TESTING 
-    SETS, GIVEN THEIR DATASET AND THE PROPORTION THEY'VE SELECTED. MACHINE LEARNING WILL RUN
-    INTO PROBLEMS OTHERWISE!!!!!!!!!!!!!
-
-
-    */
-
     @GetMapping("trained-model")
     public String showTrainedModel(HttpServletRequest request, Model model){
         // Get the Linear Regression object
@@ -226,12 +219,29 @@ public class DataController {
 
         model.addAttribute("lr", lr);
         model.addAttribute("p", lr.getParameters());
-
         String costs = "";
         for(double c : lr.getCostsWhileTraining()){
             costs += String.format("%.2f", c)+ "\n";
         }
         model.addAttribute("costs", costs);
+
+        // Get the Data object in the session
+        Data data = (Data)request.getSession().getAttribute("data");
+        if(data != null){
+            double[] predictions = lr.getPredictedPoints(data);
+
+            // Set the predictions in the session
+            request.getSession().setAttribute("predictions", predictions);
+            // WILL WANT TO REMOVE SESSION ATTRIBUTE LATER!
+
+
+        }else{
+            System.out.println("Can't find data in trained-model!");
+        }
+        
+
+
+
         return "data/trained";
     }
 

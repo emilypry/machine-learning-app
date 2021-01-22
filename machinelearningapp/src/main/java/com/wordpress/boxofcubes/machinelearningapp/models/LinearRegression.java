@@ -49,11 +49,6 @@ public class LinearRegression {
         int crossSize = (int)((allData.getNumPoints() - trainingSize) / 2);
         int testingSize = allData.getNumPoints() - trainingSize - crossSize;
 
-        System.out.println("original size: "+allData.getNumPoints());
-        System.out.println("training size: "+trainingSize);
-        System.out.println("cross size: "+crossSize);
-        System.out.println("testing size: "+testingSize);
-
         List<DataValue> trainingVals = new ArrayList<>();
         List<DataValue> crossVals = new ArrayList<>();
         List<DataValue> testingVals = new ArrayList<>();
@@ -221,8 +216,6 @@ public class LinearRegression {
             double cost = getCost(dataset, theta, true);
             costsList.add(cost);
 
-            System.out.print(cost + " ");
-
             if(i > 0){
                 double difference = costsList.get(i-1) - cost;
 
@@ -275,16 +268,35 @@ public class LinearRegression {
         return getCost(trainingSet, parameters.getInitialTheta(), false);
     }
 
+    /** Returns two X-predictedY value pairs for chart-making */
+    public double[] getPredictedPoints(Data dataset){
+        double lowestX = 999999999999999999999999.9;
+        double highestX = -999999999999999999999999.9;
+        // Get the highest and lowest X values in the dataset
+        for(int i=0; i < dataset.getNumPoints(); i++){
+            if(dataset.getX()[i] < lowestX){
+                lowestX = dataset.getX()[i];
+            }
+            if(dataset.getX()[i] > highestX){
+                highestX = dataset.getX()[i];
+            }
+        }
+        System.out.println("Lowest X: "+lowestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * lowestX));
+        System.out.println("Highest X: "+highestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * highestX));
+
+        // lowX, predLowY, highX, predHighY
+        double[] predictions = {lowestX, (trainedTheta[0] + trainedTheta[1] * lowestX),
+            highestX, (trainedTheta[0] + trainedTheta[1] * highestX)};
+
+        return predictions;
+    }
+
+
 
     public int getId(){
         return id;
     }
-    /*public Data getAllData(){
-        return allData;
-    }
-    public void setAllData(Data allData){
-        this.allData = allData;
-    }*/
+
     public Parameters getParameters(){
         return parameters;
     }
