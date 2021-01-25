@@ -372,7 +372,6 @@ input {
     width: 35%;
     margin-left: auto;
     margin-right: auto;
-    background: red;
     margin-top: 3%;
 }
 #predictions-container .label,
@@ -381,6 +380,7 @@ input {
     font-weight: 500;
     font-size: 17px;
     color:rgb(32, 40, 73);
+    display: inline;
 }
 #predictions-container #x-val {
     width: 40%;
@@ -403,4 +403,11 @@ input {
     width: 80%;
     margin-right: auto;
     margin-left: auto;
+}
+#predictions-container .value {
+    color:rgb(165, 29, 20);
+    margin-left: 3%;
+    display: inline;
+    font-family:"Avenir";
+    font-size: 17px;
 }

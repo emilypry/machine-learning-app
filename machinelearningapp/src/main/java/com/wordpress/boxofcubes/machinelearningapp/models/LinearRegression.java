@@ -291,6 +291,10 @@ public class LinearRegression {
         return predictions;
     }
 
+    public double predict(double x){
+        return trainedTheta[0] + (trainedTheta[1] * x);
+    }
+
 
 
     public int getId(){

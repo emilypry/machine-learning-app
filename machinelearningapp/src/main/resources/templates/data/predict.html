@@ -23,7 +23,7 @@
         <form method="post" id="predict-form">        
             <div id="predictions-container">
                 <div id="chart">
-                <img th:src="@{/view-data/display-chart/display-predictions(dataUUID=${dataUUID})}" width=700 height=400>
+                    <img th:src="@{/view-data/display-chart/display-predictions(dataUUID=${dataUUID})}" width=700 height=400>
                 </div>
 
                 <div class="row">
@@ -33,11 +33,11 @@
                         Predict
                     </button>
                 </div>
-                <div class="row">
+                <div class="row" th:if="${predictedY}">
                     <div class="label">
                         Predicted Y: 
                     </div>
-                    <div class="value" th:text="${0}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(predictedY, 1, 2)}"></div>
                 </div>
             </div>
         </form>

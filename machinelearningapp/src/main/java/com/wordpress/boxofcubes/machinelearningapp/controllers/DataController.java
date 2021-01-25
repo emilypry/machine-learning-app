@@ -279,6 +279,20 @@ public class DataController {
     public String showPredict(){
         return "data/predict";
     }
+    @PostMapping("predict")
+    public String processPredict(@RequestParam String x, HttpServletRequest request, Model model){
+        double xVal = Double.parseDouble(x);
+
+        // Get the model
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+        if(lr != null){
+            // Make the prediction
+            double predictedY = lr.predict(xVal);
+            model.addAttribute("predictedY", predictedY);
+        }
+
+        return "data/predict";
+    }
 
 
 
