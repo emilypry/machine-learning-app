@@ -275,6 +275,11 @@ public class DataController {
         return "data/tested";
     }
 
+    @GetMapping("predict")
+    public String showPredict(){
+        return "data/predict";
+    }
+
 
 
 

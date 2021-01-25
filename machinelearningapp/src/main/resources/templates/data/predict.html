@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">Make Predictions</div>
+
+    <!--if no user-->
+    <div th:replace="fragments :: links-logged-out"></div>
+    <!--but, if user, .....-->
+
+    <div id="content">
+        <div class="explanation">
+            <h3>Make predictions with your model. </h3>
+            <p>
+                Now that you've got a good model of your dataset, you can make predictions 
+                about new data.  
+            </p>
+        </div>
+
+        <form method="post" id="predict-form">        
+            <div id="tested-model-container">
+                <div class="row">
+                    <label for="x-val" class="label">X:</label>
+                    <input id="x-val" type="text" name="x" />
+                    <button form="predict-form" type="submit">
+                        Predict
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Predicted Y: 
+                    </div>
+                    <div class="value" th:text="${0}"></div>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="two-button-container">
+            <form method="post" th:action="@{/trained-model/return}">
+                <button type="submit">
+                    View Trained Model
+                </button>
+            </form>
+
+            <button type="submit" th:onclick="location.href='/predict'">
+                Make Predictions
+            </button>
+        </div>
+
+
+
+
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

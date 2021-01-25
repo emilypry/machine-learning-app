@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
-    <div id="header">Trained Model</div>
+    <div id="header">Tested Model</div>
 
     <!--if no user-->
     <div th:replace="fragments :: links-logged-out"></div>
@@ -24,39 +24,35 @@
         </div>
 
         <div id="tested-model-container">
-                <div class="row">
-                    <div class="label">
-                        Testing error: 
-                    </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTestingError(), 1, 2)}"></div>
+            <div class="row">
+                <div class="label">
+                    Testing error: 
                 </div>
-                <div class="row">
-                    <div class="label">
-                        Cross-validation error: 
-                    </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.getTestingError(), 1, 2)}"></div>
+            </div>
+            <div class="row">
+                <div class="label">
+                    Cross-validation error: 
                 </div>
-                <div class="row">
-                    <div class="label">
-                        Training error: 
-                    </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 1, 2)}"></div>
+            </div>
+            <div class="row">
+                <div class="label">
+                    Training error: 
                 </div>
-                <div class="row">
-                    <div class="label">
-                        Trained theta: 
-                    </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 1, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 1, 2)}"></div>
+            </div>
+            <div class="row">
+                <div class="label">
+                    Trained theta: 
                 </div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 1, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 1, 2)}"></div>
+            </div>
         </div>
 
 
 
         <div class="two-button-container">
-            <!--<button type="submit" th:onclick="location.href='/trained-model?dataUUID=[${dataUUID}]'">-->
-            <!--<button type="submit" th:onclick="location.href='/trained-model?dataUUID=[[${dataUUID}]]'">
-                View Trained Model
-            </button>-->
             <form method="post" th:action="@{/trained-model/return}">
                 <button type="submit">
                     View Trained Model
