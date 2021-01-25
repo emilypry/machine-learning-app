@@ -278,7 +278,7 @@ public class DataController {
     }
 
     @GetMapping("predict")
-    public String showPredict(HttpServletRequest request, Model model, @RequestParam(required=false) Double predictedY){
+    public String showPredict(HttpServletRequest request, Model model){
         // Get the model
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         // Get the dataset
@@ -296,9 +296,12 @@ public class DataController {
             System.out.println("missing data or model!");
         }
 
-        // If the user has requested a prediction, add it to the model
+        // If the user has requested a prediction, get it from the session
+        Double predictedY = (Double)request.getSession().getAttribute("predictedY");
         if(predictedY != null){
             model.addAttribute("predictedY", predictedY);
+            // Remove that prediction from the session
+            request.getSession().removeAttribute("predictedY");
         }
         return "data/predict";
     }
@@ -307,6 +310,16 @@ public class DataController {
         // Validate that a number has been entered
         if(x.isEmpty() || x.isBlank()){
             model.addAttribute("error", "Please enter an X value");
+            // Get the info for the chart
+            LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+            Data data = (Data)request.getSession().getAttribute("data");
+            if(data != null && lr != null){
+                double[] predictions = lr.getPredictedPoints(data);
+                request.getSession().setAttribute("predictions", predictions);
+                String dataUUID = UUID.randomUUID().toString();
+                request.getSession().setAttribute(dataUUID, data);
+                model.addAttribute("dataUUID", dataUUID);
+            }
             return "data/predict";
         }
         double xVal;
@@ -314,17 +327,26 @@ public class DataController {
             xVal = Double.parseDouble(x);
         }catch(NumberFormatException e){
             model.addAttribute("error", "Please enter a number");
+            // Get the info for the chart
+            LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+            Data data = (Data)request.getSession().getAttribute("data");
+            if(data != null && lr != null){
+                double[] predictions = lr.getPredictedPoints(data);
+                request.getSession().setAttribute("predictions", predictions);
+                String dataUUID = UUID.randomUUID().toString();
+                request.getSession().setAttribute(dataUUID, data);
+                model.addAttribute("dataUUID", dataUUID);
+            }
             return "data/predict";
         }
         
-        
-
         // Get the model
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         if(lr != null){
-            // Make the prediction
+            // Make the prediction and add it to the session
             Double predictedY = lr.predict(xVal);
-            return "redirect:/predict?predictedY="+predictedY;
+            request.getSession().setAttribute("predictedY", predictedY);
+            return "redirect:/predict";
         }else{
             System.out.println("missing linear regression!");
         }
