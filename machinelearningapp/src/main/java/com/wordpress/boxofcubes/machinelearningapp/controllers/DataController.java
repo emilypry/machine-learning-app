@@ -236,17 +236,42 @@ public class DataController {
 
         model.addAttribute("dataUUID", dataUUID);
 
+        System.out.println("dataUUID at trained-model: "+dataUUID);
+        Data dabs = (Data)request.getSession().getAttribute(dataUUID);
+            System.out.println("Data object with UUID? "+(dabs != null));
+
         return "data/trained";
+    }
+
+    @PostMapping("trained-model/return")
+    public String returnToTrainedModel(HttpServletRequest request){
+        // Get the Data object from the session
+        Data data = (Data)request.getSession().getAttribute("data");
+        // Make a new UUID for it
+        String dataUUID = UUID.randomUUID().toString();
+
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+        if(lr != null){
+            double[] predictions = lr.getPredictedPoints(data);
+            request.getSession().setAttribute("predictions", predictions);
+        }else{
+            System.out.println("couldn't find linear regression!");
+        }
+
+        if(data != null){
+            request.getSession().setAttribute(dataUUID, data);
+            System.out.println("Returning to trained model with obj "+dataUUID);
+            return "redirect:/trained-model?dataUUID="+dataUUID;
+        }else{
+            System.out.println("Couldn't find data object to go back to trained model!");
+            return "redirect:/test-model";
+        }
     }
 
     @GetMapping("test-model")
     public String showTestedModel(HttpServletRequest request, Model model){
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
-        Data data = (Data)request.getSession().getAttribute("data");
-        String dataUUID = UUID.randomUUID().toString();
-        request.getSession().setAttribute(dataUUID, data);
         model.addAttribute("lr", lr);
-        model.addAttribute("dataUUID", dataUUID);
         return "data/tested";
     }
 

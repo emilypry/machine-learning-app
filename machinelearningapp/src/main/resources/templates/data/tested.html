@@ -53,9 +53,15 @@
 
 
         <div class="two-button-container">
-            <button type="submit" th:onclick="location.href='/trained-model(dataUUID=${dataUUID})'">
+            <!--<button type="submit" th:onclick="location.href='/trained-model?dataUUID=[${dataUUID}]'">-->
+            <!--<button type="submit" th:onclick="location.href='/trained-model?dataUUID=[[${dataUUID}]]'">
                 View Trained Model
-            </button>
+            </button>-->
+            <form method="post" th:action="@{/trained-model/return}">
+                <button type="submit">
+                    View Trained Model
+                </button>
+            </form>
 
             <button type="submit" th:onclick="location.href='/predict'">
                 Make Predictions
