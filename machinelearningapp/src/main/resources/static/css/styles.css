@@ -332,13 +332,13 @@ input {
     color:rgb(32, 40, 73);
     font-size: 15px;
 }
-#tested-model-container {
+#tested-model-container  {
     width: 50%;
     margin-left:auto;
     margin-right: auto;
     margin-top: 3%;
 }
-#tested-model-container .row{
+#tested-model-container .row {
     display: block;
     width: 45%;
     margin-left: auto;
@@ -360,12 +360,34 @@ input {
     font-family:"Avenir";
     font-size: 17px;
 }
-#tested-model-container #x-val {
+
+#predictions-container  {
+    width: 70%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+#predictions-container .row {
+    display: block;
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    background: red;
+    margin-top: 3%;
+}
+#predictions-container .label,
+#predictions-container label {
+    font-family:"Avenir";
+    font-weight: 500;
+    font-size: 17px;
+    color:rgb(32, 40, 73);
+}
+#predictions-container #x-val {
     width: 40%;
     margin-left: 5%;
 }
-#tested-model-container button {
-    width: 35%;
+#predictions-container button {
+    width: 25%;
     display: inline;
     margin-left: 5%;
     background-color: rgb(253, 204, 40);
@@ -376,4 +398,9 @@ input {
     color:rgb(61, 60, 60);
     padding: 6px 15px;
     text-align: center;
+}
+#predictions-container #chart {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
 }
