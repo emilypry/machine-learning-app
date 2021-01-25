@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">My Account</div>
+
+    <div th:replace="fragments :: links-logged-in"></div>
+
+    <div id="content">
+        <h3>My account.</h3>
+
+        <div th:if="${session.user}">
+            There's a user! 
+            <p th:text="${session.user.username}"></p>
+        </div>
+
+        
+
+    </div>
+
+
+    <div id="footer"></div>
+
+
+</body>
+</html>

@@ -76,7 +76,8 @@ public class DataController {
         request.getSession().setAttribute(dataUUID, data);
 
         // Also set the Data object in session
-        setDataInSession(request.getSession(), data);
+        request.getSession().setAttribute("data", data);
+        //setDataInSession(request.getSession(), data);
 
         //return "redirect:/view-data";
         return "redirect:/view-data?dataUUID="+dataUUID;
@@ -98,7 +99,8 @@ public class DataController {
         request.getSession().setAttribute(dataUUID, data);
 
         // Also set the Data object in session
-        setDataInSession(request.getSession(), data);
+        request.getSession().setAttribute("data", data);
+        //setDataInSession(request.getSession(), data);
         //return "redirect:/view-data";
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
@@ -121,7 +123,8 @@ public class DataController {
             request.getSession().setAttribute(dataUUID, data);
         }
         // ALSO SET IT IN SESSION SO CAN ACCESS IT AFTER VIEWING !!!!!!!!!!!!!!! 
-        setDataInSession(request.getSession(), data);
+        request.getSession().setAttribute("data", data);
+        //setDataInSession(request.getSession(), data);
 
         //return "redirect:/view-data";
         return "redirect:/view-data?dataUUID="+dataUUID;
@@ -391,7 +394,7 @@ public class DataController {
 
         return data;
     }
-    public static void setDataInSession(HttpSession session, Data data){
+    /*public static void setDataInSession(HttpSession session, Data data){
         session.setAttribute("data", data);
     }
     public Data getDataFromSession(HttpSession session){
@@ -400,7 +403,7 @@ public class DataController {
             return null;
         }
         return data;
-    }
+    }*/
 
 
 

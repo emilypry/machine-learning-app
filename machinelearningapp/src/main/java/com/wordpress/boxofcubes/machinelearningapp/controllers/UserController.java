@@ -51,8 +51,9 @@ public class UserController{
         if(user.isEmpty()){
             return "user/login";
         }
-        // Start session
-        setUserInSession(request.getSession(), user.get());
+        // Add user to session
+        request.getSession().setAttribute("user", user.get());
+        //setUserInSession(request.getSession(), user.get());
         return "redirect:/home";
     }
 
@@ -74,14 +75,20 @@ public class UserController{
         User user = new User(userSignupDTO.getUsername(), userSignupDTO.getPassword());
         // Add to database
         userRepository.save(user);
-        // Start new session
-        setUserInSession(request.getSession(), user);
+        // Add user to session
+        request.getSession().setAttribute("user", user);
+        //setUserInSession(request.getSession(), user);
         
         return "redirect:/home";
     }
 
+    @GetMapping("account")
+    public String showAccount(){
+        return "user/account";
+    }
 
-    public static void setUserInSession(HttpSession session, User user){
+
+    /*public static void setUserInSession(HttpSession session, User user){
         session.setAttribute("userId", user.getId());
     }
 
@@ -95,7 +102,7 @@ public class UserController{
             return null;
         }
         return user.get();
-    }
+    }*/
 
     // MUST TEST!!!!!!!!!!
     @GetMapping("/logout")
