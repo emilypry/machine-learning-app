@@ -87,29 +87,12 @@ public class UserController{
         return "user/account";
     }
 
-
-    /*public static void setUserInSession(HttpSession session, User user){
-        session.setAttribute("userId", user.getId());
-    }
-
-    public User getUserFromSession(HttpSession session){
-        Integer userId = (Integer)session.getAttribute("userId");
-        if(userId == null){
-            return null;
-        }
-        Optional<User> user = userRepository.findById(userId);
-        if(user.isEmpty()){
-            return null;
-        }
-        return user.get();
-    }*/
-
-    // MUST TEST!!!!!!!!!!
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
         return "redirect:/home";
     }
+
 
 
 }

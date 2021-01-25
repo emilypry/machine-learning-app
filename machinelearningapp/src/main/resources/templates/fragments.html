@@ -7,7 +7,20 @@
 </head>
 <body>
 
-    <div th:fragment="links-logged-out" id="navigation">
+    <div th:fragment="links" id="navigation">
+        <div th:if="${session.user}">
+            <a th:href="@{/home}" th:text="'Home'"></a>
+            <a th:href="@{/user/account}" th:text="'My Account'"></a>
+            <a th:href="@{/user/logout}" th:text="'Log Out'"></a>
+        </div>
+        <div th:unless="${session.user}">
+            <a th:href="@{/home}" th:text="'Home'"></a>
+            <a th:href="@{/user/login}" th:text="'Log In'"></a>
+            <a th:href="@{/user/signup}" th:text="'Sign Up'"></a>            
+        </div>
+    </div>
+
+    <!--<div th:fragment="links-logged-out" id="navigation">
         <a th:href="@{/home}" th:text="'Home'"></a>
         <a th:href="@{/user/login}" th:text="'Log In'"></a>
         <a th:href="@{/user/signup}" th:text="'Sign Up'"></a>
@@ -16,7 +29,8 @@
         <a th:href="@{/home}" th:text="'Home'"></a>
         <a th:href="@{/user/account}" th:text="'My Account'"></a>
         <a th:href="@{/user/logout}" th:text="'Log Out'"></a>
-    </div>
+    </div>--> 
+    
     <div th:fragment="links-at-account" id="navigation">
         <a th:href="@{/home}" th:text="'Home'"></a>
         <a th:href="@{/user/logout}" th:text="'Log Out'"></a>

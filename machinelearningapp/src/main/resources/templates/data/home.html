@@ -4,7 +4,8 @@
 <body>
     <div id="header">Easy Machine Learning</div>
 
-    <div th:replace="fragments :: links-logged-out"></div>
+    <!--<div th:if="${session.user}" th:replace="fragments :: links-logged-out"></div>-->
+    <div th:replace="fragments :: links"></div>
 
     <div id="content">
         <h3>Create a linear regression model of a dataset through machine learning.</h3>
