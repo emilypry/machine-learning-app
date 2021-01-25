@@ -46,14 +46,12 @@
 
 
         <div class="two-button-container">
-            <form method="post" th:action="@{/trained-model/return}">
-                <button type="submit">
-                    View Trained Model
-                </button>
-            </form>
+            <button type="submit" th:onclick="location.href='/test-model'">
+                View Tested Model
+            </button>
 
-            <button type="submit" th:onclick="location.href='/predict'">
-                Make Predictions
+            <button type="submit" th:onclick="location.href='/home'">
+                Home
             </button>
         </div>
 
