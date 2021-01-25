@@ -236,9 +236,11 @@ public class DataController {
 
         model.addAttribute("dataUUID", dataUUID);
 
+        //
         System.out.println("dataUUID at trained-model: "+dataUUID);
         Data dabs = (Data)request.getSession().getAttribute(dataUUID);
             System.out.println("Data object with UUID? "+(dabs != null));
+            //
 
         return "data/trained";
     }
@@ -276,7 +278,28 @@ public class DataController {
     }
 
     @GetMapping("predict")
-    public String showPredict(){
+    public String showPredict(HttpServletRequest request, Model model, @RequestParam(required=false) Double predictedY){
+        // Get the model
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+        // Get the dataset
+        Data data = (Data)request.getSession().getAttribute("data");
+        if(data != null && lr != null){
+            // Get the predictions for the chart
+            double[] predictions = lr.getPredictedPoints(data);
+            request.getSession().setAttribute("predictions", predictions);
+
+            // Make a new UUID
+            String dataUUID = UUID.randomUUID().toString();
+            request.getSession().setAttribute(dataUUID, data);
+            model.addAttribute("dataUUID", dataUUID);
+        }else{
+            System.out.println("missing data or model!");
+        }
+
+        // If the user has requested a prediction, add it to the model
+        if(predictedY != null){
+            model.addAttribute("predictedY", predictedY);
+        }
         return "data/predict";
     }
     @PostMapping("predict")
@@ -287,11 +310,12 @@ public class DataController {
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         if(lr != null){
             // Make the prediction
-            double predictedY = lr.predict(xVal);
-            model.addAttribute("predictedY", predictedY);
+            Double predictedY = lr.predict(xVal);
+            return "redirect:/predict?predictedY="+predictedY;
+        }else{
+            System.out.println("missing linear regression!");
         }
-
-        return "data/predict";
+        return "redirect:/predict";
     }
 
 
