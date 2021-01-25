@@ -26,6 +26,8 @@
                     <img th:src="@{/view-data/display-chart/display-predictions(dataUUID=${dataUUID})}" width=700 height=400>
                 </div>
 
+                <p th:if="${error}" th:text="${error}" class="errors"></p>
+
                 <div class="row">
                     <label for="x-val">X:</label>
                     <input id="x-val" type="text" name="x" />

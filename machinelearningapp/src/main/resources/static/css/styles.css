@@ -370,8 +370,7 @@ input {
 #predictions-container .row {
     display: block;
     width: 35%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 35%;
     margin-top: 3%;
 }
 #predictions-container .label,
@@ -387,7 +386,7 @@ input {
     margin-left: 5%;
 }
 #predictions-container button {
-    width: 25%;
+    width: 28%;
     display: inline;
     margin-left: 5%;
     background-color: rgb(253, 204, 40);

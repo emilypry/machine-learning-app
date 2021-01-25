@@ -304,7 +304,20 @@ public class DataController {
     }
     @PostMapping("predict")
     public String processPredict(@RequestParam String x, HttpServletRequest request, Model model){
-        double xVal = Double.parseDouble(x);
+        // Validate that a number has been entered
+        if(x.isEmpty() || x.isBlank()){
+            model.addAttribute("error", "Please enter an X value");
+            return "data/predict";
+        }
+        double xVal;
+        try{
+            xVal = Double.parseDouble(x);
+        }catch(NumberFormatException e){
+            model.addAttribute("error", "Please enter a number");
+            return "data/predict";
+        }
+        
+        
 
         // Get the model
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
