@@ -4,15 +4,24 @@
 <body>
     <div id="header">My Account</div>
 
-    <div th:replace="fragments :: links-logged-in"></div>
+    <div th:replace="fragments :: links-at-account"></div>
 
     <div id="content">
-        <h3>My account.</h3>
+        
+        <div th:unless="${session.user}">
+            <h3>
+                Please <a th:href="@{/user/login}" th:text="'log in'"></a>
+                or <a th:href="@{/user/signup}" th:text="'sign up'"></a>
+                for an account.
+            </h3>
+        </div>
 
         <div th:if="${session.user}">
+            <h3>My account.</h3>
             There's a user! 
             <p th:text="${session.user.username}"></p>
         </div>
+
 
         
 

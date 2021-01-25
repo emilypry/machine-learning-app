@@ -15,7 +15,11 @@
     <div th:fragment="links-logged-in" id="navigation">
         <a th:href="@{/home}" th:text="'Home'"></a>
         <a th:href="@{/user/account}" th:text="'My Account'"></a>
-        <a th:href="@{/home}" th:text="'Log Out'"></a>
+        <a th:href="@{/user/logout}" th:text="'Log Out'"></a>
+    </div>
+    <div th:fragment="links-at-account" id="navigation">
+        <a th:href="@{/home}" th:text="'Home'"></a>
+        <a th:href="@{/user/logout}" th:text="'Log Out'"></a>
     </div>
 
 </body>
