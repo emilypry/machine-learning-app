@@ -21,8 +21,14 @@
         </div>
         
         <!-- only if not using a sample set!!!!!!-->
-        <div id="save-data">
-            <a th:href="@{/user/save-data}" th:text="'Save Dataset to My Account'"></a>
+        <div id="save-data" th:if="${session.user}">
+            <form method="post" th:action="@{/user/save-data}">
+                <input type="hidden" name="dataUUID" th:value="${dataUUID}" />
+                <button type="submit">
+                    Save Dataset to My Account
+                </button>
+            </form>
+            <!--<a th:href="@{/user/save-data}" th:text="'Save Dataset to My Account'"></a>-->
         </div>
 
 

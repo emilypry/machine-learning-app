@@ -39,10 +39,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class DataController {
-    @Autowired
+    /*@Autowired
     DataValueRepository dataValueRepository;
     @Autowired
-    DataRepository dataRepository;
+    DataRepository dataRepository;*/
     @Autowired
     DataSubmissionDTOValidator submissionValidator;
     @Autowired
@@ -68,10 +68,7 @@ public class DataController {
         }
 
         // Convert the DTO to a new Data object
-        //Data data = getDataObject(dataSubmissionDTO);
         Data data = new Data(dataSubmissionDTO);
-        System.out.println("made new data object? "+(data != null));
-        //dataRepository.save(data);
 
         // Make a unique identifier and set attribute
         String dataUUID = UUID.randomUUID().toString();
@@ -93,10 +90,7 @@ public class DataController {
         }
 
         // Convert the DTO to a new Data object
-        //Data data = getDataObject(dataSubmissionDTO);
         Data data = new Data(dataSubmissionDTO);
-        System.out.println("made new data object? "+(data != null)+" "+data.getItemLabel());
-        //dataRepository.save(data);
 
         // Make a unique identifier and set attribute
         String dataUUID = UUID.randomUUID().toString();
@@ -144,7 +138,7 @@ public class DataController {
         Data byUUID = (Data)request.getSession().getAttribute(dataUUID);
         Data byData = (Data)request.getSession().getAttribute("data");
 
-        System.out.println("byUUID and byData same? "+(byUUID.equals(byData)));
+        System.out.println("UUID at view-data: "+dataUUID);
 
         return "data/chart";
     }

@@ -1,11 +1,13 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
@@ -21,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("user")
@@ -31,6 +34,8 @@ public class UserController{
     UserSignupDTOValidator signupValidator;
     @Autowired
     UserLoginDTOValidator loginValidator;
+    @Autowired
+    DataRepository dataRepository;
 
     @GetMapping("login")
     public String showLogin(Model model){
@@ -94,15 +99,34 @@ public class UserController{
     }
 
     @PostMapping("/save-data")
-    public String processSaveData(HttpServletRequest request){
+    public String processSaveData(HttpServletRequest request, @RequestParam String dataUUID){
         Data data = (Data)request.getSession().getAttribute("data");
         User user = (User)request.getSession().getAttribute("user");
 
-        if(data != null && user != null){
+        if(data != null && user != null && !dataUUID.isEmpty()){
+            // Get rid of the old dataUUID attribute
+            request.getSession().removeAttribute(dataUUID);
+
+            // Make a new dataUUID attribute
+            dataUUID = UUID.randomUUID().toString();
+            request.getSession().setAttribute(dataUUID, data);
+
+            // Make sure the dataset isn't already saved
+            Optional<Data> inDatabase = dataRepository.findById(data.getId());
+            if(inDatabase.isPresent()){
+                System.out.println(" dataset already saved to user account!");
+                return "redirect:/view-data?dataUUID="+dataUUID;
+            }
+
+            // Save the dataset
             data.setUser(user);
+            dataRepository.save(data);
+            System.out.println("saved dataset to user account!");
             
+            return "redirect:/view-data?dataUUID="+dataUUID;
         }else{
-            System.out.println("data or user missing!");
+            System.out.println("data or user or oldUUID missing!");
+            return "redirect:/view-data?dataUUID="+dataUUID;
         }
     }
 

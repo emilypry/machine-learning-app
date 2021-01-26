@@ -45,10 +45,6 @@ public class Data {
         this.itemLabel = itemLabel;
     }
     public Data(DataSubmissionDTO dataSubmissionDTO){
-        //Data data = new Data();
-
-        // RawX and RawY are double[]s - convert them to List of DataValues
-        //List<DataValue> dataValues = new ArrayList<>();
         dataValues = new ArrayList<>();
         for(double x : dataSubmissionDTO.getRawX()){
             dataValues.add(new DataValue(x, this, true));
@@ -62,13 +58,6 @@ public class Data {
         xLabel = dataSubmissionDTO.getXLabel();
         yLabel = dataSubmissionDTO.getYLabel();
         itemLabel = dataSubmissionDTO.getItemLabel();
-
-        System.out.println(dataValues);
-        System.out.println(numPoints);
-        System.out.println(name);
-        System.out.println(xLabel);
-        System.out.println(yLabel);
-        System.out.println(itemLabel);
     }
 
 
