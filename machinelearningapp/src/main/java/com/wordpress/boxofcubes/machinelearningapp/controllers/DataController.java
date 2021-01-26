@@ -68,7 +68,9 @@ public class DataController {
         }
 
         // Convert the DTO to a new Data object
-        Data data = getDataObject(dataSubmissionDTO);
+        //Data data = getDataObject(dataSubmissionDTO);
+        Data data = new Data(dataSubmissionDTO);
+        System.out.println("made new data object? "+(data != null));
         //dataRepository.save(data);
 
         // Make a unique identifier and set attribute
@@ -91,7 +93,9 @@ public class DataController {
         }
 
         // Convert the DTO to a new Data object
-        Data data = getDataObject(dataSubmissionDTO);
+        //Data data = getDataObject(dataSubmissionDTO);
+        Data data = new Data(dataSubmissionDTO);
+        System.out.println("made new data object? "+(data != null)+" "+data.getItemLabel());
         //dataRepository.save(data);
 
         // Make a unique identifier and set attribute
@@ -373,7 +377,7 @@ public class DataController {
 
 
     /** Converts a DataSubmissionDTO to a new Data object */
-    public Data getDataObject(DataSubmissionDTO dataSubmissionDTO){
+    /*public Data getDataObject(DataSubmissionDTO dataSubmissionDTO){
         Data data = new Data();
 
         // RawX and RawY are double[]s - convert them to List of DataValues
@@ -393,7 +397,7 @@ public class DataController {
         data.setItemLabel(dataSubmissionDTO.getItemLabel());
 
         return data;
-    }
+    }*/
     /*public static void setDataInSession(HttpSession session, Data data){
         session.setAttribute("data", data);
     }

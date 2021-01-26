@@ -93,6 +93,19 @@ public class UserController{
         return "redirect:/home";
     }
 
+    @PostMapping("/save-data")
+    public String processSaveData(HttpServletRequest request){
+        Data data = (Data)request.getSession().getAttribute("data");
+        User user = (User)request.getSession().getAttribute("user");
+
+        if(data != null && user != null){
+            data.setUser(user);
+            
+        }else{
+            System.out.println("data or user missing!");
+        }
+    }
+
 
 
 }

@@ -11,6 +11,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
+
 @Entity
 public class Data {
     @Id
@@ -41,6 +43,32 @@ public class Data {
         this.xLabel = xLabel;
         this.yLabel = yLabel;
         this.itemLabel = itemLabel;
+    }
+    public Data(DataSubmissionDTO dataSubmissionDTO){
+        //Data data = new Data();
+
+        // RawX and RawY are double[]s - convert them to List of DataValues
+        //List<DataValue> dataValues = new ArrayList<>();
+        dataValues = new ArrayList<>();
+        for(double x : dataSubmissionDTO.getRawX()){
+            dataValues.add(new DataValue(x, this, true));
+        }
+        for(double y : dataSubmissionDTO.getRawY()){
+            dataValues.add(new DataValue(y, this, false));
+        }
+
+        numPoints = dataSubmissionDTO.getNumPoints();
+        name = dataSubmissionDTO.getName();
+        xLabel = dataSubmissionDTO.getXLabel();
+        yLabel = dataSubmissionDTO.getYLabel();
+        itemLabel = dataSubmissionDTO.getItemLabel();
+
+        System.out.println(dataValues);
+        System.out.println(numPoints);
+        System.out.println(name);
+        System.out.println(xLabel);
+        System.out.println(yLabel);
+        System.out.println(itemLabel);
     }
 
 
@@ -119,6 +147,8 @@ public class Data {
     public void setUser(User user){
         this.user = user;
     }
+
+
 
     /** Makes the Life Expectancy by Year sample dataset */
     public static Data makeLifeDataset(){
