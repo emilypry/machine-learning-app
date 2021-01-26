@@ -20,7 +20,6 @@
             <img th:src="@{/view-data/display-chart(dataUUID=${dataUUID})}" width=700 height=400>
         </div>
         
-        <!-- only if not using a sample set!!!!!!-->
         
         <div id="save-data" th:if="${session.user}">
             <form method="post" th:action="@{/user/save-data}">
@@ -29,7 +28,6 @@
                     Save Dataset to My Account
                 </button>
             </form>
-            <!--<a th:href="@{/user/save-data}" th:text="'Save Dataset to My Account'"></a>-->
         </div>
         <div class="errors">
             <p th:text="${saved}"></p>

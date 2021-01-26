@@ -48,7 +48,17 @@
             </div>
         </div>
 
-
+        <div id="save-data" th:if="${session.user}">
+            <form method="post" th:action="@{/user/save-model}">
+                <input type="hidden" name="dataUUID" th:value="${dataUUID}" />
+                <button type="submit">
+                    Save Model to My Account
+                </button>
+            </form>
+        </div>
+        <div class="errors">
+            <p th:text="${saved}"></p>
+        </div>
 
         <div class="two-button-container">
             <form method="post" th:action="@{/trained-model/return}">
@@ -61,7 +71,6 @@
                 Make Predictions
             </button>
         </div>
-
 
 
 

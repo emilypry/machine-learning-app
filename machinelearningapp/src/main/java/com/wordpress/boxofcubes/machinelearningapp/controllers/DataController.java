@@ -141,9 +141,6 @@ public class DataController {
             model.addAttribute("saved", "Dataset is saved to your account");
         }
 
-        Data byUUID = (Data)request.getSession().getAttribute(dataUUID);
-        Data byData = (Data)request.getSession().getAttribute("data");
-
         System.out.println("UUID at view-data: "+dataUUID);
 
         return "data/chart";
