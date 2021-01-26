@@ -56,7 +56,7 @@ public class SavingModel {
     public void setTrainingError(double trainingError){
         this.trainingError = trainingError;
     }
-    public double getCrossValError(double crossValError){
+    public double getCrossValError(){
         return crossValError;
     }
     public void setCrossValError(double crossValError){

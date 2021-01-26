@@ -1,5 +1,6 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -159,9 +160,26 @@ public class UserController{
             // See if the Data object is already in the database
             Optional<Data> inDB = dataRepository.findById(data.getId());
             if(inDB.isPresent()){
-                // If so, save only the model
-                savingModelRepository.save(thisModel);
-                System.out.println("data already saved - adding model");
+                List<SavingModel> models = inDB.get().getModels();
+                boolean alreadyThere = false;
+                for(SavingModel m : models){
+                    // If there isn't already a model like this one associated with the saved
+                    // Data object, then save the model itself
+                    if(m.getTheta0() == thisModel.getTheta0()
+                    && m.getTheta1() == thisModel.getTheta1()
+                    && m.getTrainingError() == thisModel.getTrainingError()
+                    && m.getCrossValError() == thisModel.getCrossValError()
+                    && m.getTestingError() == thisModel.getTestingError()
+                    && m.getData().getId() == thisModel.getData().getId()){
+                        alreadyThere = true;
+                        break;
+                    }
+                }
+                if(alreadyThere == false){
+                    savingModelRepository.save(thisModel);
+                    System.out.println("data already saved - adding model");
+                }
+                            
                 
             }else{
                 // If not, set the Data object's user, add the model, and save 

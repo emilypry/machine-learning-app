@@ -275,7 +275,11 @@ public class DataController {
     }
 
     @GetMapping("test-model")
-    public String showTestedModel(HttpServletRequest request, Model model){
+    public String showTestedModel(HttpServletRequest request, Model model, @RequestParam(required=false) Boolean saved){
+        // If the user has saved the model, give confirmation
+        if(saved != null){
+            model.addAttribute("saved", "Model and dataset are saved to your account");
+        }
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         model.addAttribute("lr", lr);
         return "data/tested";
