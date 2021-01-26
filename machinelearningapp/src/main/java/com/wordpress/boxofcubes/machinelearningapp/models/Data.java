@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -24,6 +25,9 @@ public class Data {
     private String xLabel;
     private String yLabel;
     private String itemLabel;
+
+    @ManyToOne
+    private User user;
 
     public Data(){}
     public Data(List<DataValue> dataValues){
@@ -108,6 +112,12 @@ public class Data {
     }
     public void setItemLabel(String itemLabel){
         this.itemLabel = itemLabel;
+    }
+    public User getUser(){
+        return user;
+    }
+    public void setUser(User user){
+        this.user = user;
     }
 
     /** Makes the Life Expectancy by Year sample dataset */
