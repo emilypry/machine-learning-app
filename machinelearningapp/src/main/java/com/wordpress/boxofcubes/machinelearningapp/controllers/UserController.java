@@ -115,7 +115,7 @@ public class UserController{
             Optional<Data> inDatabase = dataRepository.findById(data.getId());
             if(inDatabase.isPresent()){
                 System.out.println(" dataset already saved to user account!");
-                return "redirect:/view-data?dataUUID="+dataUUID;
+                return "redirect:/view-data?dataUUID="+dataUUID+"&saved=true";
             }
 
             // Save the dataset
@@ -123,7 +123,7 @@ public class UserController{
             dataRepository.save(data);
             System.out.println("saved dataset to user account!");
             
-            return "redirect:/view-data?dataUUID="+dataUUID;
+            return "redirect:/view-data?dataUUID="+dataUUID+"&saved=true";
         }else{
             System.out.println("data or user or oldUUID missing!");
             return "redirect:/view-data?dataUUID="+dataUUID;

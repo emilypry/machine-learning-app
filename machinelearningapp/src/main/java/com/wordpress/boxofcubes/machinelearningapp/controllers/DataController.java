@@ -131,9 +131,15 @@ public class DataController {
 
 
     @GetMapping("view-data")
-    public String showChart(Model model, @RequestParam String dataUUID, HttpServletRequest request){
+    public String showChart(Model model, @RequestParam String dataUUID, HttpServletRequest request,
+    @RequestParam(required=false) Boolean saved){
         // Get the data UUID from the URL and add to the model
         model.addAttribute("dataUUID", dataUUID);
+
+        // If the user has saved the dataset, add a confirmation message
+        if(saved != null){
+            model.addAttribute("saved", "Dataset is saved to your account");
+        }
 
         Data byUUID = (Data)request.getSession().getAttribute(dataUUID);
         Data byData = (Data)request.getSession().getAttribute("data");
