@@ -30,6 +30,8 @@ public class Data {
 
     @ManyToOne
     private User user;
+    @OneToMany(mappedBy="data", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<SavingModel> models;
 
     public Data(){}
     public Data(List<DataValue> dataValues){
@@ -136,7 +138,20 @@ public class Data {
     public void setUser(User user){
         this.user = user;
     }
+    public List<SavingModel> getModels(){
+        return models;
+    }
+    public void setModels(List<SavingModel> models){
+        this.models = models;
+    }
 
+
+    public void addModel(SavingModel model){
+        if(models == null){
+            models = new ArrayList<>();
+        }
+        models.add(model);
+    }
 
 
     /** Makes the Life Expectancy by Year sample dataset */

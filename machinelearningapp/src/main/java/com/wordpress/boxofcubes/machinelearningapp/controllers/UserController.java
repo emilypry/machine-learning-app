@@ -8,8 +8,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
+import com.wordpress.boxofcubes.machinelearningapp.data.ModelRepository;
+import com.wordpress.boxofcubes.machinelearningapp.data.SavingModelRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
+import com.wordpress.boxofcubes.machinelearningapp.models.LinearRegression;
+import com.wordpress.boxofcubes.machinelearningapp.models.SavingModel;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.UserLoginDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.UserLoginDTOValidator;
@@ -36,6 +40,8 @@ public class UserController{
     UserLoginDTOValidator loginValidator;
     @Autowired
     DataRepository dataRepository;
+    @Autowired
+    SavingModelRepository savingModelRepository;
 
     @GetMapping("login")
     public String showLogin(Model model){
@@ -130,6 +136,48 @@ public class UserController{
         }
     }
 
+    @PostMapping("/save-model")
+    public String processSaveModel(HttpServletRequest request/*, @RequestParam String dataUUID*/){
+        Data data = (Data)request.getSession().getAttribute("data");
+        User user = (User)request.getSession().getAttribute("user");
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+
+        if(data != null && user != null && lr != null /*&& !dataUUID.isEmpty()*/){
+            // Get rid of the old dataUUID attribute
+            //request.getSession().removeAttribute(dataUUID);
+
+            // Make a new dataUUID attribute
+            //dataUUID = UUID.randomUUID().toString();
+            //request.getSession().setAttribute(dataUUID, data);
+
+            // Make a Model object from the Linear Regression object
+            SavingModel thisModel = new SavingModel(lr);
+
+            // Set the Data object associated with the model
+            thisModel.setData(data);
+           
+            // See if the Data object is already in the database
+            Optional<Data> inDB = dataRepository.findById(data.getId());
+            if(inDB.isPresent()){
+                // If so, save only the model
+                savingModelRepository.save(thisModel);
+                System.out.println("data already saved - adding model");
+                
+            }else{
+                // If not, set the Data object's user, add the model, and save 
+                data.setUser(user);
+                data.addModel(thisModel);
+                dataRepository.save(data);
+
+                System.out.println("saved data with its model");
+            }
+            
+            return "redirect:/test-model?saved=true";
+        }else{
+            System.out.println("data or user or linear regression missing!");
+            return "redirect:/test-model";
+        }
+    }
 
 
 }

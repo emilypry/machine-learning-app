@@ -6,29 +6,49 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Model {
+public class SavingModel {
     @Id
     @GeneratedValue
     private int id;
-    private double[] theta;
+    private double theta0;
+    private double theta1;
     private double trainingError;
     private double crossValError;
     private double testingError;
     @ManyToOne
     private Data data;
 
-    public Model(double[] theta, double trainingError, double crossValError, double testingError){
-        this.theta = theta;
+    public SavingModel(){}
+    public SavingModel(double theta0, double theta1, double trainingError, double crossValError, double testingError){
+        this.theta0 = theta0;
+        this.theta1 = theta1;
         this.trainingError = trainingError;
         this.crossValError = crossValError;
         this.testingError = testingError;
     }
 
-    public double[] getTheta(){
-        return theta;
+    public SavingModel(LinearRegression lr){
+        theta0 = lr.getTrainedTheta()[0];
+        theta1 = lr.getTrainedTheta()[1];
+        trainingError = lr.getTrainingError();
+        crossValError = lr.getCrossValError();
+        testingError = lr.getTestingError();
     }
-    public void setTheta(double[] theta){
-        this.theta = theta;
+
+    public int getId(){
+        return id;
+    }
+    public double getTheta0(){
+        return theta0;
+    }
+    public void setTheta0(double theta0){
+        this.theta0 = theta0;
+    }
+    public double getTheta1(){
+        return theta1;
+    }
+    public void setTheta1(double theta1){
+        this.theta1 = theta1;
     }
     public double getTrainingError(){
         return trainingError;
@@ -47,6 +67,12 @@ public class Model {
     }
     public void setTestingError(double testingError){
         this.testingError = testingError;
+    }
+    public Data getData(){
+        return data;
+    }
+    public void setData(Data data){
+        this.data = data;
     }
 
 }
