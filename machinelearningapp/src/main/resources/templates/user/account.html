@@ -31,10 +31,12 @@
                 </div>
             </div>-->
             
-            <div th:for="${dataAndModels}">
-                <div th:each="entry : ${dataAndModels.entrySet()}">
-                    <div th:each="data : ${entry.getKey()}" th:text="${data.getName()}"></div>
-                    <div th:each="model : ${entry.getValue()}" th:text="${model.getTestingError()}"></div>
+            <div th:for="${dataAndModels}" id="datasets-and-models">
+                <div th:each="entry : ${dataAndModels.entrySet()}" class="row">
+                    <div class="datasets" th:each="data : ${entry.getKey()}" th:text="${data.getName()}"></div>
+                    <div class="model-row">
+                        <div class="models" th:each="model : ${entry.getValue()}" th:text="${model.getTestingError()}"></div>
+                    </div>
                 </div>
             </div>
             
