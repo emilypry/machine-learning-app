@@ -45,7 +45,11 @@ public class UserController{
     SavingModelRepository savingModelRepository;
 
     @GetMapping("login")
-    public String showLogin(Model model){
+    public String showLogin(Model model, HttpServletRequest request){
+        // If there's a Data object in the session, get rid of it
+        request.getSession().removeAttribute("data");
+        System.out.println("Deleted Data object from session.");
+
         model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "user/login";
     }
@@ -70,7 +74,11 @@ public class UserController{
     }
 
     @GetMapping("signup")
-    public String showSignup(Model model){
+    public String showSignup(Model model, HttpServletRequest request){
+        // If there's a Data object in the session, get rid of it
+        request.getSession().removeAttribute("data");
+        System.out.println("Deleted Data object from session.");
+        
         model.addAttribute("userSignupDTO", new UserSignupDTO());
         return "user/signup";
     }
