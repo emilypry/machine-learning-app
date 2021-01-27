@@ -17,10 +17,28 @@
 
         <div th:if="${session.user}">
             <h3 th:text="${username}+'\'s account.'"></h3>
+
+
+            <!--<div th:for="${user.getDatasets()}">
+                <div th:each="data : ${user.getDatasets()}" th:text="ok">
+                </div>
+            </div>-->
+
+            <!--<div th:for="${datasets}">
+                <div th:each="data : ${datasets}" th:text="${data.getName()}">
+                    <div th:for="${data.getModels()}">
+                        <p th:each="model : ${data.getModels()}" th:text="model!"></p>
+                </div>
+            </div>-->
+            
+            <div th:for="${dataAndModels}">
+                <div th:each="entry : ${dataAndModels.entrySet()}">
+                    <div th:each="data : ${entry.getKey()}" th:text="${data.getName()}"></div>
+                    <div th:each="model : ${entry.getValue()}" th:text="${model.getTestingError()}"></div>
+                </div>
+            </div>
             
             
-            
-            <p th:text="${session.user.username}"></p>
         </div>
 
 

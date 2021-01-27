@@ -1,5 +1,6 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -108,11 +109,35 @@ public class UserController{
         request.getSession().removeAttribute("data");
         System.out.println("Deleted Data object from session.");
 
-
+        // Get the user and add their username to the model
         User user = (User)request.getSession().getAttribute("user");
         model.addAttribute("username", user.getUsername());
         
+        // Make a hash map of the user's saved datasets and their models
+        HashMap<Data, List<SavingModel>> dataAndModels = new HashMap<>();
+        List<Data> datasets = dataRepository.findByUser(user);
+        for(Data d : datasets){
+            List<SavingModel> models = savingModelRepository.findByData(d);     
+            dataAndModels.put(d, models);
+        }
+        model.addAttribute("dataAndModels", dataAndModels);
 
+        //List<Data> datasets = dataRepository.findByUser(user);
+        //model.addAttribute("datasets", datasets);
+        //model.addAttribute("user", user);
+        
+        /*List<Data> datasets = dataRepository.findByUser(user);
+        for(Data d : datasets){
+            System.out.println(d.getName());
+            List<SavingModel> models = savingModelRepository.findByData(d);
+            for(SavingModel m : models){
+                System.out.println(m.getId());
+            }
+        }*/
+
+
+
+        //List<SavingModel> findSavingModelById
 
 
         return "user/account";

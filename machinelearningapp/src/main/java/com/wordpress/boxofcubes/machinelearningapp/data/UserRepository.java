@@ -1,7 +1,9 @@
 package com.wordpress.boxofcubes.machinelearningapp.data;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
 
 import org.springframework.data.repository.CrudRepository;
