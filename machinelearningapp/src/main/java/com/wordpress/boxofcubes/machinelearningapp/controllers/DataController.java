@@ -49,7 +49,11 @@ public class DataController {
     ParametersDTOValidator parametersValidator;
 
     @GetMapping("home")
-    public String showHome(){
+    public String showHome(HttpServletRequest request){
+        // If there's a Data object in the session, get rid of it
+        request.getSession().removeAttribute("data");
+        System.out.println("Deleted Data object from session.");
+        
         return "data/home";
     }
 

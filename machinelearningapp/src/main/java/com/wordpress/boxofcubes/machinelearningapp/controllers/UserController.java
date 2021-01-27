@@ -95,7 +95,18 @@ public class UserController{
     }
 
     @GetMapping("account")
-    public String showAccount(){
+    public String showAccount(HttpServletRequest request, Model model){
+        // If there's a Data object in the session, get rid of it
+        request.getSession().removeAttribute("data");
+        System.out.println("Deleted Data object from session.");
+
+
+        User user = (User)request.getSession().getAttribute("user");
+        model.addAttribute("username", user.getUsername());
+        
+
+
+
         return "user/account";
     }
 
@@ -138,19 +149,12 @@ public class UserController{
     }
 
     @PostMapping("/save-model")
-    public String processSaveModel(HttpServletRequest request/*, @RequestParam String dataUUID*/){
+    public String processSaveModel(HttpServletRequest request){
         Data data = (Data)request.getSession().getAttribute("data");
         User user = (User)request.getSession().getAttribute("user");
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
 
-        if(data != null && user != null && lr != null /*&& !dataUUID.isEmpty()*/){
-            // Get rid of the old dataUUID attribute
-            //request.getSession().removeAttribute(dataUUID);
-
-            // Make a new dataUUID attribute
-            //dataUUID = UUID.randomUUID().toString();
-            //request.getSession().setAttribute(dataUUID, data);
-
+        if(data != null && user != null && lr != null){
             // Make a Model object from the Linear Regression object
             SavingModel thisModel = new SavingModel(lr);
 
@@ -179,8 +183,7 @@ public class UserController{
                     savingModelRepository.save(thisModel);
                     System.out.println("data already saved - adding model");
                 }
-                            
-                
+                    
             }else{
                 // If not, set the Data object's user, add the model, and save 
                 data.setUser(user);
@@ -197,8 +200,7 @@ public class UserController{
         }
     }
 
-    /* ADD STYLING OF SAVING LINKS
-        DON'T SHOW SAVE LINK ON VIEW PAGE FOR SAMPLE DATASETS 
+    /* 
             MAYBE ALSO FOR MODEL OF SAMPLE. ONLY SAVE MODEL, THEN RECONSTRUCT SAMPLE WHEN PULLED UP.
         MAKE MY ACCOUNT PAGE WITH SAVE DATASETS (WHICH MAY INCLUDE MULTIPLE MODELS)...
         WHEN CLICKING ON DATASET, GO TO VIEW

@@ -7,7 +7,6 @@
     <div th:replace="fragments :: links-at-account"></div>
 
     <div id="content">
-        
         <div th:unless="${session.user}">
             <h3>
                 Please <a th:href="@{/user/login}" th:text="'log in'"></a>
@@ -17,8 +16,10 @@
         </div>
 
         <div th:if="${session.user}">
-            <h3>My account.</h3>
-            There's a user! 
+            <h3 th:text="${username}+'\'s account.'"></h3>
+            
+            
+            
             <p th:text="${session.user.username}"></p>
         </div>
 
