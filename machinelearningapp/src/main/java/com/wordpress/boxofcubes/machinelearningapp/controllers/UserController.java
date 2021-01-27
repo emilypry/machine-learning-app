@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
-import com.wordpress.boxofcubes.machinelearningapp.data.ModelRepository;
+import com.wordpress.boxofcubes.machinelearningapp.data.SavingModelRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.SavingModelRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
@@ -196,6 +196,14 @@ public class UserController{
             return "redirect:/test-model";
         }
     }
+
+    /* ADD STYLING OF SAVING LINKS
+        DON'T SHOW SAVE LINK ON VIEW PAGE FOR SAMPLE DATASETS 
+            MAYBE ALSO FOR MODEL OF SAMPLE. ONLY SAVE MODEL, THEN RECONSTRUCT SAMPLE WHEN PULLED UP.
+        MAKE MY ACCOUNT PAGE WITH SAVE DATASETS (WHICH MAY INCLUDE MULTIPLE MODELS)...
+        WHEN CLICKING ON DATASET, GO TO VIEW
+        WHEN CLICKING ON MODEL, GO TO TESTED (DON'T ALLOW GOING BACK TO TRAINED)
+    */
 
 
 }
