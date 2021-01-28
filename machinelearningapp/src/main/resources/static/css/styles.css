@@ -435,22 +435,27 @@ input {
     margin-right: auto;
 }
 .datasets {
-    margin-top: 2%;
+    margin-top: 3%;
     text-align: center;
     width: 100%;
 }
 .models {
+    margin-top: 1%;
     text-align: center;
     width: 100%;
 }
-#datasets-and-models button {
-    background: none;
+.data-button, .model-button {
     border: none;
-    padding: 0;
+    background: none;
     font-family: "Avenir";
     font-size: 16px;
-    font-weight: 400;
-    text-decoration: underline;
+    padding: 0;
+    text-decoration: none;
     cursor: pointer;
+}
+.data-button {
     color:rgb(32, 40, 73);
+}
+.model-button {
+    color:rgb(165, 29, 20);
 }

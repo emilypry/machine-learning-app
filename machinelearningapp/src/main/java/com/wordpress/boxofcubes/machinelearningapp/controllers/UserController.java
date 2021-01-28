@@ -113,34 +113,8 @@ public class UserController{
         User user = (User)request.getSession().getAttribute("user");
         model.addAttribute("username", user.getUsername());
         
-        // Make a hash map of the user's saved datasets and their models
-        /*HashMap<Data, List<SavingModel>> dataAndModels = new HashMap<>();
-        List<Data> datasets = dataRepository.findByUser(user);
-        for(Data d : datasets){
-            List<SavingModel> models = savingModelRepository.findByData(d);     
-            dataAndModels.put(d, models);
-        }
-        model.addAttribute("dataAndModels", dataAndModels);*/
-
         List<Data> datasets = dataRepository.findByUser(user);
         model.addAttribute("datasets", datasets);
-        //model.addAttribute("user", user);
-        
-
-        
-        /*List<Data> datasets = dataRepository.findByUser(user);
-        for(Data d : datasets){
-            System.out.println(d.getName());
-            List<SavingModel> models = savingModelRepository.findByData(d);
-            for(SavingModel m : models){
-                System.out.println(m.getId());
-            }
-        }*/
-
-
-
-        //List<SavingModel> findSavingModelById
-
 
         return "user/account";
     }
