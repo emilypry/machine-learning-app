@@ -428,28 +428,29 @@ input {
 }
 
 #datasets-and-models {
+    margin-top: 2%;
+    margin-bottom: 5%;
     width: 80%;
-    background:rgb(165, 29, 20);
     margin-left: auto;
     margin-right: auto;
-}
-#datasets-and-models .row{
-    width: 80%;
-    background:rgb(32, 40, 73);
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: space-between;
 }
 .datasets {
-    width: 50%;
-    background:rgb(209, 207, 181);
-}
-.model-row {
-    width: 50%;
-    background:rgb(253, 204, 40);   
+    margin-top: 2%;
+    text-align: center;
+    width: 100%;
 }
 .models {
+    text-align: center;
     width: 100%;
-    display: block;
+}
+#datasets-and-models button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: "Avenir";
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+    color:rgb(32, 40, 73);
 }
