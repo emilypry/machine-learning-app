@@ -12,10 +12,12 @@ import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.DataValueRepository;
+import com.wordpress.boxofcubes.machinelearningapp.data.SavingModelRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
 import com.wordpress.boxofcubes.machinelearningapp.models.LinearRegression;
 import com.wordpress.boxofcubes.machinelearningapp.models.Parameters;
+import com.wordpress.boxofcubes.machinelearningapp.models.SavingModel;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 import com.wordpress.boxofcubes.machinelearningapp.validation.DataSubmissionDTOValidator;
@@ -47,6 +49,8 @@ public class DataController {
     DataSubmissionDTOValidator submissionValidator;
     @Autowired
     ParametersDTOValidator parametersValidator;
+    @Autowired
+    SavingModelRepository modelRepository;
 
     @GetMapping("home")
     public String showHome(HttpServletRequest request){
@@ -295,6 +299,32 @@ public class DataController {
             System.out.println("Couldn't find data object to go back to trained model!");
             return "redirect:/test-model";
         }
+    }
+
+
+    @PostMapping("retrieve-saved-model")
+    public String processSavedModel(@RequestParam int id, HttpServletRequest request){
+        // Get the SavingModel object from the repository via its ID
+        Optional<SavingModel> theModel = modelRepository.findById(id);
+        if(theModel.isPresent()){
+            // Make a new LinearRegression object using the model
+            LinearRegression lr = new LinearRegression(theModel.get());
+
+            // Set the LinearRegression object in the session
+            request.getSession().setAttribute("linearRegression", lr);
+
+            // Find the Data object that the model is associated with
+            Optional<Data> data = dataRepository.findByModels(theModel.get());
+            if(data.isPresent()){
+                //Set the data object in the session
+                request.getSession().setAttribute("data", data.get());
+
+                return "redirect:/test-model";
+            }else{
+                System.out.println("Can't find data object associated with model!");
+            }
+        }
+        return "redirect:/user/account";
     }
 
     @GetMapping("test-model")

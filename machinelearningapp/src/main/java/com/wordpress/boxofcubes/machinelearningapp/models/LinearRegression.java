@@ -41,6 +41,12 @@ public class LinearRegression {
         this.parameters = parameters;
         setSubsets(allData);
     }
+    public LinearRegression(SavingModel savingModel){
+        trainedTheta = new double[]{savingModel.getTheta0(), savingModel.getTheta1()};
+        trainingError = savingModel.getTrainingError();
+        crossValError = savingModel.getCrossValError();
+        testingError = savingModel.getTestingError();
+    }
 
     /** Sets the trainingSet, crossValSet, and testingSet from allData */
     public void setSubsets(Data allData){
