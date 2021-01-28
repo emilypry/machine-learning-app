@@ -145,10 +145,6 @@ public class DataController {
             request.getSession().setAttribute(dataUUID, data.get());
             System.out.println("Retrieved saved data "+dataUUID);
 
-            // Add a 'retrieved' attribute to the session
-            request.getSession().setAttribute("retrieved", true);
-
-
             return "redirect:/view-data?dataUUID="+dataUUID;
         }else{
             System.out.println("couldn't find saved data");

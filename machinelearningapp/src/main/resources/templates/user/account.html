@@ -24,25 +24,22 @@
                 </div>
             </div>-->
 
-            <!--<div th:for="${datasets}">
-                <div th:each="data : ${datasets}" th:text="${data.getName()}">
-                    <div th:for="${data.getModels()}">
-                        <p th:each="model : ${data.getModels()}" th:text="model!"></p>
+            <div th:for="${datasets}" id="datasets-and-models"> 
+                <div th:each="data : ${datasets}" class="row">
+                    <div class="datasets" th:text="${data.name}"></div>
+                    <div th:each="model : ${data.getModels()}" class="model-row">
+                        <div class="models" th:text="${model.getTrainingError()}"></div>
+                    </div>
                 </div>
-            </div>-->
+            </div>
             
-            <div th:for="${dataAndModels}" id="datasets-and-models">
-                <div class="row">
-                    
-                        <h3>Datasets</h3>
-                    
-                        <h3>Models</h3>
-                    
+            <!--<div th:for="${dataAndModels}" id="datasets-and-models">
+                <div class="row">  
+                        <h3>Datasets</h3>  
+                        <h3>Models</h3>  
                 </div>
 
                 <div th:each="entry : ${dataAndModels.entrySet()}" class="row">
-                    <!--<div class="datasets" th:each="data : ${entry.getKey()}" th:text="${data.getName()}"></div>-->
-
                     <div class="datasets" th:each="data : ${entry.getKey()}">
                         <form method="post" th:action="@{/retrieve-saved-data}">
                             <input type="hidden" name="id" th:value="${data.getId()}" />
@@ -55,7 +52,7 @@
                         <div class="models" th:each="model : ${entry.getValue()}" th:text="${model.getTestingError()}"></div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             
             
         </div>

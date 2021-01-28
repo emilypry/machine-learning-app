@@ -447,9 +447,9 @@ input {
 }
 .model-row {
     width: 50%;
-    background:rgb(253, 204, 40);
-    
+    background:rgb(253, 204, 40);   
 }
 .models {
-    
+    width: 100%;
+    display: block;
 }
