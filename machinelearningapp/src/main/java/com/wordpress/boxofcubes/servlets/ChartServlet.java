@@ -100,10 +100,14 @@ public class ChartServlet extends HttpServlet{
                 // If there are predictions, show the chart with predictions
                 if(predictions != null){
                     
-                    Boolean retrieved = (Boolean)request.getSession().getAttribute("retrieved");
+                    /*Boolean retrieved = (Boolean)request.getSession().getAttribute("retrieved");
                     if(retrieved != null && retrieved == true){
                         System.out.println("DATASET HAS BEEN RETRIEVED");
-                    }
+
+                        // Remove 'retrieved' from session
+                        request.getSession().removeAttribute("retrieved");
+                        System.out.println("Removed retrieved from session ");
+                    }*/
 
                     response.setContentType("image/png");
                     OutputStream outputStream = response.getOutputStream();
@@ -118,17 +122,26 @@ public class ChartServlet extends HttpServlet{
                 }
                 // If there aren't predictions, show the chart with just the data points
                 else{
-
-                    Boolean retrieved = (Boolean)request.getSession().getAttribute("retrieved");
-                    if(retrieved != null && retrieved == true){
-                        System.out.println("DATASET HAS BEEN RETRIEVED");
-                    }
-
                     response.setContentType("image/png");
                     OutputStream outputStream = response.getOutputStream();
     
                     // Make the chart
-                    JFreeChart chart = getChart(data);
+                    JFreeChart chart = null;
+                    // If retrieving the chart, no need to make data values
+                    /*Boolean retrieved = (Boolean)request.getSession().getAttribute("retrieved");
+                    if(retrieved != null && retrieved == true){
+
+                        chart = retrieveChart(data);
+
+                        System.out.println("DATASET HAS BEEN RETRIEVED");
+
+                        // Remove 'retrieved' from session
+                        request.getSession().removeAttribute("retrieved");
+                        System.out.println("Removed retrieved from session ");
+                    }else{*/
+                        chart = getChart(data);
+                    //}
+                    
                     ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
                 }
             }else{
@@ -139,9 +152,7 @@ public class ChartServlet extends HttpServlet{
             request.getSession().removeAttribute(dataUUID);
             System.out.println("Removed UUID from session "+dataUUID);
 
-            // Remove 'retrieved' from session
-            request.getSession().removeAttribute("retrieved");
-            System.out.println("Removed retrieved from session ");
+            
 
         }else{
             System.out.println("no uuid!");
@@ -176,6 +187,10 @@ public class ChartServlet extends HttpServlet{
         plot.setChart(chart);
 
         return chart;   
+    }
+
+    private JFreeChart retrieveChart(Data data){
+
     }
 
     private JFreeChart getChartWithPredictions(Data data, double[] predictions){

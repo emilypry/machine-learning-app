@@ -16,6 +16,7 @@ public class DataValue{
     private Data data;
     private boolean isX;
 
+    public DataValue(){}
     public DataValue(double value, Data data, boolean isX){
         this.value = value;
         this.data = data;
