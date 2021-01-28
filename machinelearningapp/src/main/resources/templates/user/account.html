@@ -45,7 +45,7 @@
 
                     <div class="datasets" th:each="data : ${entry.getKey()}">
                         <form method="post" th:action="@{/retrieve-saved-data}">
-                            <input type="hidden" th:value="${data.getId()}" />
+                            <input type="hidden" name="id" th:value="${data.getId()}" />
                             <button type="submit" th:text="${data.getName()}"></button>
                         </form>
                     </div>

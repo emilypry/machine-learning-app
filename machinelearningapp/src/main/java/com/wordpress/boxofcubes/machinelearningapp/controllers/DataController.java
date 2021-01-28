@@ -40,9 +40,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class DataController {
     /*@Autowired
-    DataValueRepository dataValueRepository;
+    DataValueRepository dataValueRepository;*/
     @Autowired
-    DataRepository dataRepository;*/
+    DataRepository dataRepository;
     @Autowired
     DataSubmissionDTOValidator submissionValidator;
     @Autowired
@@ -132,6 +132,29 @@ public class DataController {
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
 
+    @PostMapping("retrieve-saved-data")
+    public String processSavedData(@RequestParam int id, HttpServletRequest request){
+        // Get the Data object from the repository via its ID
+        Optional<Data> data = dataRepository.findById(id);
+        if(data.isPresent()){
+            // Set the Data object in the session
+            request.getSession().setAttribute("data", data.get());
+
+            // Make new UUID and add to session
+            String dataUUID = UUID.randomUUID().toString();
+            request.getSession().setAttribute(dataUUID, data.get());
+            System.out.println("Retrieved saved data "+dataUUID);
+
+            // Add a 'retrieved' attribute to the session
+            request.getSession().setAttribute("retrieved", true);
+
+
+            return "redirect:/view-data?dataUUID="+dataUUID;
+        }else{
+            System.out.println("couldn't find saved data");
+            return "redirect:/user/account";
+        }
+    }
 
 
     @GetMapping("view-data")

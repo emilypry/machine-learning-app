@@ -99,6 +99,12 @@ public class ChartServlet extends HttpServlet{
 
                 // If there are predictions, show the chart with predictions
                 if(predictions != null){
+                    
+                    Boolean retrieved = (Boolean)request.getSession().getAttribute("retrieved");
+                    if(retrieved != null && retrieved == true){
+                        System.out.println("DATASET HAS BEEN RETRIEVED");
+                    }
+
                     response.setContentType("image/png");
                     OutputStream outputStream = response.getOutputStream();
         
@@ -112,6 +118,12 @@ public class ChartServlet extends HttpServlet{
                 }
                 // If there aren't predictions, show the chart with just the data points
                 else{
+
+                    Boolean retrieved = (Boolean)request.getSession().getAttribute("retrieved");
+                    if(retrieved != null && retrieved == true){
+                        System.out.println("DATASET HAS BEEN RETRIEVED");
+                    }
+
                     response.setContentType("image/png");
                     OutputStream outputStream = response.getOutputStream();
     
@@ -126,6 +138,10 @@ public class ChartServlet extends HttpServlet{
             // Remove dataUUID from session
             request.getSession().removeAttribute(dataUUID);
             System.out.println("Removed UUID from session "+dataUUID);
+
+            // Remove 'retrieved' from session
+            request.getSession().removeAttribute("retrieved");
+            System.out.println("Removed retrieved from session ");
 
         }else{
             System.out.println("no uuid!");
