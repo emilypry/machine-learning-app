@@ -37,16 +37,16 @@
                         <div class="row">
                             <div class="datasets">
                                 <form method="post" th:action="@{/retrieve-saved-data}">
-                                    <input type="hidden" name="id" th:value="${data.getId()}" />
+                                    <input type="hidden" name="id" th:value="${data.id}" />
                                     <button type="submit" th:text="${data.name}" class="data-button"></button>
                                 </form>
                             </div>
 
                             <div class="models">
-                                <div th:each="model : ${data.getModels()}">
+                                <div th:each="model : ${data.models}">
                                 
                                     <form method="post" th:action="@{/retrieve-saved-model}">
-                                        <input type="hidden" name="id" th:value="${model.getId()}" />
+                                        <input type="hidden" name="id" th:value="${model.id}" />
                                         <button type="submit" th:text="${'Model error: '+#numbers.formatDecimal(model.trainingError,1,2)+', '+#numbers.formatDecimal(model.crossValError,1,2)+', '+#numbers.formatDecimal(model.testingError,1,2)}" class="model-button"></button>
                                     </form>
                                 </div>
