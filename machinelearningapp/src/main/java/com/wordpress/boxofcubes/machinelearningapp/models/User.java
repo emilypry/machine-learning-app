@@ -16,10 +16,10 @@ public class User {
     private int id;
     private String username;
     private String passwordHash;
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     @OneToMany(mappedBy = "user")
     private List<Data> datasets;
-
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    
     public User(){}
     public User(String username, String password){
         this.username = username;

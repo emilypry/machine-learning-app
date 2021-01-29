@@ -6,7 +6,6 @@ import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.User;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.UserSignupDTO;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -30,6 +29,7 @@ public class UserSignupDTOValidator implements Validator{
         String password = u.getPassword();
         String verify = u.getVerifyPassword();
 
+        // Missing field
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", 
         "error.username", "Please enter a username");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", 
@@ -49,12 +49,10 @@ public class UserSignupDTOValidator implements Validator{
             }
 
             // User with that username already in database
-            // MUST TEST!!!
             Optional<User> anotherUser = userRepository.findByUsername(username);
             if(anotherUser.isPresent()){
                 errors.reject("error.usernameSize", "Username is taken");
             }
-
         }
 
         // Password errors
@@ -71,6 +69,5 @@ public class UserSignupDTOValidator implements Validator{
                 errors.reject("error.passwordNotVerified", "Verified password must be the same as password");
             }
         } 
-    
     }  
 }
