@@ -1,11 +1,13 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.naming.SizeLimitExceededException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -64,11 +66,12 @@ public class DataController {
     @GetMapping("submit-data")
     public String showSubmit(Model model, HttpSession session){
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
-        System.out.println("---At submit-data");
+        //System.out.println("---At submit-data");
         return "data/submit";
     }
     @PostMapping("submit-data/upload")
     public String processUploadData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
+        // Validate data upload submission
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
         if(bindingResult.hasErrors()){
             model.addAttribute("uploaded", true);
@@ -78,15 +81,14 @@ public class DataController {
         // Convert the DTO to a new Data object
         Data data = new Data(dataSubmissionDTO);
 
-        // Make a unique identifier and set attribute
+        // Make a unique identifier for it and add it to the session
         String dataUUID = UUID.randomUUID().toString();
         request.getSession().setAttribute(dataUUID, data);
 
-        // Also set the Data object in session
+        // Also set the Data object itself in the session
         request.getSession().setAttribute("data", data);
         //setDataInSession(request.getSession(), data);
 
-        //return "redirect:/view-data";
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
     @PostMapping("submit-data/enter")

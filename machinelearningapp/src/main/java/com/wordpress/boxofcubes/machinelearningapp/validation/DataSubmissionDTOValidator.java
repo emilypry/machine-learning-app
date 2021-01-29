@@ -1,7 +1,6 @@
 package com.wordpress.boxofcubes.machinelearningapp.validation;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.DataSubmissionDTO;
-import com.wordpress.boxofcubes.machinelearningapp.models.DataValue;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -150,24 +148,10 @@ public class DataSubmissionDTOValidator implements Validator{
         // Delete both Files
         newX.delete();
         newY.delete();
+        
     }
 
     private void scanFile(File file, DataSubmissionDTO submission, String xOrY) throws FileNotFoundException, InputMismatchException{
-       /* List<DataValue> vals = new ArrayList<>();
-        Scanner scan = new Scanner(file);
-        while(scan.hasNext()){
-            vals.add(new DataValue(scan.nextDouble(), submission));
-        }
-        scan.close();
-
-        // Set the X or Y DataValues for the submission object
-        if(xOrY.equals("X")){
-            submission.setX(vals);
-        }else if(xOrY.equals("Y")){
-            submission.setY(vals);
-        }*/
-
-        
         ArrayList<Double> vals = new ArrayList<>();
         Scanner scan = new Scanner(file);
         while(scan.hasNext()){

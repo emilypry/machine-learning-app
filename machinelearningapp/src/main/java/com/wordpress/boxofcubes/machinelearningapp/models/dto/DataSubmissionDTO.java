@@ -1,7 +1,5 @@
 package com.wordpress.boxofcubes.machinelearningapp.models.dto;
 
-import com.wordpress.boxofcubes.machinelearningapp.models.Data;
-
 import org.springframework.web.multipart.MultipartFile;
 
 public class DataSubmissionDTO {

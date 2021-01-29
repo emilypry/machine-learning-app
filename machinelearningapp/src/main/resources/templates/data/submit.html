@@ -20,8 +20,6 @@
             </p>
         </div>
 
-
-
         <div id="data-choice">
             <input th:if="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" checked="checked"/>
             <input th:unless="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" />
@@ -35,7 +33,7 @@
             <label for="sample-choice" class="data-choice-label">Use sample data</label>
 
             <div id="chose-upload">
-                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" th:action="@{/submit-data/upload}" id="upload-form" >
+                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" th:action="@{/submit-data/upload}" id="upload-form">
                     <div class="errors">
                         <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
                     </div>

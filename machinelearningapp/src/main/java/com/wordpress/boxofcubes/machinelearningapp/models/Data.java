@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -19,16 +18,13 @@ public class Data {
     @Id
     @GeneratedValue
     private int id;
-
     @OneToMany(mappedBy="data", cascade=CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
     private List<DataValue> dataValues;
-
     private int numPoints;
     private String name;
     private String xLabel;
     private String yLabel;
     private String itemLabel;
-
     @ManyToOne
     private User user;
     @OneToMany(mappedBy="data", cascade=CascadeType.ALL, orphanRemoval = true)
@@ -63,7 +59,6 @@ public class Data {
         itemLabel = dataSubmissionDTO.getItemLabel();
     }
 
-
     public double[] getX(){
         List<DataValue> xList = new ArrayList<>();
         for(DataValue d : dataValues){
@@ -89,6 +84,13 @@ public class Data {
             y[i] = yList.get(i).getValue();
         }
         return y;
+    }
+
+    public void addModel(SavingModel model){
+        if(models == null){
+            models = new ArrayList<>();
+        }
+        models.add(model);
     }
 
     public int getId(){
@@ -145,15 +147,6 @@ public class Data {
     public void setModels(List<SavingModel> models){
         this.models = models;
     }
-
-
-    public void addModel(SavingModel model){
-        if(models == null){
-            models = new ArrayList<>();
-        }
-        models.add(model);
-    }
-
 
     /** Makes the Life Expectancy by Year sample dataset */
     public static Data makeLifeDataset(){
@@ -385,62 +378,62 @@ public class Data {
         return data;
     } 
 
-        /** Makes the Price and Number of Pages of Books sample dataset */
-        public static Data makeBookDataset(){
-            Data data = new Data();
-            List<DataValue> dataValues = new ArrayList<>();
-            dataValues.add(new DataValue(5, data, true));
-            dataValues.add(new DataValue(60, data, false));
-            dataValues.add(new DataValue(5, data, true));
-            dataValues.add(new DataValue(20, data, false));
-            dataValues.add(new DataValue(5.30, data, true));
-            dataValues.add(new DataValue(100, data, false));
-            dataValues.add(new DataValue(7, data, true));
-            dataValues.add(new DataValue(80, data, false));
-            dataValues.add(new DataValue(7.30, data, true));
-            dataValues.add(new DataValue(180, data, false));
-            dataValues.add(new DataValue(9, data, true));
-            dataValues.add(new DataValue(432, data, false));
-            dataValues.add(new DataValue(10, data, true));
-            dataValues.add(new DataValue(35, data, false));
-            dataValues.add(new DataValue(10.25, data, true));
-            dataValues.add(new DataValue(100, data, false));
-            dataValues.add(new DataValue(12, data, true));
-            dataValues.add(new DataValue(200, data, false));
-            dataValues.add(new DataValue(12.50, data, true));
-            dataValues.add(new DataValue(15, data, false));
-            dataValues.add(new DataValue(15.75, data, true));
-            dataValues.add(new DataValue(300, data, false));
-            dataValues.add(new DataValue(18, data, true));
-            dataValues.add(new DataValue(320, data, false));
-            dataValues.add(new DataValue(18, data, true));
-            dataValues.add(new DataValue(148, data, false));
-            dataValues.add(new DataValue(20, data, true));
-            dataValues.add(new DataValue(498, data, false));
-            dataValues.add(new DataValue(20.25, data, true));
-            dataValues.add(new DataValue(152, data, false));
-            dataValues.add(new DataValue(20.50, data, true));
-            dataValues.add(new DataValue(68, data, false));
-            dataValues.add(new DataValue(23, data, true));
-            dataValues.add(new DataValue(325, data, false));
-            dataValues.add(new DataValue(25, data, true));
-            dataValues.add(new DataValue(112, data, false));
-            dataValues.add(new DataValue(26, data, true));
-            dataValues.add(new DataValue(264, data, false));
-            dataValues.add(new DataValue(27, data, true));
-            dataValues.add(new DataValue(411, data, false));
-            dataValues.add(new DataValue(27.75, data, true));
-            dataValues.add(new DataValue(74, data, false));
-            dataValues.add(new DataValue(30, data, true));
-            dataValues.add(new DataValue(107, data, false));
+    /** Makes the Price and Number of Pages of Books sample dataset */
+    public static Data makeBookDataset(){
+        Data data = new Data();
+        List<DataValue> dataValues = new ArrayList<>();
+        dataValues.add(new DataValue(5, data, true));
+        dataValues.add(new DataValue(60, data, false));
+        dataValues.add(new DataValue(5, data, true));
+        dataValues.add(new DataValue(20, data, false));
+        dataValues.add(new DataValue(5.30, data, true));
+        dataValues.add(new DataValue(100, data, false));
+        dataValues.add(new DataValue(7, data, true));
+        dataValues.add(new DataValue(80, data, false));
+        dataValues.add(new DataValue(7.30, data, true));
+        dataValues.add(new DataValue(180, data, false));
+        dataValues.add(new DataValue(9, data, true));
+        dataValues.add(new DataValue(432, data, false));
+        dataValues.add(new DataValue(10, data, true));
+        dataValues.add(new DataValue(35, data, false));
+        dataValues.add(new DataValue(10.25, data, true));
+        dataValues.add(new DataValue(100, data, false));
+        dataValues.add(new DataValue(12, data, true));
+        dataValues.add(new DataValue(200, data, false));
+        dataValues.add(new DataValue(12.50, data, true));
+        dataValues.add(new DataValue(15, data, false));
+        dataValues.add(new DataValue(15.75, data, true));
+        dataValues.add(new DataValue(300, data, false));
+        dataValues.add(new DataValue(18, data, true));
+        dataValues.add(new DataValue(320, data, false));
+        dataValues.add(new DataValue(18, data, true));
+        dataValues.add(new DataValue(148, data, false));
+        dataValues.add(new DataValue(20, data, true));
+        dataValues.add(new DataValue(498, data, false));
+        dataValues.add(new DataValue(20.25, data, true));
+        dataValues.add(new DataValue(152, data, false));
+        dataValues.add(new DataValue(20.50, data, true));
+        dataValues.add(new DataValue(68, data, false));
+        dataValues.add(new DataValue(23, data, true));
+        dataValues.add(new DataValue(325, data, false));
+        dataValues.add(new DataValue(25, data, true));
+        dataValues.add(new DataValue(112, data, false));
+        dataValues.add(new DataValue(26, data, true));
+        dataValues.add(new DataValue(264, data, false));
+        dataValues.add(new DataValue(27, data, true));
+        dataValues.add(new DataValue(411, data, false));
+        dataValues.add(new DataValue(27.75, data, true));
+        dataValues.add(new DataValue(74, data, false));
+        dataValues.add(new DataValue(30, data, true));
+        dataValues.add(new DataValue(107, data, false));
 
-            data.setDataValues(dataValues);
-            data.setNumPoints(dataValues.size() / 2);
-            data.setName("Price and Number of Pages of Books");
-            data.setXLabel("Price of Book (Dollars)");
-            data.setYLabel("Number of Pages in Book");
-            data.setItemLabel("Book");
-    
-            return data;
-        } 
+        data.setDataValues(dataValues);
+        data.setNumPoints(dataValues.size() / 2);
+        data.setName("Price and Number of Pages of Books");
+        data.setXLabel("Price of Book (Dollars)");
+        data.setYLabel("Number of Pages in Book");
+        data.setItemLabel("Book");
+
+        return data;
+    } 
 }
