@@ -130,7 +130,7 @@ public class DataController {
             data = Data.makeBookDataset();
             request.getSession().setAttribute(dataUUID, data);
         }
-        
+
         // Also set the Data object in the session
         request.getSession().setAttribute("data", data);
         //setDataInSession(request.getSession(), data);
@@ -147,16 +147,17 @@ public class DataController {
             // Set the Data object in the session
             request.getSession().setAttribute("data", data.get());
 
-            // Make new UUID and add to session
+            // Make new UUID for it and add it to session
             String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data.get());
-            System.out.println("Retrieved saved data "+dataUUID);
+            //System.out.println("Retrieved saved data "+dataUUID);
 
             return "redirect:/view-data?dataUUID="+dataUUID;
-        }else{
+        }/*else{
             System.out.println("couldn't find saved data");
             return "redirect:/user/account";
-        }
+        }*/
+        return "redirect:/user/account";
     }
 
 
@@ -166,12 +167,12 @@ public class DataController {
         // Get the data UUID from the URL and add to the model
         model.addAttribute("dataUUID", dataUUID);
 
-        // If the user has saved the dataset, add a confirmation message
+        // If the user has saved the Data object, add a confirmation message
         if(saved != null){
             model.addAttribute("saved", "Dataset is saved to your account");
         }
 
-        System.out.println("UUID at view-data: "+dataUUID);
+        //System.out.println("UUID at view-data: "+dataUUID);
 
         return "data/chart";
     }

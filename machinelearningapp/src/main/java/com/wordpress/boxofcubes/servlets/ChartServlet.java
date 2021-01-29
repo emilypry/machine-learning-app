@@ -2,7 +2,6 @@ package com.wordpress.boxofcubes.servlets;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.awt.Color;
 
 import javax.servlet.ServletException;
@@ -10,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;
 
@@ -28,13 +26,15 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class ChartServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        System.out.println("Entered chart...");
+        //System.out.println("Entered chart...");
 
-        // Get Data UUID
+        // Get Data UUID from the URL
         String dataUUID = request.getParameter("dataUUID");
         if(dataUUID != null){
+            // Get the Data object identified by the UUID from the session
             Data data = (Data)request.getSession().getAttribute(dataUUID);
             if(data != null){
+                // Get the predictions from the session
                 double[] predictions = (double[])request.getSession().getAttribute("predictions");
 
                 // If there are predictions, show the chart with predictions
@@ -46,9 +46,9 @@ public class ChartServlet extends HttpServlet{
                     JFreeChart chart = getChartWithPredictions(data, predictions);
                     ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
     
-                    // Remove predictions from session
+                    // Remove the predictions from the session
                     request.getSession().removeAttribute("predictions");
-                    System.out.println("Removed predictions from session");
+                    //System.out.println("Removed predictions from session");
                 }
                 // If there aren't predictions, show the chart with just the data points
                 else{
@@ -59,23 +59,23 @@ public class ChartServlet extends HttpServlet{
                     JFreeChart chart = getChart(data);
                     ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
                 }
-            }else{
+            }/*else{
                 System.out.println("uuid but no data object!");
-            }
+            }*/
 
             // Remove dataUUID from session
             request.getSession().removeAttribute(dataUUID);
-            System.out.println("Removed UUID from session "+dataUUID);
+            //System.out.println("Removed UUID from session "+dataUUID);
 
-        }else{
+        }/*else{
             System.out.println("no uuid!");
-        }
+        }*/
     }
 
     private XYDataset getDataset(Data data){
         XYSeriesCollection dataset = new XYSeriesCollection();
 
-        // Get the data from the Data object
+        // Get the data values from the Data object
         XYSeries pairs = new XYSeries(data.getItemLabel());
         for(int i=0; i<data.getX().length; i++){
           pairs.add(data.getX()[i], data.getY()[i]);
@@ -111,15 +111,16 @@ public class ChartServlet extends HttpServlet{
         pairs.add(predictions[0], predictions[1]);
         pairs.add(predictions[2], predictions[3]);
         preds.addSeries(pairs);
-
         XYDataset modelPreds = (XYDataset)preds;
 
         // Set the renderers
         XYItemRenderer renderer1 = new XYLineAndShapeRenderer(false, true); // points
         XYItemRenderer renderer2 = new XYLineAndShapeRenderer(true, false); // line
+
         // Create chart
         JFreeChart chart = ChartFactory.createScatterPlot(data.getName(), data.getXLabel(),
         data.getYLabel(), dataset);
+        
         // Create the plot, add the datasets to it, set the background color
         XYPlot plot = (XYPlot)chart.getPlot();
         plot.setDataset(0, dataset); 

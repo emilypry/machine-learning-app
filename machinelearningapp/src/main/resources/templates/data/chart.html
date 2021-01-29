@@ -20,7 +20,6 @@
             <img th:src="@{/view-data/display-chart(dataUUID=${dataUUID},retrieved=${retrieved})}" width=700 height=400>
         </div>
         
-        
         <div th:if="${session.user}">   
             <form method="post" th:action="@{/user/save-data}">
                 <input type="hidden" name="dataUUID" th:value="${dataUUID}" />
@@ -34,7 +33,6 @@
             </div>
         </div>
         
-
         <div class="two-button-container">
             <button type="submit" th:onclick="location.href='/submit-data'">
                 Revise Data
@@ -45,9 +43,9 @@
             </button>
         </div>
 
-
     </div>
 
     <div id="footer"></div>
+    
 </body>
 </html>
