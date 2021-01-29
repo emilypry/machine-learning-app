@@ -93,6 +93,7 @@ public class DataController {
     }
     @PostMapping("submit-data/enter")
     public String processEnterData(DataSubmissionDTO dataSubmissionDTO, BindingResult bindingResult, Model model, HttpServletRequest request){
+        // Validate data entry submission
         submissionValidator.validate(dataSubmissionDTO, bindingResult);
         if(bindingResult.hasErrors()){
             model.addAttribute("entered", true);

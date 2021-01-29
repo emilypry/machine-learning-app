@@ -124,7 +124,7 @@ public class DataSubmissionDTOValidator implements Validator{
                 errors.reject("error.noX", "There are no X values in the submission");
             }
             if(lengthY == 0){
-                errors.reject("error.noY", "There are no Y values in th submission");
+                errors.reject("error.noY", "There are no Y values in the submission");
             }
             if(lengthX > 1000 || lengthY > 1000){
                 errors.reject("error.tooManyValues", "Data must have fewer than 1000 examples");
@@ -152,6 +152,7 @@ public class DataSubmissionDTOValidator implements Validator{
     }
 
     private void scanFile(File file, DataSubmissionDTO submission, String xOrY) throws FileNotFoundException, InputMismatchException{
+        // Get the doubles from the file
         ArrayList<Double> vals = new ArrayList<>();
         Scanner scan = new Scanner(file);
         while(scan.hasNext()){
@@ -159,11 +160,13 @@ public class DataSubmissionDTOValidator implements Validator{
         }
         scan.close();
 
+        // Convert the array list to an array
         double[] theVals = new double[vals.size()];
         for(int i=0; i<vals.size(); i++){
             theVals[i] = vals.get(i);
         }
 
+        // Set the rawX or rawY attribute of the DTO to the array
         if(xOrY.equals("X")){
             submission.setRawX(theVals);
         }else if(xOrY.equals("Y")){
