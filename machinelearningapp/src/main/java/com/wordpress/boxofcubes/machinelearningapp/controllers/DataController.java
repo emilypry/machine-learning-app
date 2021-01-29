@@ -220,10 +220,7 @@ public class DataController {
             return "data/parameters";
         }
         // Convert the DTO to a new Parameters object
-        double[] theta = new double[2];
-        theta[0] = parametersDTO.getTheta0();
-        theta[1] = parametersDTO.getTheta1();
-        Parameters parameters = new Parameters(parametersDTO.getTrainingProportion(), theta, parametersDTO.getAlpha(), parametersDTO.getLambda(), parametersDTO.getMaxIterations(), parametersDTO.getConvergenceLevel());
+        Parameters parameters = new Parameters(parametersDTO);
 
         // Get the Data object from the session 
         Data data = (Data)request.getSession().getAttribute("data");

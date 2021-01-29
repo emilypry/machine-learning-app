@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
+
 @Entity
 public class Parameters {
     @Id
@@ -24,6 +26,14 @@ public class Parameters {
         this.lambda = lambda;
         this.maxIterations = maxIterations;
         this.convergenceLevel = convergenceLevel;
+    }
+    public Parameters(ParametersDTO dto){
+        trainingProportion = dto.getTrainingProportion();
+        initialTheta = new double[]{dto.getTheta0(), dto.getTheta1()};
+        alpha = dto.getAlpha();
+        lambda = dto.getLambda();
+        maxIterations = dto.getMaxIterations();
+        convergenceLevel = dto.getConvergenceLevel();
     }
 
     public int getId(){
