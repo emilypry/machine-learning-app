@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
@@ -15,8 +12,7 @@ public class LinearRegression {
     @GeneratedValue
     private int id;
 
-    // The data and subsets
-    //private Data allData;
+    // The subsets of the data
     private Data trainingSet;
     private Data crossValSet;
     private Data testingSet;
@@ -53,7 +49,7 @@ public class LinearRegression {
         // Get the size for the subsets
         int trainingSize = (int)(allData.getNumPoints() * parameters.getTrainingProportion());
         int crossSize = (int)((allData.getNumPoints() - trainingSize) / 2);
-        int testingSize = allData.getNumPoints() - trainingSize - crossSize;
+        //int testingSize = allData.getNumPoints() - trainingSize - crossSize;
 
         List<DataValue> trainingVals = new ArrayList<>();
         List<DataValue> crossVals = new ArrayList<>();
@@ -227,14 +223,14 @@ public class LinearRegression {
 
                 // If cost has increased on this iteration, stop (not learning)
                 if(difference < 0){
-                    System.out.println("COST INCREASED");
+                    //System.out.println("COST INCREASED");
                     costIncreased = true;
                     break;
                 }
                 // If the cost has decreased less than the convergenceLevel on this 
                 // iteration, stop (learned)
                 if(difference < parameters.getConvergenceLevel()){
-                    System.out.println("CONVERGED");
+                    //System.out.println("CONVERGED");
                     converged = true;
                     break;
                 }
@@ -302,7 +298,6 @@ public class LinearRegression {
     }
 
 
-
     public int getId(){
         return id;
     }
@@ -345,84 +340,4 @@ public class LinearRegression {
     public double getTestingError(){
         return testingError;
     }
-
-
-
-
-
-
-    public static void main(String[] args){
-        Data data = Data.makeLifeDataset();
-        ParametersDTO p = ParametersDTO.getDefaultParameters();
-        double[] theta = {p.getTheta0(), p.getTheta1()};
-        Parameters parameters = new Parameters(p.getTrainingProportion(), theta, p.getAlpha(), p.getLambda(), p.getMaxIterations(), p.getConvergenceLevel());
-
-        LinearRegression lr = new LinearRegression(data, parameters);
-
-        /*System.out.println("ORIGINAL");
-        for(int i=0; i< lr.allData.getNumPoints(); i++){
-            System.out.println(lr.allData.getX()[i]+", "+lr.allData.getY()[i]);
-        }*/
-        System.out.println("TRAINING");
-        for(int i=0; i< lr.trainingSet.getNumPoints(); i++){
-            System.out.println(lr.trainingSet.getX()[i]+", "+lr.trainingSet.getY()[i]);
-        }
-        /*System.out.println("CV");
-        for(int i=0; i< lr.crossValSet.getNumPoints(); i++){
-            System.out.println(lr.crossValSet.getX()[i]+", "+lr.crossValSet.getY()[i]);
-        }
-        System.out.println("TESTING");
-        for(int i=0; i< lr.testingSet.getNumPoints(); i++){
-            System.out.println(lr.testingSet.getX()[i]+", "+lr.testingSet.getY()[i]);
-        }*/
-
-        /*System.out.println("design");
-        double[][] design = getDesignMatrix(lr.trainingSet);
-        for(int r=0; r<design.length; r++){
-            System.out.println(design[r][0]+" "+design[r][1]);
-        }*/
-        /*System.out.println("predictions");
-        double[] pred = getPredictions(lr.trainingSet, new double[]{1,1});
-        for(double pp : pred){
-            System.out.println(pp);
-        }*/
-
-        /*System.out.println("theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
-        lr.parameters.setLambda(20);
-        System.out.println("lambda: "+lr.parameters.getLambda());
-        double cost = lr.getCost(lr.trainingSet, lr.parameters.getInitialTheta(), true);
-        System.out.println("COST: "+cost);*/
-
-        /*lr.parameters.setLambda(20);
-        double[] newTheta = lr.updateTheta(lr.trainingSet, theta);
-        System.out.println(newTheta[0]+" "+newTheta[1]);*/
-
-        //double[] t = {10, 10};
-        //lr.parameters.setInitialTheta(t);
-        /*lr.parameters.setLambda(10);
-        System.out.println("initial theta: "+lr.parameters.getInitialTheta()[0]+" "+lr.parameters.getInitialTheta()[1]);
-        System.out.println("alpha: "+lr.parameters.getAlpha());
-        System.out.println("lambda: "+lr.parameters.getLambda());
-        System.out.println("max it: "+lr.parameters.getMaxIterations());
-        System.out.println("con level: "+lr.parameters.getConvergenceLevel());
-        double[][] costsAndTheta = lr.gradientDescent(lr.trainingSet);
-        System.out.println("new theta: "+costsAndTheta[1][0]+" "+costsAndTheta[1][1]);*/
-
-        lr.parameters.setAlpha(.00000001);
-        lr.trainModel();
-        System.out.println("trained model!");
-        System.out.println("initial error: "+lr.getCost(lr.trainingSet, lr.parameters.getInitialTheta(), false));
-        System.out.println("trained theta: "+lr.trainedTheta[0]+" "+lr.trainedTheta[1]);
-        System.out.println("training error: "+lr.trainingError);
-        System.out.println("cv error: "+lr.crossValError);
-        System.out.println("testing error: "+lr.trainingError);
-
-
-
-
-    }
-
-
-
-
 }

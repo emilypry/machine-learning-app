@@ -232,7 +232,7 @@ public class DataController {
             // Add the Linear Regression object to the session
             request.getSession().setAttribute("linearRegression", lr);
 
-            // Make a new UUID for the Data object
+            // Make a new UUID for the Data object and add to session
             String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data);
 
@@ -241,12 +241,11 @@ public class DataController {
             request.getSession().setAttribute("predictions", predictions);
 
             return "redirect:/trained-model?dataUUID="+dataUUID;
-        }else{
+        }/*else{
             System.out.println("ERROR - couldn't find data for training!");
             return "data/parameters";
-        }
-
-
+        }*/
+        return "redirect:/set-parameters";
     }
 
     @GetMapping("trained-model")
