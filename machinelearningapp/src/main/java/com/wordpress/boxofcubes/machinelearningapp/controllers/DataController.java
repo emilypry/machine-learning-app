@@ -182,17 +182,17 @@ public class DataController {
         // Get the Data object from the session
         Data data = (Data)request.getSession().getAttribute("data");
 
-        // Make a new UUID for it
-        String dataUUID = UUID.randomUUID().toString();
-
         if(data != null){
+             // Make a new UUID for it and set it in the session
+            String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data);
-            System.out.println("Returning to view data with obj "+dataUUID);
+            //System.out.println("Returning to view data with obj "+dataUUID);
             return "redirect:/view-data?dataUUID="+dataUUID;
-        }else{
+        }/*else{
             System.out.println("Couldn't find data object to go back to view!");
             return "redirect:/set-parameters";
-        }
+        }*/
+        return "redirect:/set-parameters";
     }
 
 
