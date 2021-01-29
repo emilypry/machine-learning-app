@@ -17,34 +17,41 @@
 
         <div th:if="${session.user}">
             <h3 th:text="${username}+'\'s account.'"></h3>
-            <div class="explanation">
-                <p>
-                    These are your saved datasets and models. Click on a dataset to look at a graph
-                    of it and train a model. Click on a model of a dataset to see its performance and
-                    make predictions with it.
+
+            <div th:unless="${datasets.size() > 0}">
+                <p class="short-explanation">
+                    You do not have any saved datasets or models.
                 </p>
             </div>
 
-            <div th:for="${datasets}" id="datasets-and-models"> 
-                <div th:each="data : ${datasets}">
-                    <div class="datasets">
-                        <form method="post" th:action="@{/retrieve-saved-data}">
-                            <input type="hidden" name="id" th:value="${data.getId()}" />
-                            <button type="submit" th:text="${data.name}" class="data-button"></button>
-                        </form>
-                    </div>
-                    <div th:each="model : ${data.getModels()}">
-                        <div class="models">
-                            <form method="post" th:action="@{/retrieve-saved-model}">
-                                <input type="hidden" name="id" th:value="${model.getId()}" />
-                                <button type="submit" th:text="${'Model error: '+#numbers.formatDecimal(model.trainingError,1,2)+', '+#numbers.formatDecimal(model.crossValError,1,2)+', '+#numbers.formatDecimal(model.testingError,1,2)}" class="model-button"></button>
+            <div th:if="${datasets.size() > 0}">
+                <div class="explanation">
+                    <p>
+                        These are your saved datasets and models. Click on a dataset to look at a graph
+                        of it and train a model. Click on a model of a dataset to see its performance and
+                        make predictions with it.
+                    </p>
+                </div>
+
+                <div th:for="${datasets}" id="datasets-and-models"> 
+                    <div th:each="data : ${datasets}">
+                        <div class="datasets">
+                            <form method="post" th:action="@{/retrieve-saved-data}">
+                                <input type="hidden" name="id" th:value="${data.getId()}" />
+                                <button type="submit" th:text="${data.name}" class="data-button"></button>
                             </form>
                         </div>
+                        <div th:each="model : ${data.getModels()}">
+                            <div class="models">
+                                <form method="post" th:action="@{/retrieve-saved-model}">
+                                    <input type="hidden" name="id" th:value="${model.getId()}" />
+                                    <button type="submit" th:text="${'Model error: '+#numbers.formatDecimal(model.trainingError,1,2)+', '+#numbers.formatDecimal(model.crossValError,1,2)+', '+#numbers.formatDecimal(model.testingError,1,2)}" class="model-button"></button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div>   
             </div>
-            
-
             
             
         </div>

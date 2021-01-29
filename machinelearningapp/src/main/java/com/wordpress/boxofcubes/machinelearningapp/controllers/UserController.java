@@ -103,12 +103,13 @@ public class UserController{
     public String showAccount(HttpServletRequest request, Model model){
         // If there's a Data object in the session, get rid of it
         request.getSession().removeAttribute("data");
-        System.out.println("Deleted Data object from session.");
+        //System.out.println("Deleted Data object from session.");
 
         // Get the user and add their username to the model
         User user = (User)request.getSession().getAttribute("user");
         model.addAttribute("username", user.getUsername());
         
+        // Get the user's saved data objects
         List<Data> datasets = dataRepository.findByUser(user);
         model.addAttribute("datasets", datasets);
 
