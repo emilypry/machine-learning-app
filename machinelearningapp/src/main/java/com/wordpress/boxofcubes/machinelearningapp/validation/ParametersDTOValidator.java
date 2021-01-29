@@ -1,13 +1,9 @@
 package com.wordpress.boxofcubes.machinelearningapp.validation;
 
-import java.text.NumberFormat;
-
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -39,14 +35,14 @@ public class ParametersDTOValidator implements Validator{
         }
 
         // Training proportion too high/low given number of points in data
-        System.out.println("Params - number of data points: "+p.getNumPointsInData());
+        //System.out.println("Params - number of data points: "+p.getNumPointsInData());
         int train = (int)(p.getNumPointsInData() * p.getTrainingProportion());
         int cross = (int)((p.getNumPointsInData() - train) / 2);
         int test = p.getNumPointsInData() - train - cross;
 
-        System.out.println("train size: " +train);
+        /*System.out.println("train size: " +train);
         System.out.println("cv size: " +cross);
-        System.out.println("test size: " +test);
+        System.out.println("test size: " +test);*/
 
         if(train < 1){
             errors.reject("error.tooFewTrainingExamples", "Training proportion too low for dataset size");
@@ -56,5 +52,4 @@ public class ParametersDTOValidator implements Validator{
         }
 
     }
-
 }

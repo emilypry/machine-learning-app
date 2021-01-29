@@ -3,7 +3,6 @@ package com.wordpress.boxofcubes.machinelearningapp.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Parameters {
@@ -66,5 +65,4 @@ public class Parameters {
     public void setConvergenceLevel(double convergenceLevel){
         this.convergenceLevel = convergenceLevel;
     }
-
 }

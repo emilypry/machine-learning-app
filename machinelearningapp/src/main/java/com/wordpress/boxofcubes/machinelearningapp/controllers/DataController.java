@@ -195,10 +195,6 @@ public class DataController {
         return "redirect:/set-parameters";
     }
 
-
-
-
-
     @GetMapping("set-parameters")
     public String showParameters(Model model, HttpServletRequest request){
         // Make a new ParametersDTO with the default parameters
@@ -207,11 +203,11 @@ public class DataController {
         // Get the Data object from the session
         Data data = (Data)request.getSession().getAttribute("data");
         if(data != null){
-            // Set the numPointsInData of the Parameters object
+            // Set the numPointsInData of the ParametersDTO to the Data's numPoints
             p.setNumPointsInData(data.getNumPoints());
-        }else{
+        }/*else{
             System.out.println("No data object for setting num points in Parameters!");
-        }
+        }*/
         model.addAttribute("parametersDTO", p);
 
         return "data/parameters";

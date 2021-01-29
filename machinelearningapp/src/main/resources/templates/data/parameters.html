@@ -7,27 +7,15 @@
     <div th:replace="fragments :: links"></div>
 
     <div id="content">
-        <div class="explanation">
-            <h3>Set the parameters for the machine learning algorithm. </h3>
-            <p>
-                The dataset will be parsed randomly into three subsets: a training set, a 
-                cross-validation set, and a testing set. A model will be trained on the 
-                training set using a gradient descent algorithm. Select the parameters for 
-                the algorithm or use the default parameters. 
-            </p>
-        </div>
+        <h3>Set the parameters for the machine learning algorithm.</h3>
 
-        <!--
-            Proportion of data in training set: .1 - .9 [list]
-            Initial theta0: any int
-            Initial theta1: any int
+        <p class="explanation">
+            The dataset will be parsed randomly into three subsets: a training set, a 
+            cross-validation set, and a testing set. A model will be trained on the 
+            training set using a gradient descent algorithm. Select the parameters for 
+            the algorithm or use the default parameters. 
+        </p>
 
-            Alpha: 0-1 [list?]
-            Lambda: 0+
-
-            Max iterations: 10 - 2500
-            Convergence level: .0000001 - 1 [list]
-        -->
         <form method="post" th:object="${parametersDTO}" id="parameters-form">      
             <p class="errors" th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
 
@@ -77,7 +65,7 @@
                             will change more dramatically on each iteration of the algorithm.
                             This could result in faster learning but could also lead to 
                             the algorithm increasing prediction error on some iterations 
-                            and failing to converge. 
+                            or failing to converge. 
                         </p>
                         <p>
                             Acceptable values: 0 - 1
@@ -89,7 +77,7 @@
                         <input th:field="*{lambda}" id="lambda" />
                         <p>
                             The regularization parameter of the algorithm. Regularization 
-                            prevents the model from overfitting the data, but could also 
+                            prevents the model from overfitting the data, but can also 
                             make the model underfit the data. 0 means no regularization, 
                             and a positive number means some regularization. 
                         </p>
@@ -106,8 +94,9 @@
                         <p>
                             The greatest number of iterations that the gradient descent
                             algorithm will execute. It will stop sooner only if it has reached
-                            the convergence level. A higher number could result in a 
-                            better model but will take more time. 
+                            the convergence level or has increased prediction error on at least
+                            one iteration. A higher number could result in a better model but 
+                            will take more time. 
                         </p>
                         <p>
                             Acceptable values: 10 - 3000
@@ -135,7 +124,7 @@
                 </div>
 
                 <div id="default">
-                    <a th:href="@{/set-parameters?defaultParams=true}">Restore Default Parameters</a>
+                    <a th:href="@{/set-parameters}">Restore Default Parameters</a>
                 </div>
 
             </div>
@@ -156,5 +145,6 @@
     </div>
 
     <div id="footer"></div>
+    
 </body>
 </html>

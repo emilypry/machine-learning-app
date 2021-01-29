@@ -9,6 +9,19 @@ public class ParametersDTO extends Parameters{
 
     public ParametersDTO(){};
 
+    public static ParametersDTO getDefaultParameters(){
+        ParametersDTO p = new ParametersDTO();
+        p.setTrainingProportion(.6);
+        p.setTheta0(0);
+        p.setTheta1(0);
+        p.setAlpha(.01);
+        p.setLambda(0);
+        p.setMaxIterations(500);
+        p.setConvergenceLevel(.001);
+
+        return p;
+    }
+
     public double getTheta0(){
         return theta0;
     }
@@ -26,18 +39,5 @@ public class ParametersDTO extends Parameters{
     }
     public void setNumPointsInData(int numPointsInData){
         this.numPointsInData = numPointsInData;
-    }
-
-    public static ParametersDTO getDefaultParameters(){
-        ParametersDTO p = new ParametersDTO();
-        p.setTrainingProportion(.6);
-        p.setTheta0(0);
-        p.setTheta1(0);
-        p.setAlpha(.01);
-        p.setLambda(0);
-        p.setMaxIterations(500);
-        p.setConvergenceLevel(.001);
-
-        return p;
     }
 }
