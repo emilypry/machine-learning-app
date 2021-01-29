@@ -123,7 +123,6 @@ public class DataController {
         if(sampleData.equals("life")){
             data = Data.makeLifeDataset();
             request.getSession().setAttribute(dataUUID, data);
-            
         }else if(sampleData.equals("chocolate")){
             data = Data.makeChocolateDataset();
             request.getSession().setAttribute(dataUUID, data);
@@ -131,7 +130,8 @@ public class DataController {
             data = Data.makeBookDataset();
             request.getSession().setAttribute(dataUUID, data);
         }
-        // ALSO SET IT IN SESSION SO CAN ACCESS IT AFTER VIEWING !!!!!!!!!!!!!!! 
+        
+        // Also set the Data object in the session
         request.getSession().setAttribute("data", data);
         //setDataInSession(request.getSession(), data);
 
