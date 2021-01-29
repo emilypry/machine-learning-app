@@ -1,16 +1,12 @@
 package com.wordpress.boxofcubes.machinelearningapp.controllers;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import com.wordpress.boxofcubes.machinelearningapp.data.DataRepository;
-import com.wordpress.boxofcubes.machinelearningapp.data.SavingModelRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.SavingModelRepository;
 import com.wordpress.boxofcubes.machinelearningapp.data.UserRepository;
 import com.wordpress.boxofcubes.machinelearningapp.models.Data;

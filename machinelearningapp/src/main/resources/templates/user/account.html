@@ -17,12 +17,13 @@
 
         <div th:if="${session.user}">
             <h3 th:text="${username}+'\'s account.'"></h3>
-
-            <p class="explanation">
-                These are your saved datasets and models. Click on a dataset to look at a graph
-                of it and train a model. Click on a model of a dataset to see its performance and
-                make predictions with it.
-            </p>
+            <div class="explanation">
+                <p>
+                    These are your saved datasets and models. Click on a dataset to look at a graph
+                    of it and train a model. Click on a model of a dataset to see its performance and
+                    make predictions with it.
+                </p>
+            </div>
 
             <div th:for="${datasets}" id="datasets-and-models"> 
                 <div th:each="data : ${datasets}">
