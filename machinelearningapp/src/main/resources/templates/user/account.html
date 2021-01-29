@@ -28,35 +28,30 @@
                 <p class="explanation">
                     These are your saved datasets and models. Click on a dataset to look at a graph
                     of it and train a model. Click on a model of a dataset to see its performance and
-                    make predictions with it.
+                    make predictions with it. The models' training error, cross-validation error, and 
+                    testing error are shown, respectively. 
                 </p>
 
                 <div th:for="${datasets}" id="datasets-and-models"> 
-
-                    
                     <div th:each="data : ${datasets}" >
-
                         <div class="row">
-
-                        <div class="datasets">
-                            <form method="post" th:action="@{/retrieve-saved-data}">
-                                <input type="hidden" name="id" th:value="${data.getId()}" />
-                                <button type="submit" th:text="${data.name}" class="data-button"></button>
-                            </form>
-                        </div>
-
-                        <div class="models">
-                            <div th:each="model : ${data.getModels()}">
-                            
-                                <form method="post" th:action="@{/retrieve-saved-model}">
-                                    <input type="hidden" name="id" th:value="${model.getId()}" />
-                                    <button type="submit" th:text="${'Model error: '+#numbers.formatDecimal(model.trainingError,1,2)+', '+#numbers.formatDecimal(model.crossValError,1,2)+', '+#numbers.formatDecimal(model.testingError,1,2)}" class="model-button"></button>
+                            <div class="datasets">
+                                <form method="post" th:action="@{/retrieve-saved-data}">
+                                    <input type="hidden" name="id" th:value="${data.getId()}" />
+                                    <button type="submit" th:text="${data.name}" class="data-button"></button>
                                 </form>
                             </div>
-                        </div>
 
+                            <div class="models">
+                                <div th:each="model : ${data.getModels()}">
+                                
+                                    <form method="post" th:action="@{/retrieve-saved-model}">
+                                        <input type="hidden" name="id" th:value="${model.getId()}" />
+                                        <button type="submit" th:text="${'Model error: '+#numbers.formatDecimal(model.trainingError,1,2)+', '+#numbers.formatDecimal(model.crossValError,1,2)+', '+#numbers.formatDecimal(model.testingError,1,2)}" class="model-button"></button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>   
             </div>

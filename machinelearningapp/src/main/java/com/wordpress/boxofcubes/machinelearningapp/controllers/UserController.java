@@ -45,6 +45,8 @@ public class UserController{
     public String showLogin(Model model, HttpServletRequest request){
         // If there's a Data object in the session, get rid of it
         request.getSession().removeAttribute("data");
+        // If there's a User object in the session, get rid of it
+        request.getSession().removeAttribute("user");
         //System.out.println("Deleted Data object from session.");
 
         model.addAttribute("userLoginDTO", new UserLoginDTO());
@@ -74,6 +76,8 @@ public class UserController{
     public String showSignup(Model model, HttpServletRequest request){
         // If there's a Data object in the session, get rid of it
         request.getSession().removeAttribute("data");
+        // If there's a User object in the session, get rid of it
+        request.getSession().removeAttribute("user");
         //System.out.println("Deleted Data object from session.");
         
         model.addAttribute("userSignupDTO", new UserSignupDTO());
