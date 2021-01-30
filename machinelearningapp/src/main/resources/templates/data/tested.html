@@ -7,44 +7,43 @@
     <div th:replace="fragments :: links"></div>
 
     <div id="content">
-        <div class="explanation">
-            <h3>This is your model's performance on the testing set. </h3>
-            <p>
-                Now that you've trained your model on the training set, evaluated its performance
-                on the cross-validation set, retrained your model, re-evaluated its performance,
-                and so on, you can now see its performance on a brand new dataset: the testing set.
-                If the <b>testing error</b> is close to 0, that's an indication that you've trained
-                a good model. If the testing, cross-validation, and/or training error are high, 
-                you can improve your model by retraining it and re-evaluating its performance on 
-                the cross-validation set, until the training and cross-validation error are low. If
-                your model is ready to go, you can move on to make predictions about new data. 
-            </p>
-        </div>
+        <h3>This is your model's performance on the testing set. </h3>
+
+        <p class="explanation">
+            Now that you've trained your model on the training set, evaluated its performance
+            on the cross-validation set, retrained your model, re-evaluated its performance,
+            and so on, you can now see its performance on a brand new dataset: the testing set.
+            If the <b>testing error</b> is close to 0, that's an indication that you've trained
+            a good model. If the testing, cross-validation, and/or training error are high, 
+            you can improve your model by retraining it and re-evaluating its performance on 
+            the cross-validation set, until the training and cross-validation error are low. If
+            your model is ready to go, you can move on to make predictions about new data. 
+        </p>
 
         <div id="tested-model-container">
             <div class="row">
                 <div class="label">
                     Testing error: 
                 </div>
-                <div class="value" th:text="${#numbers.formatDecimal(lr.getTestingError(), 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.testingError, 1, 2)}"></div>
             </div>
             <div class="row">
                 <div class="label">
                     Cross-validation error: 
                 </div>
-                <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.crossValError, 1, 2)}"></div>
             </div>
             <div class="row">
                 <div class="label">
                     Training error: 
                 </div>
-                <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.trainingError, 1, 2)}"></div>
             </div>
             <div class="row">
                 <div class="label">
                     Trained theta: 
                 </div>
-                <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 1, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 1, 2)}"></div>
+                <div class="value" th:text="${#numbers.formatDecimal(lr.trainedTheta[0], 1, 2)+', '+#numbers.formatDecimal(lr.trainedTheta[1], 1, 2)}"></div>
             </div>
         </div>
 
@@ -74,9 +73,9 @@
             </button>
         </div>
 
-
-
     </div>
+
     <div id="footer"></div>
+    
 </body>
 </html>

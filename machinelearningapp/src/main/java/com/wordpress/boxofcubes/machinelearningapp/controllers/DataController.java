@@ -265,7 +265,6 @@ public class DataController {
 
         return "data/trained";
     }
-
     @PostMapping("trained-model/return")
     public String returnToTrainedModel(HttpServletRequest request){
         // Get the Data object from the session
@@ -293,7 +292,6 @@ public class DataController {
         return "redirect:/home";
     }
 
-
     @PostMapping("retrieve-saved-model")
     public String processSavedModel(@RequestParam int id, HttpServletRequest request){
         // Get the SavingModel object from the repository via its ID
@@ -302,7 +300,7 @@ public class DataController {
             // Make a new LinearRegression object using the model
             LinearRegression lr = new LinearRegression(theModel.get());
 
-            // Set the LinearRegression object in the session
+            // Add the LinearRegression object to the session
             request.getSession().setAttribute("linearRegression", lr);
 
             // Find the Data object that the model is associated with
@@ -312,9 +310,9 @@ public class DataController {
                 request.getSession().setAttribute("data", data.get());
 
                 return "redirect:/test-model";
-            }else{
+            }/*else{
                 System.out.println("Can't find data object associated with model!");
-            }
+            }*/
         }
         return "redirect:/user/account";
     }
@@ -325,8 +323,10 @@ public class DataController {
         if(saved != null){
             model.addAttribute("saved", "Model and dataset are saved to your account");
         }
+        // Get the LinearRegression object from the session
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         model.addAttribute("lr", lr);
+        
         return "data/tested";
     }
 

@@ -1,12 +1,10 @@
 package com.wordpress.boxofcubes.machinelearningapp.models;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
-@Entity
 public class Parameters {
     @Id
     @GeneratedValue

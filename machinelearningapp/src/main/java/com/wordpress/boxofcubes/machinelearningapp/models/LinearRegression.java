@@ -281,8 +281,8 @@ public class LinearRegression {
                 highestX = dataset.getX()[i];
             }
         }
-        System.out.println("Lowest X: "+lowestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * lowestX));
-        System.out.println("Highest X: "+highestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * highestX));
+        /*System.out.println("Lowest X: "+lowestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * lowestX));
+        System.out.println("Highest X: "+highestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * highestX));*/
 
         // lowX, predLowY, highX, predHighY
         double[] predictions = {lowestX, (trainedTheta[0] + trainedTheta[1] * lowestX),
