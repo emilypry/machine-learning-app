@@ -6,8 +6,6 @@ import java.util.Random;
 
 import javax.persistence.GeneratedValue;
 
-import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
-
 public class LinearRegression {
     @GeneratedValue
     private int id;

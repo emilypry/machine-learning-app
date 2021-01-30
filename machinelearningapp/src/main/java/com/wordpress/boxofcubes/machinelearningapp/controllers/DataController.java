@@ -249,25 +249,19 @@ public class DataController {
     }
 
     @GetMapping("trained-model")
-    public String showTrainedModel(@RequestParam String dataUUID,HttpServletRequest request, Model model){
-        // Get the Linear Regression object
+    public String showTrainedModel(@RequestParam String dataUUID, HttpServletRequest request, Model model){
+        // Get the Linear Regression object from the session
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
-
-        model.addAttribute("lr", lr);
-        model.addAttribute("p", lr.getParameters());
+        
         String costs = "";
         for(double c : lr.getCostsWhileTraining()){
             costs += String.format("%.2f", c)+ "\n";
         }
         model.addAttribute("costs", costs);
+        model.addAttribute("lr", lr);
+        model.addAttribute("p", lr.getParameters());
 
         model.addAttribute("dataUUID", dataUUID);
-
-        //
-        System.out.println("dataUUID at trained-model: "+dataUUID);
-        Data dabs = (Data)request.getSession().getAttribute(dataUUID);
-            System.out.println("Data object with UUID? "+(dabs != null));
-            //
 
         return "data/trained";
     }

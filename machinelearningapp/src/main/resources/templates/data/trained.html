@@ -7,8 +7,9 @@
     <div th:replace="fragments :: links"></div>
 
     <div id="content">
+        <h3>This is your trained model. </h3>
+
         <div class="explanation">
-            <h3>This is your trained model. </h3>
             <p>
                 A model has been trained on your training set given the parameters you
                 specified for the gradient descent algorithm. The model consists in 
@@ -46,19 +47,19 @@
                     <div class="label">
                         Trained theta: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainedTheta()[0], 1, 2)+', '+#numbers.formatDecimal(lr.getTrainedTheta()[1], 1, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.trainedTheta[0], 1, 2)+', '+#numbers.formatDecimal(lr.trainedTheta[1], 1, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Training error: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getTrainingError(), 1, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.trainingError, 1, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Cross-validation error: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getCrossValError(), 1, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.crossValError, 1, 2)}"></div>
                 </div>
 
                 <div class="header">Gradient Descent</div>
@@ -66,25 +67,25 @@
                     <div class="label">
                         Initial cost: 
                     </div>
-                    <div class="value" th:text="${#numbers.formatDecimal(lr.getInitialCost(), 1, 2)}"></div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.initialCost, 1, 2)}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Actual iterations:  
                     </div>
-                    <div class="value" th:text="${lr.getActualIterations()}"></div>
+                    <div class="value" th:text="${lr.actualIterations}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Converged:
                     </div>
-                    <div class="value" th:text="${lr.getConverged()}"></div>
+                    <div class="value" th:text="${lr.converged}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Cost increased:
                     </div>
-                    <div class="value" th:text="${lr.getCostIncreased()}"></div>
+                    <div class="value" th:text="${lr.costIncreased}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
@@ -102,7 +103,7 @@
                     <div class="label">
                         Proportion of dataset in training set: 
                     </div>
-                    <div class="value" th:text="${p.getTrainingProportion()}"></div>
+                    <div class="value" th:text="${p.trainingProportion}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
@@ -120,31 +121,31 @@
                     <div class="label">
                         Initial theta:
                     </div>
-                    <div class="value" th:text="${p.getInitialTheta()[0]+', '+p.getInitialTheta()[1]}"></div>
+                    <div class="value" th:text="${p.initialTheta[0]+', '+p.initialTheta[1]}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Alpha:
                     </div>
-                    <div class="value" th:text="${p.getAlpha()}"></div>
+                    <div class="value" th:text="${p.alpha}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Lambda:
                     </div>
-                    <div class="value" th:text="${p.getLambda()}"></div>
+                    <div class="value" th:text="${p.lambda}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Maximum iterations: 
                     </div>
-                    <div class="value" th:text="${p.getMaxIterations()}"></div>
+                    <div class="value" th:text="${p.maxIterations}"></div>
                 </div>
                 <div class="row">
                     <div class="label">
                         Convergence level:
                     </div>
-                    <div class="value" th:text="${p.getConvergenceLevel()}"></div>
+                    <div class="value" th:text="${p.convergenceLevel}"></div>
                 </div>
 
 
