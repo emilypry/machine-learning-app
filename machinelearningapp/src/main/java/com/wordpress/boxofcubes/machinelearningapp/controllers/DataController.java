@@ -270,25 +270,27 @@ public class DataController {
     public String returnToTrainedModel(HttpServletRequest request){
         // Get the Data object from the session
         Data data = (Data)request.getSession().getAttribute("data");
-        // Make a new UUID for it
-        String dataUUID = UUID.randomUUID().toString();
-
-        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
-        if(lr != null){
-            double[] predictions = lr.getPredictedPoints(data);
-            request.getSession().setAttribute("predictions", predictions);
-        }else{
-            System.out.println("couldn't find linear regression!");
-        }
-
+        
         if(data != null){
+            // Get the Linear Regression object from the session
+            LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+
+            if(lr != null){
+                // Get the model prediction points for the graph
+                double[] predictions = lr.getPredictedPoints(data);
+                
+                // Add them to the session
+                request.getSession().setAttribute("predictions", predictions);
+            }
+        
+            // Make a new UUID for the Data object and add to session
+            String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data);
-            System.out.println("Returning to trained model with obj "+dataUUID);
+
             return "redirect:/trained-model?dataUUID="+dataUUID;
-        }else{
-            System.out.println("Couldn't find data object to go back to trained model!");
-            return "redirect:/test-model";
         }
+
+        return "redirect:/home";
     }
 
 
