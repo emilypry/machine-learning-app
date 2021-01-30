@@ -326,33 +326,36 @@ public class DataController {
         // Get the LinearRegression object from the session
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         model.addAttribute("lr", lr);
-        
+
         return "data/tested";
     }
 
     @GetMapping("predict")
     public String showPredict(HttpServletRequest request, Model model){
-        // Get the model
+        // Get the Linear Regression object from the session
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
-        // Get the dataset
+        
+        // Get the Data object from the session
         Data data = (Data)request.getSession().getAttribute("data");
+
         if(data != null && lr != null){
-            // Get the predictions for the chart
+            // Get the predictions for the chart and add to the session
             double[] predictions = lr.getPredictedPoints(data);
             request.getSession().setAttribute("predictions", predictions);
 
-            // Make a new UUID
+            // Make a new UUID for the Data object and add to the session
             String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data);
             model.addAttribute("dataUUID", dataUUID);
-        }else{
+        }/*else{
             System.out.println("missing data or model!");
-        }
+        }*/
 
         // If the user has requested a prediction, get it from the session
         Double predictedY = (Double)request.getSession().getAttribute("predictedY");
         if(predictedY != null){
             model.addAttribute("predictedY", predictedY);
+
             // Remove that prediction from the session
             request.getSession().removeAttribute("predictedY");
         }
@@ -363,7 +366,7 @@ public class DataController {
         // Validate that a number has been entered
         if(x.isEmpty() || x.isBlank()){
             model.addAttribute("error", "Please enter an X value");
-            // Get the info for the chart
+            // Retrieve the info for the graph
             LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
             Data data = (Data)request.getSession().getAttribute("data");
             if(data != null && lr != null){
@@ -380,7 +383,7 @@ public class DataController {
             xVal = Double.parseDouble(x);
         }catch(NumberFormatException e){
             model.addAttribute("error", "Please enter a number");
-            // Get the info for the chart
+            // Retrieve the info for the chart
             LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
             Data data = (Data)request.getSession().getAttribute("data");
             if(data != null && lr != null){
@@ -393,16 +396,16 @@ public class DataController {
             return "data/predict";
         }
         
-        // Get the model
+        // If the user has entered the model, get the prediction
         LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
         if(lr != null){
             // Make the prediction and add it to the session
             Double predictedY = lr.predict(xVal);
             request.getSession().setAttribute("predictedY", predictedY);
             return "redirect:/predict";
-        }else{
+        }/*else{
             System.out.println("missing linear regression!");
-        }
+        }*/
         return "redirect:/predict";
     }
 
