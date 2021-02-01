@@ -26,6 +26,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class ChartServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //System.out.println("Entered chart...");
+
         // Get Data UUID from the URL
         String dataUUID = request.getParameter("dataUUID");
         if(dataUUID != null){
@@ -46,6 +48,7 @@ public class ChartServlet extends HttpServlet{
     
                     // Remove the predictions from the session
                     request.getSession().removeAttribute("predictions");
+                    //System.out.println("Removed predictions from session");
                 }
                 // If there aren't predictions, show the chart with just the data points
                 else{
@@ -56,11 +59,17 @@ public class ChartServlet extends HttpServlet{
                     JFreeChart chart = getChart(data);
                     ChartUtils.writeChartAsPNG(outputStream, chart, 700, 400); 
                 }
-            }
+            }/*else{
+                System.out.println("uuid but no data object!");
+            }*/
 
             // Remove dataUUID from session
             request.getSession().removeAttribute(dataUUID);
-        }
+            //System.out.println("Removed UUID from session "+dataUUID);
+
+        }/*else{
+            System.out.println("no uuid!");
+        }*/
     }
 
     private XYDataset getDataset(Data data){
