@@ -35,14 +35,9 @@ public class ParametersDTOValidator implements Validator{
         }
 
         // Training proportion too high/low given number of points in data
-        //System.out.println("Params - number of data points: "+p.getNumPointsInData());
         int train = (int)(p.getNumPointsInData() * p.getTrainingProportion());
         int cross = (int)((p.getNumPointsInData() - train) / 2);
         int test = p.getNumPointsInData() - train - cross;
-
-        /*System.out.println("train size: " +train);
-        System.out.println("cv size: " +cross);
-        System.out.println("test size: " +test);*/
 
         if(train < 1){
             errors.reject("error.tooFewTrainingExamples", "Training proportion too low for dataset size");
