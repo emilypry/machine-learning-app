@@ -148,7 +148,6 @@ public class DataSubmissionDTOValidator implements Validator{
         // Delete both Files
         newX.delete();
         newY.delete();
-        
     }
 
     private void scanFile(File file, DataSubmissionDTO submission, String xOrY) throws FileNotFoundException, InputMismatchException{
