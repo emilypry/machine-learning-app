@@ -47,7 +47,6 @@ public class UserController{
         request.getSession().removeAttribute("data");
         // If there's a User object in the session, get rid of it
         request.getSession().removeAttribute("user");
-        //System.out.println("Deleted Data object from session.");
 
         model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "user/login";
@@ -68,7 +67,7 @@ public class UserController{
         }
         // Add user to session
         request.getSession().setAttribute("user", user.get());
-        //setUserInSession(request.getSession(), user.get());
+
         return "redirect:/home";
     }
 
@@ -78,7 +77,6 @@ public class UserController{
         request.getSession().removeAttribute("data");
         // If there's a User object in the session, get rid of it
         request.getSession().removeAttribute("user");
-        //System.out.println("Deleted Data object from session.");
         
         model.addAttribute("userSignupDTO", new UserSignupDTO());
         return "user/signup";
@@ -98,7 +96,6 @@ public class UserController{
         userRepository.save(user);
         // Add user to session
         request.getSession().setAttribute("user", user);
-        //setUserInSession(request.getSession(), user);
         
         return "redirect:/home";
     }
@@ -107,7 +104,6 @@ public class UserController{
     public String showAccount(HttpServletRequest request, Model model){
         // If there's a Data object in the session, get rid of it
         request.getSession().removeAttribute("data");
-        //System.out.println("Deleted Data object from session.");
 
         // Get the user and add their username to the model
         User user = (User)request.getSession().getAttribute("user");
@@ -144,20 +140,16 @@ public class UserController{
             // Make sure the dataset isn't already saved
             Optional<Data> inDatabase = dataRepository.findById(data.getId());
             if(inDatabase.isPresent()){
-                //System.out.println(" dataset already saved to user account!");
                 return "redirect:/view-data?dataUUID="+dataUUID+"&saved=true";
             }
 
             // Save the dataset
             data.setUser(user);
             dataRepository.save(data);
-            //System.out.println("saved dataset to user account!");
             
             return "redirect:/view-data?dataUUID="+dataUUID+"&saved=true";
-        }/*else{
-            System.out.println("data or user or oldUUID missing!");
-            return "redirect:/view-data?dataUUID="+dataUUID;
-        }*/
+        }
+
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
 
@@ -194,7 +186,6 @@ public class UserController{
                 }
                 if(alreadyThere == false){
                     savingModelRepository.save(thisModel);
-                    //System.out.println("data already saved - adding model");
                 }
                     
             }else{
@@ -202,15 +193,11 @@ public class UserController{
                 data.setUser(user);
                 data.addModel(thisModel);
                 dataRepository.save(data);
-
-                //System.out.println("saved data with its model");
             }
             
             return "redirect:/test-model?saved=true";
-        }/*else{
-            System.out.println("data or user or linear regression missing!");
-            return "redirect:/test-model";
-        }*/
+        }
+        
         return "redirect:/test-model";
     }
 

@@ -47,7 +47,6 @@ public class LinearRegression {
         // Get the size for the subsets
         int trainingSize = (int)(allData.getNumPoints() * parameters.getTrainingProportion());
         int crossSize = (int)((allData.getNumPoints() - trainingSize) / 2);
-        //int testingSize = allData.getNumPoints() - trainingSize - crossSize;
 
         List<DataValue> trainingVals = new ArrayList<>();
         List<DataValue> crossVals = new ArrayList<>();
@@ -221,14 +220,12 @@ public class LinearRegression {
 
                 // If cost has increased on this iteration, stop (not learning)
                 if(difference < 0){
-                    //System.out.println("COST INCREASED");
                     costIncreased = true;
                     break;
                 }
                 // If the cost has decreased less than the convergenceLevel on this 
                 // iteration, stop (learned)
                 if(difference < parameters.getConvergenceLevel()){
-                    //System.out.println("CONVERGED");
                     converged = true;
                     break;
                 }
@@ -281,8 +278,6 @@ public class LinearRegression {
                 highestX = dataset.getX()[i];
             }
         }
-        /*System.out.println("Lowest X: "+lowestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * lowestX));
-        System.out.println("Highest X: "+highestX+", predY: "+(trainedTheta[0] + trainedTheta[1] * highestX));*/
 
         // lowX, predLowY, highX, predHighY
         double[] predictions = {lowestX, (trainedTheta[0] + trainedTheta[1] * lowestX),
