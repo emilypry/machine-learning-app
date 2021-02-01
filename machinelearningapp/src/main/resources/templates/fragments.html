@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:fragments="head">
+    <title>Easy Machine Learning</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div th:fragment="links" id="navigation">
+        <div th:if="${session.user}">
+            <a th:href="@{/home}" th:text="'Home'"></a>
+            <a th:href="@{/user/account}" th:text="'My Account'"></a>
+            <a th:href="@{/user/logout}" th:text="'Log Out'"></a>
+        </div>
+        <div th:unless="${session.user}">
+            <a th:href="@{/home}" th:text="'Home'"></a>
+            <a th:href="@{/user/login}" th:text="'Log In'"></a>
+            <a th:href="@{/user/signup}" th:text="'Sign Up'"></a>            
+        </div>
+    </div>
+    
+    <div th:fragment="links-at-account" id="navigation">
+        <a th:href="@{/home}" th:text="'Home'"></a>
+        <a th:href="@{/user/logout}" th:text="'Log Out'"></a>
+    </div>
+
+</body>
+</html>

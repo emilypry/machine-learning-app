@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">My Account</div>
+
+    <div th:replace="fragments :: links-at-account"></div>
+
+    <div id="content">
+        <div th:unless="${session.user}">
+            <h3>
+                Please <a th:href="@{/user/login}" th:text="'log in'"></a>
+                or <a th:href="@{/user/signup}" th:text="'sign up'"></a>
+                for an account.
+            </h3>
+        </div>
+
+        <div th:if="${session.user}">
+            <h3 th:text="${username}+'\'s account.'"></h3>
+
+            <div th:unless="${datasets.size() > 0}">
+                <p class="short-explanation">
+                    You do not have any saved datasets or models.
+                </p>
+            </div>
+
+            <div th:if="${datasets.size() > 0}">
+                <p class="explanation">
+                    These are your saved datasets and models. Click on a dataset to look at a graph
+                    of it and train a model. Click on a model of a dataset to see its performance and
+                    make predictions with it. The models' training error, cross-validation error, and 
+                    testing error are shown, respectively. 
+                </p>
+
+                <div th:for="${datasets}" id="datasets-and-models"> 
+                    <div th:each="data : ${datasets}" >
+                        <div class="row">
+                            <div class="datasets">
+                                <form method="post" th:action="@{/retrieve-saved-data}">
+                                    <input type="hidden" name="id" th:value="${data.id}" />
+                                    <button type="submit" th:text="${data.name}" class="data-button"></button>
+                                </form>
+                            </div>
+
+                            <div class="models">
+                                <div th:each="model : ${data.models}">
+                                
+                                    <form method="post" th:action="@{/retrieve-saved-model}">
+                                        <input type="hidden" name="id" th:value="${model.id}" />
+                                        <button type="submit" th:text="${'Model error: '+#numbers.formatDecimal(model.trainingError,1,2)+', '+#numbers.formatDecimal(model.crossValError,1,2)+', '+#numbers.formatDecimal(model.testingError,1,2)}" class="model-button"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        
+    </div>
+
+    <div id="footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">Submit Data</div>
+
+    <div th:replace="fragments :: links"></div>
+
+    <div id="content">
+        <div class="explanation">
+            <h3>Upload or enter your own dataset or use a sample dataset.</h3>
+            <p>
+                All values must be numerical and separated by whitespace, not by comma.
+                The order of X values and Y values must
+                be the same; each consecutive pair of values will be treated as a single example. 
+                The X values should contain only one factor, e.g., 'house price' instead of
+                'house price and house size'. The Y values should be continuous, e.g., 
+                'temperature', 'price', or 'weight' instead of 'number of children', 'model 
+                of car', or 'age group'.
+            </p>
+        </div>
+
+        <div id="data-choice">
+            <input th:if="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" checked="checked"/>
+            <input th:unless="${uploaded == true}" type="radio" name="data-choice" id="upload-choice" />
+            <label for="upload-choice" class="data-choice-label">Upload data</label>
+
+            <input th:if="${entered == true}" type="radio" name="data-choice" id="enter-choice" checked="checked"/>
+            <input th:unless="${entered == true}" type="radio" name="data-choice" id="enter-choice"/>
+            <label for="enter-choice" class="data-choice-label">Enter data</label>
+
+            <input type="radio" name="data-choice" id="sample-choice" />
+            <label for="sample-choice" class="data-choice-label">Use sample data</label>
+
+            <div id="chose-upload">
+                <form method="post" enctype="multipart/form-data" th:object="${dataSubmissionDTO}" th:action="@{/submit-data/upload}" id="upload-form">
+                    <div class="errors">
+                        <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
+                    </div>
+                
+                    <div class="input-line">
+                        <label for="xUpload">X: </label>
+                        <input type="file" th:field="*{xFile}" id="xUpload" />
+                    </div>
+
+                    <div class="input-line">
+                        <label for="yUpload">Y: </label>
+                        <input type="file" th:field="*{yFile}" id="yUpload" />
+                    </div>
+
+                    <div class="input-line">
+                        <label for="name">Name of dataset: </label>
+                        <input th:field="*{name}" id="name" th:value="*{name}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="xLabel">X label: </label>
+                        <input th:field="*{xLabel}" id="xLabel" th:value="*{xLabel}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="yLabel">Y label: </label>
+                        <input th:field="*{yLabel}" id="yLabel" th:value="*{yLabel}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="item">Item label: </label>
+                        <input th:field="*{itemLabel}" id="item" th:value="*{itemLabel}"/>
+                    </div>
+
+                    <div class="one-button-container">
+                        <button form="upload-form" type="submit">
+                            View Data
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div id="chose-enter">
+                <form method="post" th:object="${dataSubmissionDTO}" th:action="@{/submit-data/enter}" id="enter-form" >
+                    <div class="errors">
+                        <p th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
+                    </div>
+                
+                    <div class="input-line">
+                        <label for="xEnter" class="enter-label">X: </label>
+                        <textarea form="enter-form" th:field="*{xEntry}" id="xEnter"
+                        rows=20 cols=50 ></textarea>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="yEnter" class="enter-label">Y: </label>
+                        <textarea form="enter-form" th:field="*{yEntry}" id="yEnter" 
+                        rows=20 cols=50></textarea>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="name">Name of dataset: </label>
+                        <input th:field="*{name}" id="name" th:value="*{name}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="xLabel">X label: </label>
+                        <input th:field="*{xLabel}" id="xLabel" th:value="*{xLabel}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="yLabel">Y label: </label>
+                        <input th:field="*{yLabel}" id="yLabel" th:value="*{yLabel}"/>
+                    </div>
+
+                    <div class="input-line">
+                        <label for="item">Item label: </label>
+                        <input th:field="*{itemLabel}" id="item" th:value="*{itemLabel}"/>
+                    </div>
+
+                    <div class="one-button-container">
+                        <button form="enter-form" type="submit">
+                            View Data
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div id="chose-sample">
+                <form method="post" th:action="@{/submit-data/sample}" id="sample-form" >
+                    <div class="input-line">
+                        <label for="sampleSets">Sample dataset: </label>
+                        <select id="sampleSets" name="sampleData">
+                            <option value="chocolate">Weight and Price of Chocolate Boxes</option>
+                            <option value="life">Life Expectancy by Year</option>
+                            <option value="book">Price and Number of Pages of Books</option>
+                        </select>
+                    </div>
+
+                    <div class="one-button-container">
+                        <button form="sample-form" type="submit">
+                            View Data
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="footer"></div>
+    
+</body>
+</html>

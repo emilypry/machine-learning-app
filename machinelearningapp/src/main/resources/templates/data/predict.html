@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">Make Predictions</div>
+
+    <div th:replace="fragments :: links"></div>
+
+    <div id="content">
+        <div class="explanation">
+            <h3>Make predictions with your model. </h3>
+            <p>
+                Now that you've got a good model of your dataset, you can make predictions 
+                about new data. As before, the line on the chart represents the model's predictions;
+                each point is a possible X value and the model's predicted Y value. For possible
+                X values that do not appear on the chart, you can enter them below to get the predicted
+                Y values. 
+            </p>
+        </div>
+
+        <form method="post" id="predict-form">        
+            <div id="predictions-container">
+                <div id="chart">
+                    <img th:src="@{/view-data/display-chart/display-predictions(dataUUID=${dataUUID})}" width=700 height=400>
+                </div>
+
+                <p th:if="${error}" th:text="${error}" class="errors"></p>
+
+                <div class="row">
+                    <label for="x-val">X:</label>
+                    <input id="x-val" type="text" name="x" />
+                    <button form="predict-form" type="submit">
+                        Predict
+                    </button>
+                </div>
+                <div class="row" th:if="${predictedY}">
+                    <div class="label">
+                        Predicted Y: 
+                    </div>
+                    <div class="value" th:text="${#numbers.formatDecimal(predictedY, 1, 2)}"></div>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="two-button-container">
+            <button type="submit" th:onclick="location.href='/test-model'">
+                View Tested Model
+            </button>
+
+            <button type="submit" th:onclick="location.href='/home'">
+                Home
+            </button>
+        </div>
+
+
+
+
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

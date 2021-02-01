@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div id="header">Trained Model</div>
+
+    <div th:replace="fragments :: links"></div>
+
+    <div id="content">
+        <h3>This is your trained model. </h3>
+
+        <div class="explanation">
+            <p>
+                A model has been trained on your training set given the parameters you
+                specified for the gradient descent algorithm. The model consists in 
+                the <b>trained theta </b>values, corresponding to estimated y-intercept and 
+                slope of the linear regression. The graph shows your whole dataset and 
+                the model's linear regression. A good model will fit the line onto your dataset 
+                well. 
+            </p>
+            <p>
+                &nbsp The model's <b>training and cross-validation error</b> represent its average prediction error on the training and cross-validation sets. The closer those numbers are 
+                to 0, the better the model is of your dataset. To improve the model, modify the 
+                parameters of the algorithm and train the model again. <u>While improving the model,
+                you should shoot for the lowest possible cross-validation error.</u> Once you've
+                found a good model, move on to testing it on the testing set. 
+            </p>
+            <p>
+                &nbsp The <b>initial cost</b> is the average prediction error of the initial theta 
+                values on your training set. You can gauge whether the model learned by comparing
+                the initial cost to the training and cross-validation error; the training and 
+                cross-validation error should be lower than the initial cost. The number of 
+                <b>actual iterations</b> of the gradient descent algorithm will be lower than 
+                the maximum iterations only if the algorithm converged or the cost increased. 
+                If it <b>converged</b>, it found the optimal theta values, relative to the 
+                convergence level. If the <b>cost increased</b>, the prediction error 
+                increased at some point in the algorithm, meaning it wasn't working properly. 
+                The <b>costs while training</b> shows the model's prediction error on each 
+                iteration of the algorithm. 
+            </p>
+        </div>
+
+        <div id="trained-model-container">
+            <div id="left-column">
+                <div class="header">Model</div>
+                <div class="row">
+                    <div class="label">
+                        Trained theta: 
+                    </div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.trainedTheta[0], 1, 2)+', '+#numbers.formatDecimal(lr.trainedTheta[1], 1, 2)}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Training error: 
+                    </div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.trainingError, 1, 2)}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Cross-validation error: 
+                    </div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.crossValError, 1, 2)}"></div>
+                </div>
+
+                <div class="header">Gradient Descent</div>
+                <div class="row">
+                    <div class="label">
+                        Initial cost: 
+                    </div>
+                    <div class="value" th:text="${#numbers.formatDecimal(lr.initialCost, 1, 2)}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Actual iterations:  
+                    </div>
+                    <div class="value" th:text="${lr.actualIterations}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Converged:
+                    </div>
+                    <div class="value" th:text="${lr.converged}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Cost increased:
+                    </div>
+                    <div class="value" th:text="${lr.costIncreased}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        All costs while training:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <textarea readonly th:text="${costs}" rows=10></textarea>
+                    </div>
+                </div>
+               
+                <div class="header">Parameters</div>
+                <div class="row">
+                    <div class="label">
+                        Proportion of dataset in training set: 
+                    </div>
+                    <div class="value" th:text="${p.trainingProportion}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Size of training set:
+                    </div>
+                    <div class="value" th:text="${lr.getTrainingSize()}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Size of cross-validation set: 
+                    </div>
+                    <div class="value" th:text="${lr.getCrossValSize()}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Initial theta:
+                    </div>
+                    <div class="value" th:text="${p.initialTheta[0]+', '+p.initialTheta[1]}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Alpha:
+                    </div>
+                    <div class="value" th:text="${p.alpha}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Lambda:
+                    </div>
+                    <div class="value" th:text="${p.lambda}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Maximum iterations: 
+                    </div>
+                    <div class="value" th:text="${p.maxIterations}"></div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        Convergence level:
+                    </div>
+                    <div class="value" th:text="${p.convergenceLevel}"></div>
+                </div>
+
+
+            </div>
+
+            <div id="right-column">
+                <img th:src="@{/view-data/display-chart/display-predictions(dataUUID=${dataUUID})}" width=700 height=400>
+
+                <div id="improvements">
+                    <h3>How to improve the model</h3>
+                    <p>
+                        If the <b>cost increased</b>, try decreasing alpha, decreasing lambda,
+                        or changing the initial theta values.
+
+                        <br/><br/>If the algorithm did not <b>converge</b>, try increasing the maximum
+                        iterations or changing the initial theta values. 
+
+                        <br/><br/>If the <b>training error</b> is low but the <b>cross-validation error</b>
+                        is high, try increasing lambda.
+
+                        <br/><br/>If the <b>cross-validation error</b> is low but the <b>training error</b>
+                        is high, try decreasing lambda.
+
+                        <br/><br/>After that, if the <b>training error</b> and <b>cross-validation 
+                        error</b> are still high, try increasing the maximum iterations, decreasing
+                        the convergence level, changing the initial theta values, or increasing
+                        the proportion of the dataset in the training set.
+
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="two-button-container">
+            <button type="submit" th:onclick="location.href='/set-parameters'">
+                Modify Parameters
+            </button>
+
+            <button type="submit" th:onclick="location.href='/test-model'">
+                Test the Model
+            </button>
+        </div>
+
+
+
+
+    </div>
+    <div id="footer"></div>
+</body>
+</html>
