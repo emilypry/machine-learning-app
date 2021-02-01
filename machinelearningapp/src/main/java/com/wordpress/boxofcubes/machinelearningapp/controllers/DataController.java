@@ -43,8 +43,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class DataController {
-    /*@Autowired
-    DataValueRepository dataValueRepository;*/
     @Autowired
     DataRepository dataRepository;
     @Autowired
@@ -58,15 +56,12 @@ public class DataController {
     public String showHome(HttpServletRequest request){
         // If there's a Data object in the session, get rid of it
         request.getSession().removeAttribute("data");
-        System.out.println("Deleted Data object from session.");
-        
         return "data/home";
     }
 
     @GetMapping("submit-data")
     public String showSubmit(Model model, HttpSession session){
         model.addAttribute("dataSubmissionDTO", new DataSubmissionDTO());
-        //System.out.println("---At submit-data");
         return "data/submit";
     }
     @PostMapping("submit-data/upload")
@@ -87,7 +82,6 @@ public class DataController {
 
         // Also set the Data object itself in the session
         request.getSession().setAttribute("data", data);
-        //setDataInSession(request.getSession(), data);
 
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
@@ -109,8 +103,7 @@ public class DataController {
 
         // Also set the Data object in session
         request.getSession().setAttribute("data", data);
-        //setDataInSession(request.getSession(), data);
-        //return "redirect:/view-data";
+
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
     @PostMapping("submit-data/sample")
@@ -133,9 +126,7 @@ public class DataController {
 
         // Also set the Data object in the session
         request.getSession().setAttribute("data", data);
-        //setDataInSession(request.getSession(), data);
 
-        //return "redirect:/view-data";
         return "redirect:/view-data?dataUUID="+dataUUID;
     }
 
@@ -150,13 +141,9 @@ public class DataController {
             // Make new UUID for it and add it to session
             String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data.get());
-            //System.out.println("Retrieved saved data "+dataUUID);
 
             return "redirect:/view-data?dataUUID="+dataUUID;
-        }/*else{
-            System.out.println("couldn't find saved data");
-            return "redirect:/user/account";
-        }*/
+        }
         return "redirect:/user/account";
     }
 
@@ -172,8 +159,6 @@ public class DataController {
             model.addAttribute("saved", "Dataset is saved to your account");
         }
 
-        //System.out.println("UUID at view-data: "+dataUUID);
-
         return "data/chart";
     }
 
@@ -186,12 +171,9 @@ public class DataController {
              // Make a new UUID for it and set it in the session
             String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data);
-            //System.out.println("Returning to view data with obj "+dataUUID);
+
             return "redirect:/view-data?dataUUID="+dataUUID;
-        }/*else{
-            System.out.println("Couldn't find data object to go back to view!");
-            return "redirect:/set-parameters";
-        }*/
+        }
         return "redirect:/set-parameters";
     }
 
@@ -205,9 +187,8 @@ public class DataController {
         if(data != null){
             // Set the numPointsInData of the ParametersDTO to the Data's numPoints
             p.setNumPointsInData(data.getNumPoints());
-        }/*else{
-            System.out.println("No data object for setting num points in Parameters!");
-        }*/
+        }
+
         model.addAttribute("parametersDTO", p);
 
         return "data/parameters";
@@ -241,10 +222,7 @@ public class DataController {
             request.getSession().setAttribute("predictions", predictions);
 
             return "redirect:/trained-model?dataUUID="+dataUUID;
-        }/*else{
-            System.out.println("ERROR - couldn't find data for training!");
-            return "data/parameters";
-        }*/
+        }
         return "redirect:/set-parameters";
     }
 
@@ -310,9 +288,7 @@ public class DataController {
                 request.getSession().setAttribute("data", data.get());
 
                 return "redirect:/test-model";
-            }/*else{
-                System.out.println("Can't find data object associated with model!");
-            }*/
+            }
         }
         return "redirect:/user/account";
     }
@@ -347,9 +323,7 @@ public class DataController {
             String dataUUID = UUID.randomUUID().toString();
             request.getSession().setAttribute(dataUUID, data);
             model.addAttribute("dataUUID", dataUUID);
-        }/*else{
-            System.out.println("missing data or model!");
-        }*/
+        }
 
         // If the user has requested a prediction, get it from the session
         Double predictedY = (Double)request.getSession().getAttribute("predictedY");
@@ -403,62 +377,8 @@ public class DataController {
             Double predictedY = lr.predict(xVal);
             request.getSession().setAttribute("predictedY", predictedY);
             return "redirect:/predict";
-        }/*else{
-            System.out.println("missing linear regression!");
-        }*/
+        }
         return "redirect:/predict";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /** Converts a DataSubmissionDTO to a new Data object */
-    /*public Data getDataObject(DataSubmissionDTO dataSubmissionDTO){
-        Data data = new Data();
-
-        // RawX and RawY are double[]s - convert them to List of DataValues
-        List<DataValue> dataValues = new ArrayList<>();
-        for(double x : dataSubmissionDTO.getRawX()){
-            dataValues.add(new DataValue(x, data, true));
-        }
-        for(double y : dataSubmissionDTO.getRawY()){
-            dataValues.add(new DataValue(y, data, false));
-        }
-
-        data.setDataValues(dataValues);
-        data.setNumPoints(dataSubmissionDTO.getNumPoints());
-        data.setName(dataSubmissionDTO.getName());
-        data.setXLabel(dataSubmissionDTO.getXLabel());
-        data.setYLabel(dataSubmissionDTO.getYLabel());
-        data.setItemLabel(dataSubmissionDTO.getItemLabel());
-
-        return data;
-    }*/
-    /*public static void setDataInSession(HttpSession session, Data data){
-        session.setAttribute("data", data);
-    }
-    public Data getDataFromSession(HttpSession session){
-        Data data = (Data)session.getAttribute("data");
-        if(data == null){
-            return null;
-        }
-        return data;
-    }*/
-
-
-
 
 }
