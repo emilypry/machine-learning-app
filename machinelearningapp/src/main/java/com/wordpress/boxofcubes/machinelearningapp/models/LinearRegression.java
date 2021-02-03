@@ -333,4 +333,5 @@ public class LinearRegression {
     public double getTestingError(){
         return testingError;
     }
+
 }
