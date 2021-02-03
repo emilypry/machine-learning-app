@@ -321,41 +321,27 @@ public class DataController {
     }
     @PostMapping("predict")
     public String processPredict(@RequestParam String x, HttpServletRequest request, Model model){
+        // Retrieve the info for the chart
+        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+        Data data = (Data)request.getSession().getAttribute("data");
+        String dataUUID = UUID.randomUUID().toString();
+
         // Validate that a number has been entered
-        if(x.isEmpty() || x.isBlank()){
-            model.addAttribute("error", "Please enter an X value");
-            // Retrieve the info for the graph
-            LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
-            Data data = (Data)request.getSession().getAttribute("data");
-            if(data != null && lr != null){
-                double[] predictions = lr.getPredictedPoints(data);
-                request.getSession().setAttribute("predictions", predictions);
-                String dataUUID = UUID.randomUUID().toString();
-                request.getSession().setAttribute(dataUUID, data);
-                model.addAttribute("dataUUID", dataUUID);
-            }
-            return "data/predict";
-        }
         double xVal;
         try{
             xVal = Double.parseDouble(x);
         }catch(NumberFormatException e){
             model.addAttribute("error", "Please enter a number");
-            // Retrieve the info for the chart
-            LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
-            Data data = (Data)request.getSession().getAttribute("data");
             if(data != null && lr != null){
                 double[] predictions = lr.getPredictedPoints(data);
                 request.getSession().setAttribute("predictions", predictions);
-                String dataUUID = UUID.randomUUID().toString();
                 request.getSession().setAttribute(dataUUID, data);
                 model.addAttribute("dataUUID", dataUUID);
             }
             return "data/predict";
         }
         
-        // If the user has entered the model, get the prediction
-        LinearRegression lr = (LinearRegression)request.getSession().getAttribute("linearRegression");
+        // If the user has entered a valid number, get the prediction
         if(lr != null){
             // Make the prediction and add it to the session
             Double predictedY = lr.predict(xVal);

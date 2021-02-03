@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import com.wordpress.boxofcubes.machinelearningapp.models.dto.ParametersDTO;
 
 public class Parameters {
-    @Id
     @GeneratedValue
     private int id;
     private double trainingProportion;
